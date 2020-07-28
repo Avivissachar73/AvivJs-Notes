@@ -11,7 +11,7 @@ export default {
                 <li A-for="note in notes">
                     <NotePreview note="{{note}}" key="{{note._id}}" @infoChanged="updateInfo(note._id)">
                         <div class="actions width-all flex align-center space-around">    
-                            <RouterLink url="{{'/note/edit/'+note._id}}">Edit</RouterLink>
+                            <RouterLink url="{{'/edit/'+note._id}}">Edit</RouterLink>
                             <button @click="pinNote(note._id)">P</button>
                             <button @click="removeNote(note._id)">X</button>
                         </div>

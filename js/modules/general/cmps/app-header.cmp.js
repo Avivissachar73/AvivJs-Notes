@@ -10,7 +10,7 @@ export default class AppHeader {
                 <div ref="screen" class="screen {{navClass}}" @click="toggleNav"/>
                 <ul ref="nav" @click="toggleNav" class="app-nav {{navClass}} clean-list flex align-center space-between wrap">
                     <li>
-                        <RouterLink className="flex-center" url="/note">Notes</RouterLink> 
+                        <RouterLink className="flex-center" url="/">Notes</RouterLink> 
                     </li>
                     <li>
                         <RouterLink className="flex-center" url="/about">About</RouterLink>
