@@ -59,8 +59,8 @@ a, .router-link {
     color: unset;
 }
 
-img {
+/* img {
     height: 100%;
     width: 100%;
-    object-fit: cober;
-}
+    object-fit: cover;
+} */
