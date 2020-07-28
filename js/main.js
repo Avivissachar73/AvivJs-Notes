@@ -7,7 +7,7 @@ import _store from './store.js';
 import './modules/general/globalCmps.js';
 
 import AppHeader from './modules/general/cmps/app-header.cmp.js';
-import AppFooter from './modules/general/cmps/app-Footer.cmp.js';
+import AppFooter from './modules/general/cmps/app-footer.cmp.js';
 
 const App = new AvivJs();
 App.RootComponent('#App', class {
