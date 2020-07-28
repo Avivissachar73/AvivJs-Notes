@@ -21,7 +21,7 @@
 
     overflow-y: scroll;
 }
-@media (max-width: 350px) {
+@media (max-width: 500px) {
     .note-edit .edit-section {
         width: 95%;
     }
