@@ -1,0 +1,63 @@
+.note-edit {
+    position: relative;
+}
+
+.note-edit .edit-section {
+    position: fixed;
+    /* top: 75px; */
+    bottom: 50%;
+    right: 50%;
+    transform: translate(50%, 50%);
+    z-index: 7;
+    
+    background-color: rgb(255, 202, 167);
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 3px;
+    
+    width: 300px;
+    /* min-height: 400px; */
+    height: 400px;
+
+    overflow-y: scroll;
+}
+@media (max-width: 350px) {
+    .note-edit .edit-section {
+        width: 95%;
+    }
+}
+.note-edit ::-webkit-scrollbar {
+    margin-left: 2.5px;
+    padding: 1px;
+    width: 5px;
+    /* background-color: rgb(255, 137, 137); */
+    background-color: rgb(228, 59, 59);
+}
+.note-edit ::-webkit-scrollbar-thumb {
+    /* width: 5px; */
+    /* background-color: rgb(255, 239, 149); */
+    background-color: rgb(255, 137, 137);
+    border-radius: 10px;
+    
+}
+.note-edit ::-webkit-scrollbar-button {
+    /* width: 5px; */
+    /* background-color: blue; */
+    background-color: rgb(228, 59, 59);
+}
+
+.note-edit .close-btn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.note-edit .screen {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 5;
+}

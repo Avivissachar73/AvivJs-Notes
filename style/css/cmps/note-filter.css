@@ -1,0 +1,8 @@
+.note-filter >* {
+    display: inline-block;
+    /* margin: 5px; */
+}
+.note-filter >*:not(:last-child) {
+    display: inline-block;
+    margin-right: 5px;
+}

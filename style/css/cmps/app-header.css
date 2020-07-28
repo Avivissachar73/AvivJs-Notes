@@ -1,0 +1,105 @@
+.app-header .logo {
+    height: 60px;
+    min-width: 60px;
+    font-family: 'Courier New', Courier, monospace;
+}
+.app-header .logo span {
+    color: black;
+    text-transform: lowercase;
+}
+.app-header .logo span:before {
+    content: '.';
+}
+
+.app-header li a {
+    height: 60px;
+}
+.app-header li:not(:first-child) a {
+    margin-left: 20px;
+}
+
+.app-header a {
+    transition: 0.2s;
+}
+.app-header a:hover {
+    transform: scale(1.02);
+}
+
+.app-nav {
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+/* .app-nav li {
+    border-right: 1px solid rgba(0, 0, 0, 0.5);
+}
+.app-nav li:first-child {
+    border-left: 1px solid rgba(0, 0, 0, 0.5);
+} */
+
+
+.nav-btn {
+    border: unset;
+    background-color: unset;
+    padding: 0;
+    width: 22.5px;
+    height: 22.5px;
+    /* font-size: 1.5rem;
+    font-weight: 800; */
+    display: none;
+}
+.nav-btn:active {
+    border: unset;
+    background-color: unset;
+}
+.nav-btn img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.app-header .screen {
+    display: none;
+}
+@media (max-width: 450px) {
+    .nav-btn {
+        display: block;
+    }
+    .app-header li:not(:first-child) a {
+        margin-left: unset;
+    }
+    .app-header .screen {
+        display: block;
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: rgba(0, 0, 0, 0.05);
+        z-index: 7;
+    }
+    .app-header .screen.hide {
+        display: none;
+    }
+    .app-nav {
+        flex-direction: column;
+        position: fixed;
+        right: 0;
+        top: 0;
+        /* top: 60px; */
+        background-color: rgb(252, 47, 47);
+        color: black;
+        border-left: 1px solid rgba(0, 0, 0, 0.5);
+        transition: 0.4s;
+        z-index: 10;
+    }
+    .app-nav.hide {
+        transform: translate(100%, 0);
+    }
+    .app-nav li a {
+        width: 150px;
+        height: 100px;
+    }
+    .app-nav li {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    }
+}

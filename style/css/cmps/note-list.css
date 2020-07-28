@@ -1,0 +1,57 @@
+.note-list {
+    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, auto));
+    gap: 10px;
+    /* padding: 10px 0; */
+    padding-top: 10px;
+    padding-bottom: 10px;
+} 
+@media (max-width: 450px) {
+    .note-list {
+        grid-template-columns: repeat(1, 100%);
+        /* padding: 0; */
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+.pinned-notes {
+    background-color: rgb(253, 218, 207);
+}
+
+
+
+
+
+
+
+/* .note-list {
+    column-count: 3;
+    justify-content: space-between;
+}  */
+/* @media (max-width: 515px) {
+    .note-list {justify-content: space-around;}
+} */
+
+/* .note-list > li:not(:last-child) {
+    margin-right: 10px;
+}
+.note-list > li:not(:first-child) {
+    margin-left: 10px;
+} */
+
+/* .note-list > li {
+    margin: 5px;
+    margin-bottom: 10px;
+    width: 200px;
+    break-inside: avoid;
+} */
+/* @media (max-width: 750px) {
+    .note-list > li {width: 150px;}
+}  */
+/* @media (max-width: 450px) {
+    .note-list > li {
+        margin: 2px 0;
+        width: 100%;
+    }
+} */

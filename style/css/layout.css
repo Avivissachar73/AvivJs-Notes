@@ -1,0 +1,44 @@
+
+.app-header {
+    /* height: 10vh; */
+    padding: 0 5px;
+    /* color: white;
+    background-color: black; */
+}
+
+.app-main {
+    min-height: 80vh;
+    background-color: #fff;
+    color: rgb(252, 47, 47);
+
+}
+
+.app-footer {
+    min-height: 20vh;
+    /* color: white;
+    background-color: black; */
+}
+
+.app-header, .app-footer {
+    background-color: rgb(252, 47, 47);
+    color: #fff;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 0 5px;
+    max-width: 900px;
+} @media (max-width: 950px) {
+    .container {
+        max-width: 700px;
+    }
+} @media (max-width: 750px) {
+    .container {
+        padding: 0 2px;
+        max-width: unset;
+    }
+} @media (max-width: 450px) {
+    .container {
+        padding: 0;
+    }
+}
