@@ -29,8 +29,8 @@ export default class AppHeader {
     }
     methods = {
         toggleNav() {
-            this.state.isNavOpen = !this.state.isNavOpen;
-            // for (let curr of Object.values(this.context.refs)) curr.classList.toggle('hide');
+            // this.state.isNavOpen = !this.state.isNavOpen;
+            for (let curr of Object.values(this.context.refs)) curr.classList.toggle('hide');
         }
     }
 }
