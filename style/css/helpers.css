@@ -6,6 +6,7 @@
 .justify-center {justify-content: center;}
 .space-around {justify-content: space-around;}
 .space-between {justify-content: space-between;}
+.space-evenly {justify-content: space-evenly;}
 .column {flex-direction: column;}
 .wrap {flex-wrap: wrap;}
 .flex-start {align-items: flex-start;}
