@@ -7,7 +7,10 @@ AvivJs.Component('TextWrapper', class TextWrapper {
         <p title="{{title}}" class="text-wrapper">
             <style>
                 .text-wrapper button {
-                    margin-left: 5px;
+                    margin: 0;
+                    padding: 0;
+                    display: inline;
+                    /* margin-left: 5px; */
                     border: unset;
                     color: #717171 !important;
                     /* border-bottom: 1px solid #717171 !important; */
@@ -43,6 +46,7 @@ AvivJs.Component('TextWrapper', class TextWrapper {
     }
     methods = {
         toggle() {
+            console.log('toggling');
             this.state.isShowAll = !this.state.isShowAll;
         }
     }
@@ -67,7 +71,7 @@ AvivJs.Component('ColorPicker', class ColorPicker {
                     border-radius: 25%;
                     border: 1px solid black;
                     box-shadow: 0px 0px 5px 1px rgba(0,0,0,1);
-                    transition: 3s;
+                    transition: 0.2s;
                     margin: 5px;
                 }
                 .color-picker .color:hover {cursor: pointer;}

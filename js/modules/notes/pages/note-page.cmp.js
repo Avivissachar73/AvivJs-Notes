@@ -9,7 +9,7 @@ export default class NotePage {
         <main class="note-page app-main column-layout">
             <div class="actions container width-all flex align-center space-between wrap">
                 <NoteFilter @filter="setFilter"/>
-                <RouterLink className="inline-block" url="/edit">New</RouterLink>
+                <RouterLink className="inline-block" url="/note/edit">New</RouterLink>
             </div>
             <NoteList A-if="pinedNotes && pinedNotes.length" className="pinned-notes" notes="{{pinedNotes}}" @noteUpdate="updateNote" @removeNote="removeNote" @pinNote="pinNote"/>
             <note-list A-if="unPinedNotes && unPinedNotes.length" className="" notes="{{unPinedNotes}}" @noteUpdate="updateNote" @removeNote="removeNote" @pinNote="pinNote"/>

@@ -30,6 +30,8 @@
     background-color: unset;
 }
 
-.note-info iframe {
-    height: 300px;
+@media (max-width: 500px) {
+    .note-info iframe {
+        height: 300px;
+    }
 }

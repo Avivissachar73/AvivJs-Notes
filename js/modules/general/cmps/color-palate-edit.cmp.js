@@ -19,7 +19,7 @@ export default class ColorsEdit {
                     border-radius: 50%;
                     border: 1px solid black;
                     box-shadow: 0px 0px 5px 1px rgba(0,0,0,1);
-                    transition: 3s;
+                    transition: 0.2s;
                     margin: 5px;
                 }
                 .colors-edit .color:hover {cursor: pointer;}

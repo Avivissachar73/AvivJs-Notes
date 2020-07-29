@@ -9,7 +9,21 @@ import noteEdit from './modules/notes/cmps/note-edit.cmp.js';
 export default [
     {
         path: '/',
-        // component: homePage
+        component: homePage
+        // component: notePage,
+        // children: [
+        //     {
+        //         path: '/edit/:id',
+        //         component: noteEdit
+        //     }
+        // ]
+    },
+    {
+        path: '/about',
+        component: aboutPage
+    },
+    {
+        path: '/note',
         component: notePage,
         children: [
             {
@@ -17,19 +31,5 @@ export default [
                 component: noteEdit
             }
         ]
-    },
-    {
-        path: '/about',
-        component: aboutPage
-    },
-    // {
-    //     path: '/note',
-    //     component: notePage,
-    //     children: [
-    //         {
-    //             path: '/edit/:id',
-    //             component: noteEdit
-    //         }
-    //     ]
-    // }
+    }
 ];
