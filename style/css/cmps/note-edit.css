@@ -24,8 +24,8 @@
 @media (max-width: 500px) {
     .note-edit .edit-section {
         width: 95%;
-        /* height: 95%; */
-        height: 550px;
+        height: 95%;
+        /* height: 550px; */
     }
 }
 .note-edit ::-webkit-scrollbar {
