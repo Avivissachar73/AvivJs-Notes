@@ -7,6 +7,7 @@ export default class NotePage {
     name = 'note-page';
     template = `
         <main class="note-page app-main column-layout">
+            <h2>Notes</h2>
             <div class="actions container width-all flex align-center space-between wrap">
                 <NoteFilter @filter="setFilter"/>
                 <RouterLink className="inline-block" url="/note/edit">New</RouterLink>

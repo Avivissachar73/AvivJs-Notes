@@ -1,0 +1,8 @@
+.app-footer .logo {
+    margin-right: 10px;
+}
+@media (max-width: 240px) {
+    .app-footer .logo {
+        margin-right: 0;
+    }
+}

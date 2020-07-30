@@ -4,6 +4,7 @@
 @import './layout.css';
 
 @import './cmps/app-header.css';
+@import './cmps/app-footer.css';
 
 @import './cmps/note-page.css';
 @import './cmps/note-info.css';
@@ -21,7 +22,6 @@
 .logo span:before {
     content: '.';
 }
-
 
 .home-page .logo {
     font-size: 4rem;
