@@ -6,7 +6,7 @@ export default class AppFooter {
         <footer class="app-footer flex-center">
             <h4 class="text-center flex wrap space-around">
                 <p class="logo flex-center">Aviv<span>Js</span></p>
-                 © Aviv Issachar
+                © Aviv Issachar
             </h4>
         </footer>
     `;

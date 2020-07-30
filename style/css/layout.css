@@ -1,6 +1,7 @@
 
 .app-header {
     /* height: 10vh; */
+    min-height: 60px;
     padding: 0 5px;
     /* color: white;
     background-color: black; */
@@ -8,14 +9,15 @@
 
 .app-main {
     /* min-height: 80vh; */
-    min-height: calc(80vh - 60px);
+    min-height: calc(100vh - 180px);
     background-color: #fff;
     color: rgb(252, 47, 47);
 
 }
 
 .app-footer {
-    min-height: 20vh;
+    /* min-height: 20vh; */
+    min-height: 120px;
     /* color: white;
     background-color: black; */
 }

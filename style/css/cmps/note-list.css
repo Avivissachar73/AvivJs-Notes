@@ -16,7 +16,8 @@
     }
 }
 .pinned-notes {
-    background-color: rgb(253, 218, 207);
+    /* background-color: rgb(253, 218, 207); */
+    background-color: rgba(252, 47, 47, 0.3);
 }
 
 
