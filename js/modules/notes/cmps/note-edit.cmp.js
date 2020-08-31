@@ -22,7 +22,7 @@ export default class NoteEdit {
                     </template>
                 </div>
                 <button class="close-btn" @click="close">X</button>
-                <input A-model="noteToEdit.title" placeholder="title"/>
+                <input A-model="noteToEdit.title" placeholder="title" ref="title"/>
                 <{{infoType}} type="{{noteToEdit.type}}" info="{{noteToEdit.info}}" isEditable="{{true}}" @infoUpdated="updateInfo"/>  
                 <div A-if="colorPalate" class="style-pannel width-all">
                     <div class="flex align-center space-between width-all">
@@ -118,6 +118,9 @@ export default class NoteEdit {
     }
     onDestroyed() {
         // console.log('edit was destroyed!!');
+    }
+    onRender() {
+        // this.context.refs.title.focus();
     }
     watch = {
         'Router.params.id': () => {
