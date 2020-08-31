@@ -4,12 +4,17 @@ var nestedMicro = new AvivJs().element({
     name: 'counter',
     template: `
         <div class="column-layout">
-            <h1>COUNTER</h1>
-            <p>
-                <button @click="update(1)">+</button>
-                {{count}}
+            <header>
+                <h2>COUNTER</h2>
+            </header>
+            <main class="width-all flex align-cemter space-between">
                 <button @click="update(-1)">-</button>
-            </p>
+                {{count}}
+                <button @click="update(1)">+</button>
+            </main>
+            <footer>
+                <h5>microFrontend</h5>
+            </footer>
         </div>
     `,
     state: {
