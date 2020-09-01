@@ -1,6 +1,6 @@
 'use strict';
 
-var nestedMicro = new AvivJs().element({
+var nestedMicro = AvivJs.element({
     name: 'counter',
     template: `
         <div class="column-layout">
@@ -12,8 +12,9 @@ var nestedMicro = new AvivJs().element({
                 {{count}}
                 <button @click="update(1)">+</button>
             </main>
-            <footer>
+            <footer class="text-center">
                 <h5>_microFrontend_</h5>
+                <h6>nested_App</h6>
             </footer>
         </div>
     `,
