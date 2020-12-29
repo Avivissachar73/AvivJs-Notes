@@ -127,7 +127,7 @@ export default class NoteEdit {
             this.methods.loadNote();
         },
         'noteToEdit.style.backgroundColor': () => {
-            console.log('bg changed!', this.noteToEdit.style.backgroundColor);
+            // console.log('bg changed!', this.noteToEdit.style.backgroundColor);
         }
     }
     components = {

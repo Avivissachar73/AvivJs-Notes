@@ -27,7 +27,6 @@ export default class TextNote {
     }
     watch = {
         newTxt(curr, prev) {
-            console.log('wowo');
             this.saveChanges();
         }
     }
