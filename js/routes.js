@@ -6,6 +6,8 @@ import notePage from './modules/notes/pages/note-page.cmp.js';
 
 import noteEdit from './modules/notes/cmps/note-edit.cmp.js';
 
+import dashboardPage from './modules/dashboard/pages/dashboard.cmp.js';
+
 export default [
     {
         path: '/',
@@ -31,5 +33,9 @@ export default [
                 component: noteEdit
             }
         ]
+    },
+    {
+        path: '/dashboard',
+        component: dashboardPage
     }
 ];
