@@ -17,7 +17,7 @@ export default class NotePage {
             <RouterView someProp="wow"/>
         </main>
     `;
-    computed = {
+    getters = {
         notesToShow() {
             return this.context.store.notesToShow;
         },

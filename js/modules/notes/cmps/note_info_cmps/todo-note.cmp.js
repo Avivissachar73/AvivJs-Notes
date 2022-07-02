@@ -21,7 +21,7 @@ export default class TodoNote {
     state = {
         newTodoTxt: ''
     }
-    computed = {
+    getters = {
         isDesable() {
             return (!this.newTodoTxt)? true : false; 
         }

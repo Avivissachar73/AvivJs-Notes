@@ -25,7 +25,7 @@ AvivJs.Component('TextWrapper', class TextWrapper {
     state = {
         isShowAll: false
     }
-    computed = {
+    getters = {
         isLongTxt() {
             const {text, limit} = this;
             if (!limit) limit = 100;
@@ -57,34 +57,36 @@ AvivJs.Component('ColorPicker', class ColorPicker {
     props = ['colors', 'value'];
     template = `
         <section class="color-picker">
-            <style>
-                .color-picker .colors {
-                    display: flex;
-                    align-itemps: center;
-                    justify-content: space-around;
-                    flex-wrap: wrap;
-                    width: 100%;
-                }
-                .color-picker .color {
-                    width: 15px;
-                    height: 15px;
-                    border-radius: 25%;
-                    border: 1px solid black;
-                    box-shadow: 0px 0px 5px 1px rgba(0,0,0,1);
-                    transition: 0.2s;
-                    margin: 5px;
-                }
-                .color-picker .color:hover {cursor: pointer;}
-                .color-picker .color.selected {border: 1px solid white}
-                .color-picker .color:not(:last-child){margin-right: 5px}
-            </style>
             <div class="colors">
                 <template A-for="color in colors">
-                    <div @click="select(color)" style="background-color:{{color}};" class="color {{color===selectedColor? 'selected' : ''}}"></div>
+                   <div @click="select(color)" style="background-color:{{color}};" class="color {{color===selectedColor? 'selected' : ''}}"></div>
                 </template>
             </div>
         </section>
-    `;
+        `;
+        style = {
+            '.colors': {
+                display: 'flex',
+                'align-items': 'center',
+                'justify-content': 'space-around',
+                'flex-wrap': 'wrap',
+                'width': '100%',
+                
+                '.color': {
+                    'width': '15px',
+                    'height': '15px',
+                    'border-radius': '25%',
+                    'border': '1px solid black',
+                    'box-shadow': '0px 0px 5px 1px rgba(0,0,0,1)',
+                    transition: '0.2s',
+                    margin: '5px',
+
+                    '&:hover': {cursor: 'pointer',},
+                    '&.selected': {'border': '1px solid white'},
+                    '&:not(:last-child)': {'margin-right': '5px'}
+                }
+            },
+        }
     state = {
         selectedColor: ''
     }

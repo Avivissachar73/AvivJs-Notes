@@ -52,7 +52,7 @@ export default class NoteEdit {
         ],
         isColorEditMode: false
     }
-    computed = {
+    getters = {
         title() {
             if (!this.noteToEdit) return '';
             if (this.noteToEdit._id) return 'Edit note';
@@ -84,7 +84,7 @@ export default class NoteEdit {
     }
     methods = {
         loadNote: async () => {
-            var id = this.context.Router.params.id;
+            var id = this.context.router.params.id;
             if (!id) this.setNewNote(this.noteType);
             else this.state.noteToEdit = JSON.parse(JSON.stringify(await this.context.store.getNote(id)));
         },
@@ -94,15 +94,15 @@ export default class NoteEdit {
         },
         async save() {
             await this.context.store.saveNote(this.noteToEdit);
-            this.context.Router.push('/note');
+            this.context.router.push('/note');
         },
         close() {
-            this.context.Router.push('/note');
+            this.context.router.push('/note');
         },
         setNewNote(type) {
             var title = `${type.split('').map((x,i) => i === 0 ? x.toUpperCase() : x.toLowerCase()).join('')} note`;
             this.state.noteToEdit = noteService.createNote(title, type);
-            // this.context.Router.push('/note/edit');
+            // this.context.router.push('/note/edit');
         },
         updateColors(palate) {
             this.context.store.saveColorPalate(palate);

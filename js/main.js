@@ -12,7 +12,7 @@ const App = new AvivJs();
 App.RootCmp('#App', class {
     name = 'root-cmp';
     store = _store;
-    routes = _routes
+    routes = _routes;
     template = `
         <div>
             <AppHeader/>
@@ -25,3 +25,19 @@ App.RootCmp('#App', class {
         AppFooter
     }
 });
+// App.RootCmp('#App', {
+//     name: 'root-cmp',
+//     store: _store,
+//     routes: _routes,
+//     template: `
+//         <div>
+//             <AppHeader/>
+//             <RouterView/>
+//             <AppFooter/>
+//         </div>
+//     `,
+//     components: {
+//         AppHeader,
+//         AppFooter
+//     }
+// });

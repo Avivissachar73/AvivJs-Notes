@@ -16,7 +16,7 @@ export default class MediaNote {
     state = {
         newUrl: ''
     }
-    computed = {
+    getters = {
         infoType() {
             switch (this.type) {
                 case 'image':

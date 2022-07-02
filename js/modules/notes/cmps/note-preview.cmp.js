@@ -16,7 +16,7 @@ export default class NotePreview {
             <content/>
         </section>
     `;
-    computed = {
+    getters = {
         styleStr() {
             return Utils.getStyleStr(this.note.style);
         },

@@ -22,7 +22,7 @@ export default class AppHeader {
     state = {
         isNavOpen: false
     }
-    computed = {
+    getters = {
         navClass() {
             return this.isNavOpen? '' : 'hide';
         }
