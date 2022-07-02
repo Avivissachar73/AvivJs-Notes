@@ -6,7 +6,7 @@ export default class AppHeader {
         <header class="app-header">
             <nav class="container height-all flex align-center space-between wrap">
                 <RouterLink url="/"><h1 class="logo flex-center">Aviv<span>Js</span></h1></RouterLink>
-                <button class="nav-btn" @click="toggleNav"><img src="img/navBurger.png"/></button>
+                <button class="nav-btn" @click="toggleNav"><img src="assets/img/navBurger.png"/></button>
                 <div ref="screen" class="screen {{navClass}}" @click="toggleNav"/>
                 <ul ref="nav" @click="toggleNav" class="app-nav {{navClass}} clean-list flex align-center space-between wrap">
                     <li>
