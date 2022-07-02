@@ -12,9 +12,9 @@ export default {
             <div class="charts-container flex wrap align-center space-around">
               <div class="chart donat-container"></div>
               <div class="chart frame-container"></div>
-              <div class="chart bar-container"></div>
               <div class="chart bar2-container"></div>
               <div class="chart bar3-container"></div>
+              <div class="chart bar-container"></div>
               <div class="chart line-container"></div>
               <div class="chart disc-container"></div>
               <div class="chart pi-container"></div>
@@ -96,7 +96,7 @@ export default {
           ],
         }, '.bar2-container'),
         
-        new BarChart(baseOptions(), '.bar3-container'),
+        new BarChart({...baseOptions(), horizontal: true}, '.bar3-container'),
       
         new LineChart(baseOptions(), '.line-container'),
       
