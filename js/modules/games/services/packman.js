@@ -1,6 +1,6 @@
 import { BaseBoardGame } from './BaseBoardGame.class.js';
 
-import { Utils } from '../../../services/Utils.service.js'
+import { Utils } from '../../../services/utils.service.js'
 
 
 export class Packman {

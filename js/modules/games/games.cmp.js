@@ -13,7 +13,7 @@ import boardGameUtils from './services/board-game-utils.js';
 // make geme controller more generic, the component doesnt need to know what game is played, packman and damka shold be handled the same.
 // move style to style prop or to another file;
 // change functions to cmp methods
-// add more games, routable;
+// add all the games, routable (damka, snake, space invaders);
 
 var game = null
 
