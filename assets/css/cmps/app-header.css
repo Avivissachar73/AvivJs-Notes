@@ -71,7 +71,7 @@
         height: 100vh;
         width: 100vw;
         background-color: rgba(0, 0, 0, 0.05);
-        z-index: 7;
+        z-index: 35;
     }
     .app-header .screen.hide {
         display: none;
@@ -86,7 +86,7 @@
         /* color: black; */
         border-left: 1px solid rgba(0, 0, 0, 0.5);
         transition: 0.4s;
-        z-index: 10;
+        z-index: 40;
     }
     .app-nav.hide {
         transform: translate(100%, 0);
