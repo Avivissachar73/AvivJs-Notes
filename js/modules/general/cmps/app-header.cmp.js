@@ -16,6 +16,9 @@ export default class AppHeader {
                         <RouterLink className="flex-center" url="/about">About</RouterLink>
                     </li>
                     <li>
+                        <RouterLink className="flex-center" url="/games">Games</RouterLink>
+                    </li>
+                    <li>
                         <RouterLink className="flex-center" url="/dashboard">Dashboard</RouterLink>
                     </li>
                 </ul>
