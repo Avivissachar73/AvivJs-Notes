@@ -40,7 +40,7 @@ export default [
         component: dashboardPage
     },
     {
-        path: '/games',
+        path: '/games/:gameName',
         component: gamesPage
     }
 ];

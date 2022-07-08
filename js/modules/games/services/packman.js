@@ -28,8 +28,8 @@ export class PackmanController {
   }
   
   async init() {
-    this.connectEvents();
     this.setDomMethods();
+    this.connectEvents();
     createBtnsController(this.handleKeyPress, null, 'main');
     this.initGame(false);
     // setReSizeBoard();
@@ -42,44 +42,47 @@ export class PackmanController {
   
   setDomMethods() {
       this.container.innerHTML = `
+          <style>
+            .board-container {
+                width: 100%;
+                max-width: 400px;
+                background-color: #fff;
+            }
+
+            .board-container table {
+                border-radius: 5px;
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+                margin: 0 auto;
+                width: 100%;
+                height: 100%;
+                border-collapse: collapse;
+            }
+
+            .board-cell {
+                background-color: antiquewhite;
+            }
+
+            .board-cell span {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+            }
+
+
+            .board-cell .border {
+                background-color: rgb(243, 235, 162);
+            }
+
+            .board-cell .food {
+                background-color:#a2f3ba;
+            }
+            .game-info {
+              margin-bottom: 20px;
+            }
+          </style>
           <section class="game-info width-all flex align-center space-around wrap">
-              <style>
-                .board-container {
-                    width: 100%;
-                    max-width: 400px;
-                    background-color: #fff;
-                }
-  
-                .board-container table {
-                    border-radius: 5px;
-                    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-                    margin: 0 auto;
-                    width: 100%;
-                    height: 100%;
-                    border-collapse: collapse;
-                }
-  
-                .board-cell {
-                    background-color: antiquewhite;
-                }
-  
-                .board-cell span {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 100%;
-                    height: 100%;
-                }
-  
-  
-                .board-cell .border {
-                    background-color: rgb(243, 235, 162);
-                }
-  
-                .board-cell .food {
-                    background-color:#a2f3ba;
-                }
-              </style>
               <button class="reset-btn">Restart</button>
               <h3>Score: <span class="score-span">0</span></h3>
               <button class="pause-btn">Pause</button>
@@ -88,7 +91,7 @@ export class PackmanController {
           <div id="board" class="board-container"></div>
       `;
       this.container.querySelector('.reset-btn').onclick = () => {
-          initGame(true);
+          this.initGame(true);
           this.isGameOver = false;
       }
       this.container.querySelector('.pause-btn').onclick = this.pauseGame;
@@ -118,6 +121,10 @@ export class PackmanController {
   
   initGame(isStart) {
       this.EventManager.emit('set-game', isStart);
+  }
+
+  destroy() {
+    this.disconnectEvs();
   }
   
   
@@ -640,14 +647,14 @@ export class PackmanModel {
 
 
 export class PackmanGame {
-  name = 'Packman';
+  static name = 'Packman';
   constructor(Emitter, popupInstance, containerSelector) {
     this.model = new PackmanModel(Emitter);
     this.controller = new PackmanController(Emitter, popupInstance, containerSelector);
   }
   destroy() {
     this.model.destroy();
-    this.controller.disconnectEvs();
+    this.controller.destroy();
   }
 }
 

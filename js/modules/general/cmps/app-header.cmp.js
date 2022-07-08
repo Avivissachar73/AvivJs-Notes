@@ -25,6 +25,14 @@ export default class AppHeader {
             </nav>
         </header>
     `;
+    style = {
+        '.app-nav': {
+            '.active': {
+                color: 'black'
+            } 
+
+        }
+    };
     state = {
         isNavOpen: false
     }

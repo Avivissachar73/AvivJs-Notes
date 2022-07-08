@@ -123,7 +123,7 @@ export default class NoteEdit {
         // this.context.refs.title.focus();
     }
     watch = {
-        'Router.params.id': () => {
+        'router.params.id': () => {
             this.methods.loadNote();
         },
         'noteToEdit.style.backgroundColor': () => {
