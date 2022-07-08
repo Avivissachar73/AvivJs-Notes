@@ -46,7 +46,7 @@ export default {
     onMounted() {
       this.mountCharts();
     },
-    OnDestroyedCPN() {
+    OnDestroyed() {
       this.charts.forEach(c => c.destroy());
       this.charts = [];
     },
