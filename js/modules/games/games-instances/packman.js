@@ -1,4 +1,3 @@
-import { BaseBoardGame } from './BaseBoardGame.class.js';
 import { Utils } from '../../../services/utils.service.js'
 import boardGameUtils from '../services/board-game-utils.js';
 import createBtnsController from '../services/btn-controls.cmp.js';

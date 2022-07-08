@@ -1,16 +1,9 @@
 import { Utils } from '../../../services/utils.service.js'
 import createBtnsController from '../services/btn-controls.cmp.js';
-import { TableService } from './TableService.js';
+import { TableService } from '../services/TableService.js';
 
 
 export class SnakeModel {
-  // import {createBoard} from '../services/utils.service.js';
-  // import boardService from './board.service.js';
-  // import playerService from './player.service.js';
-  // import { Utils.getRandomInt } from '../services/utils.service.js';
-
-  // import scoreService from './score.service.js';
-
   evManager = null;
   state = null;
   offers = [];

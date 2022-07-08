@@ -2,11 +2,11 @@ import { EventEmiter } from '../../../lib/EventEmiter.js';
 import A_Alert from '../../../lib/Alert.js';
 const EventManager = new EventEmiter();
 
-import { PackmanGame } from './services/packman.js';
-import { DamkeGame } from './services/damka.js';
-import { SpaceInvadersGame } from './services/space-invaders.js';
-import { MineSweeperGame } from './services/mine-sweeper.js';
-import { SnakeGame } from './services/snake.js';
+import { PackmanGame } from './games-instances/packman.js';
+import { DamkeGame } from './games-instances/damka.js';
+import { SpaceInvadersGame } from './games-instances/space-invaders.js';
+import { MineSweeperGame } from './games-instances/mine-sweeper.js';
+import { SnakeGame } from './games-instances/snake.js';
 
 
 const allGames = [PackmanGame, SnakeGame, DamkeGame, SpaceInvadersGame, MineSweeperGame];
