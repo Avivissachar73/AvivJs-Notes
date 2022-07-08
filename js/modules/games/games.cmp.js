@@ -20,56 +20,58 @@ var game = null
 export default {
     name: 'games-page',
     template: `
-        <main class="app-main container flex column align-center space-around">
-            <style>
-              .board-container {
-                  width: 100%;
-                  max-width: 400px;
-                  background-color: #fff;
-              }
-
-              .board-container table {
-                  border-radius: 5px;
-                  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-                  margin: 0 auto;
-                  width: 100%;
-                  height: 100%;
-                  border-collapse: collapse;
-              }
-
-              .board-cell {
-                  background-color: antiquewhite;
-              }
-
-              .board-cell span {
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  width: 100%;
-                  height: 100%;
-              }
-
-
-              .board-cell .border {
-                  background-color: rgb(243, 235, 162);
-              }
-
-              .board-cell .food {
-                  background-color:#a2f3ba;
-              }
-            </style>
-
-            <h2>Game: {{currGameName}}</h2>
-
-            <section class="game-info width-all flex align-center space-around wrap">
-                <button class="reset-btn">Restart</button>
-                <h3>Score: <span class="score-span">0</span></h3>
-                <button class="pause-btn">Pause</button>
-            </section>
-    
-            <div id="board" class="board-container"></div>
-            
-        </main>
+        <section class="games-gage-container">
+          <main class="app-main container flex column align-center space-around">
+              <style>
+                .board-container {
+                    width: 100%;
+                    max-width: 400px;
+                    background-color: #fff;
+                }
+  
+                .board-container table {
+                    border-radius: 5px;
+                    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+                    margin: 0 auto;
+                    width: 100%;
+                    height: 100%;
+                    border-collapse: collapse;
+                }
+  
+                .board-cell {
+                    background-color: antiquewhite;
+                }
+  
+                .board-cell span {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+                    height: 100%;
+                }
+  
+  
+                .board-cell .border {
+                    background-color: rgb(243, 235, 162);
+                }
+  
+                .board-cell .food {
+                    background-color:#a2f3ba;
+                }
+              </style>
+  
+              <h2>Game: {{currGameName}}</h2>
+  
+              <section class="game-info width-all flex align-center space-around wrap">
+                  <button class="reset-btn">Restart</button>
+                  <h3>Score: <span class="score-span">0</span></h3>
+                  <button class="pause-btn">Pause</button>
+              </section>
+      
+              <div id="board" class="board-container"></div>
+              
+          </main>
+        </section>
     `,
     style: {
       position: 'relative',
@@ -78,13 +80,6 @@ export default {
       },
       '.board-container': {
         margin: '30px 0'
-      },
-      '.alert-screen': {
-        width: '100vw !important',
-        position: 'sticky !important',
-        top: '60px !important',
-        right: '50%',
-        transform: 'translateX(50%)'
       }
     },
     getters: {
@@ -96,7 +91,7 @@ export default {
       }
     },
     async onMounted() {
-      const {Confirm, Alert, Prompt} = new A_Alert('.app-main', true);
+      const {Confirm, Alert, Prompt} = new A_Alert('.games-gage-container', true);
       _Confirm = Confirm;
       _Alert = Alert;
       _Prompt - Prompt;
