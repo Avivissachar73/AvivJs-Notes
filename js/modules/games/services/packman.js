@@ -1,14 +1,208 @@
 import { BaseBoardGame } from './BaseBoardGame.class.js';
-
 import { Utils } from '../../../services/utils.service.js'
+import boardGameUtils from '../services/board-game-utils.js';
+import createBtnsController from '../services/btn-controls.cmp.js';
 
 
-export class Packman {
+
+export class PackmanController {
+  BOARD_SELECTOR = '#board';
+
+  isSupperMode = false;
+  isGameOver = true;
+  WELCOME_MSG = 'Hello!<br/>do you think you can collect all the foods in the market without being infected by any of the other costumers?<br/>Lets play!';
+
+  PAUSE_MSG = '';
+  
+  offers = [];
+
+  popup = null;
+
+
+  constructor(Emitter, popupInstance, containerSelector) {
+    this.EventManager = Emitter;
+    this.container = document.querySelector(containerSelector);
+    this.popup = popupInstance;
+
+    this.init();
+  }
+  
+  async init() {
+    this.connectEvents();
+    this.setDomMethods();
+    createBtnsController(this.handleKeyPress, null, 'main');
+    this.initGame(false);
+    // setReSizeBoard();
+    if (await this.popup.Confirm(this.WELCOME_MSG)) {
+        this.initGame(true);
+        this.isGameOver = false;
+    }
+  }
+
+  
+  setDomMethods() {
+      this.container.innerHTML = `
+          <section class="game-info width-all flex align-center space-around wrap">
+              <style>
+                .board-container {
+                    width: 100%;
+                    max-width: 400px;
+                    background-color: #fff;
+                }
+  
+                .board-container table {
+                    border-radius: 5px;
+                    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+                    margin: 0 auto;
+                    width: 100%;
+                    height: 100%;
+                    border-collapse: collapse;
+                }
+  
+                .board-cell {
+                    background-color: antiquewhite;
+                }
+  
+                .board-cell span {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 100%;
+                    height: 100%;
+                }
+  
+  
+                .board-cell .border {
+                    background-color: rgb(243, 235, 162);
+                }
+  
+                .board-cell .food {
+                    background-color:#a2f3ba;
+                }
+              </style>
+              <button class="reset-btn">Restart</button>
+              <h3>Score: <span class="score-span">0</span></h3>
+              <button class="pause-btn">Pause</button>
+          </section>
+    
+          <div id="board" class="board-container"></div>
+      `;
+      this.container.querySelector('.reset-btn').onclick = () => {
+          initGame(true);
+          this.isGameOver = false;
+      }
+      this.container.querySelector('.pause-btn').onclick = this.pauseGame;
+      document.body.onkeydown = ev => this.handleKeyPress(ev);
+      // document.querySelector(BOARD_SELECTOR).onkeydown = handleKeyPress;
+  }
+  
+  async pauseGame() {
+      if (this.isGameOver) return;
+      this.EventManager.emit('pause-game');
+      await this.popup.Alert(this.PAUSE_MSG);
+      this.EventManager.emit('resurm-game');
+  }
+  
+  handleKeyPress(event) {
+      const key = event.key;
+      event.preventDefault?.();
+      // if (event.preventDefault && !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(key)) {
+      //     event.preventDefault();
+      // }
+      if (key === 'ArrowLeft') this.EventManager.emit('move-player', {i:0,j:-1});
+      if (key === 'ArrowRight') this.EventManager.emit('move-player', {i:0,j:1});
+      if (key === 'ArrowUp') this.EventManager.emit('move-player', {i:-1,j:0});
+      if (key === 'ArrowDown') this.EventManager.emit('move-player', {i:1,j:0});
+      if (key === 'Escape') this.pauseGame();
+  }
+  
+  initGame(isStart) {
+      this.EventManager.emit('set-game', isStart);
+  }
+  
+  
+  disconnectEvs() {
+    this.offers.forEach(c => c?.());
+  }
+  
+  connectEvents() {
+      this.offers = [
+        this.EventManager.on('game-setted', (board, bestScore) => {
+            this.renderBoard(board);
+            this.PAUSE_MSG = bestScore ? `Game paused <br/><br/> Best score: ${bestScore.score} by - ${bestScore.name}` : 'Game paused';
+            // reSizeBoard();
+        }),
+        this.EventManager.on('object-moved', (fromPos, toPos, board) => {
+            this.renderCellByPos(fromPos, board);
+            this.renderCellByPos(toPos, board);
+        }),
+        this.EventManager.on('player-eaten', (pos, board) => {
+            this.renderCellByPos(pos, board);
+        }),
+        this.EventManager.on('game-over', async (isVictory, score, isNewHighScore) => {
+            console.log('game-over, isVictory:', isVictory, 'score:', score, 'isNewBest:', isNewHighScore);
+            if (isVictory) {
+                if (isNewHighScore) {
+                    let playerName = await _Prompt(`You broke the high score! You got ${score} points! <br/> save score?`, 'Your name');
+                    if (playerName) this.EventManager.emit('save-score', playerName)
+                }
+                else this.popup.Alert(`You win! Score: ${score}`);
+            }
+            // else this.popup.Alert(`Game over...  Score: ${score}`);
+            else this.popup.Alert(`Game over... <br/> You been infected by a sick costumer.. <br/> Score: ${score}`);
+            this.isGameOver = true;
+        }),
+        this.EventManager.on('score-update', score => {
+            document.querySelector('.score-span').innerText = score;
+        }),
+        this.EventManager.on('obj-added', (pos, board) => {
+            this.renderCellByPos(pos, board);
+        }),
+        this.EventManager.on('supper-mode', duration => {
+            this.isSupperMode = true;
+            setTimeout(() => this.isSupperMode = false, duration);
+        })
+      ];
+  }
+  
+  renderBoard(board) {
+      boardGameUtils.renderBoard(board, cell => this.getCellHtmlStr(cell), this.BOARD_SELECTOR);
+      boardGameUtils.setReSizeBoard(this.BOARD_SELECTOR, 'table');
+  }
+  
+  renderCellByPos(pos, board) {
+      boardGameUtils.renderCellByPos(pos, board, cell => this.getCellHtmlStr(cell));
+  }
+  
+  
+  getCellHtmlStr(cell) {
+      // const contentStr = cell.uiStr;
+      const contentStr = (() => {
+        if (cell.isEmpty || cell.type === 'border') return ' ';
+        if (cell.type === 'player') return '🤠';
+        if (cell.type === 'enemy') return ['😷','🤒','🤕','🤢','🤮','🤧'][0];
+        if (cell.type === 'food' && cell.subtype === 'food') return ' ';
+        if (cell.subtype === 'supper-food') return ['☕','🥛','🍷','🍸','🍺','🍻','🥃','🥤'][0];
+        if (cell.subtype === 'cherry') return ['🥑','🍒','🍆','🍉','🍌','🍅','🥥','🥔','🥦','🥕','🌽','🥒','🍄','🍇','🍞','🥐','🥨','🍦','🍨','🍩','🍪','🍰','🍔','🍟','🍕','🌮','🥪','🍿','🍲','🥘','🍳','🥡','🍭','🍬','🍫','🥫'][0];
+        return ' ';
+      })();
+      const styleStr = (() => {
+          var styleStr = '';
+          if (cell.type === 'enemy') styleStr += ` background-color:${this.isSupperMode? '#b88ae8' : cell.color};`;
+          return styleStr;
+      })();
+      const classListStr = (() => {
+          return `${cell.subtype || cell.type || ''}`;
+      })();
+      return `<span style="${styleStr}" class="${classListStr}">${contentStr}</span>`;
+  }
+}
+
+export class PackmanModel {
   state = {};
   EventManager = null;
   static BOARD_SIZE = 21;
   static STORAGE_KEY = 'Pacman_best_score';
-  static WELCOME_MSG = 'Hello!<br/>do you think you can collect all the foods in the market without being infected by any of the other costumers?<br/>Lets play!';
 
   offers = [];
 
@@ -309,7 +503,7 @@ export class Packman {
           isEmpty: true,
           cellId: Utils.getRandomId(),
           pos,
-          uiStr: _geCellUiStr('empty', 'empty', true)
+          // uiStr: _geCellUiStr('empty', 'empty', true)
 
       };
   }
@@ -319,7 +513,7 @@ export class Packman {
           type: 'player',
           cellId: Utils.getRandomId(),
           pos,
-          uiStr: _geCellUiStr('player')
+          // uiStr: _geCellUiStr('player')
       }
   }
   static createEnemyCell(pos) {
@@ -330,7 +524,7 @@ export class Packman {
           pos,
           color: Utils.getRandomColor(),
           score: 20,
-          uiStr: _geCellUiStr('enemy')
+          // uiStr: _geCellUiStr('enemy')
       }
   }
   static creasteBoardCell(pos) {
@@ -339,7 +533,7 @@ export class Packman {
           type: 'border',
           cellId: Utils.getRandomId(),
           pos,
-          uiStr: _geCellUiStr('boarder')
+          // uiStr: _geCellUiStr('boarder')
       }
   }
   static createSupperFoodCell(pos) {
@@ -350,7 +544,7 @@ export class Packman {
           cellId: Utils.getRandomId(),
           pos,
           score: 20,
-          uiStr: _geCellUiStr('food', 'supper-food')
+          // uiStr: _geCellUiStr('food', 'supper-food')
       }
   }
   static createRegFoodCell(pos) {
@@ -361,7 +555,7 @@ export class Packman {
           cellId: Utils.getRandomId(),
           pos,
           score: 1,
-          uiStr: _geCellUiStr('food', 'food')
+          // uiStr: _geCellUiStr('food', 'food')
       }
   }
 
@@ -417,7 +611,7 @@ export class Packman {
         cellId: Utils.getRandomId(),
         pos: randomPos,
         score: 15,
-        uiStr: _geCellUiStr('food', 'cherry')
+        // uiStr: _geCellUiStr('food', 'cherry')
     }
     this.EventManager.emit('obj-added', randomPos, board);
   }
@@ -445,12 +639,25 @@ export class Packman {
 }
 
 
-function _geCellUiStr(type, subtype, isEmpty = false) {
-  if (isEmpty || type === 'border') return ' ';
-  if (type === 'player') return '🤠';
-  if (type === 'enemy') return ['😷','🤒','🤕','🤢','🤮','🤧'][0];
-  if (type === 'food' && subtype === 'food') return ' ';
-  if (subtype === 'supper-food') return ['☕','🥛','🍷','🍸','🍺','🍻','🥃','🥤'][0];
-  if (subtype === 'cherry') return ['🥑','🍒','🍆','🍉','🍌','🍅','🥥','🥔','🥦','🥕','🌽','🥒','🍄','🍇','🍞','🥐','🥨','🍦','🍨','🍩','🍪','🍰','🍔','🍟','🍕','🌮','🥪','🍿','🍲','🥘','🍳','🥡','🍭','🍬','🍫','🥫'][0];
-  return ' ';
+export class PackmanGame {
+  name = 'Packman';
+  constructor(Emitter, popupInstance, containerSelector) {
+    this.model = new PackmanModel(Emitter);
+    this.controller = new PackmanController(Emitter, popupInstance, containerSelector);
+  }
+  destroy() {
+    this.model.destroy();
+    this.controller.disconnectEvs();
+  }
 }
+
+
+// function _geCellUiStr(type, subtype, isEmpty = false) {
+//   if (isEmpty || type === 'border') return ' ';
+//   if (type === 'player') return '🤠';
+//   if (type === 'enemy') return ['😷','🤒','🤕','🤢','🤮','🤧'][0];
+//   if (type === 'food' && subtype === 'food') return ' ';
+//   if (subtype === 'supper-food') return ['☕','🥛','🍷','🍸','🍺','🍻','🥃','🥤'][0];
+//   if (subtype === 'cherry') return ['🥑','🍒','🍆','🍉','🍌','🍅','🥥','🥔','🥦','🥕','🌽','🥒','🍄','🍇','🍞','🥐','🥨','🍦','🍨','🍩','🍪','🍰','🍔','🍟','🍕','🌮','🥪','🍿','🍲','🥘','🍳','🥡','🍭','🍬','🍫','🥫'][0];
+//   return ' ';
+// }
