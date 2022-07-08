@@ -78,6 +78,13 @@ export default {
       },
       '.board-container': {
         margin: '30px 0'
+      },
+      '.alert-screen': {
+        width: '100vw !important',
+        position: 'sticky !important',
+        top: '60px !important',
+        right: '50%',
+        transform: 'translateX(50%)'
       }
     },
     getters: {
