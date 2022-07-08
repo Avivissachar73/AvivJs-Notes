@@ -108,10 +108,10 @@ export class PackmanController {
   
   handleKeyPress(event) {
       const key = event.key;
-      event.preventDefault?.();
-      // if (event.preventDefault && !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(key)) {
-      //     event.preventDefault();
-      // }
+    //   event.preventDefault?.();
+      if (event.preventDefault && !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(key)) {
+          event.preventDefault();
+      }
       if (key === 'ArrowLeft') this.EventManager.emit('move-player', {i:0,j:-1});
       if (key === 'ArrowRight') this.EventManager.emit('move-player', {i:0,j:1});
       if (key === 'ArrowUp') this.EventManager.emit('move-player', {i:-1,j:0});

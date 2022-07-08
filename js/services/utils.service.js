@@ -12,7 +12,8 @@ export const Utils = {
     getRandomColor,
     stringToLowerKabab,
     getStyleStr,
-    deepSearch
+    deepSearch,
+    createBoard
 };
 
 

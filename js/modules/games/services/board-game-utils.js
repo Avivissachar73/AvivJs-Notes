@@ -1,5 +1,8 @@
 'use strict';
 
+
+/// TODO: delete this file;
+
 export default {
     renderBoard,
     renderCellByPos,
