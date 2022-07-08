@@ -93,7 +93,7 @@ export class PackmanController {
           this.initGame(true);
           this.isGameOver = false;
       }
-      this.container.querySelector('.pause-btn').onclick = this.pauseGame;
+      this.container.querySelector('.pause-btn').onclick = (ev) => this.pauseGame(ev);
       document.body.onkeydown = ev => this.handleKeyPress(ev);
       // document.querySelector(BOARD_SELECTOR).onkeydown = handleKeyPress;
   }
@@ -108,7 +108,7 @@ export class PackmanController {
   handleKeyPress(event) {
       const key = event.key;
     //   event.preventDefault?.();
-      if (event.preventDefault && !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(key)) {
+      if (event.preventDefault && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(key)) {
           event.preventDefault();
       }
       if (key === 'ArrowLeft') this.EventManager.emit('move-player', {i:0,j:-1});
