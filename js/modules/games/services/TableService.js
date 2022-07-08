@@ -74,6 +74,6 @@ export class TableService {
           elTable.style['font-size'] = boardFontSize + 'px';
       }
       reSizeBoard();
-      if (isListenToResize) window.addEventListener('resize', reSizeBoard);
+      if (isListenToResize) window.addEventListener('resize', reSizeBoard); // TODO: fix this bug - disconnect after destroyed;
   }
 }
