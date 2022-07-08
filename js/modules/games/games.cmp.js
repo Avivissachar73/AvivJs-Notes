@@ -9,7 +9,7 @@ import { MineSweeperGame } from './services/mine-sweeper.js';
 import { SnakeGame } from './services/snake.js';
 
 
-const allGames = [PackmanGame, DamkeGame, SnakeGame, SpaceInvadersGame, MineSweeperGame];
+const allGames = [PackmanGame, SnakeGame, DamkeGame, SpaceInvadersGame, MineSweeperGame];
 
 ////////// TODO:
 // make geme controller more generic, the component doesnt need to know what game is played, packman and damka shold be handled the same.

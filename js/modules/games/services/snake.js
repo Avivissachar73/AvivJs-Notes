@@ -46,7 +46,7 @@ export class SnakeModel {
   }
 
   destroy() {
-    this.endGame();
+    this.pauseGame();
     this.disConnectEvents();
   }
 
@@ -389,7 +389,7 @@ export class SnakeController {
           this.tableService.updateCell(pos, item);
       }),
       this.evManager.on('game_over', async (score, isNewBest) => {
-          await Alert(`Game over..<br/><br/>Score: ${score}`);
+          await this.popup.Alert(`Game over..<br/><br/>Score: ${score}`);
           if (isNewBest) {
               const playerName = await this.popup.Prompt('You broke the high score!<br/><br/>Save it?', 'Your name');
               if (playerName) this.evManager.emit('save_new_score', playerName);
@@ -401,7 +401,7 @@ export class SnakeController {
           document.querySelector('.score span').innerText = score;
       }),
       this.evManager.on('game_paused', async () => {
-          await Alert('Game paused');
+          await this.popup.Alert('Game paused');
           this.evManager.emit('resurme_game');
       }),
       this.evManager.on('supermode_on', () => {
