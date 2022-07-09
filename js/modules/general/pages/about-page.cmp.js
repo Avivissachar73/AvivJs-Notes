@@ -13,7 +13,7 @@ export default class AboutPage {
                     Mostly inspired by VueJs.
                 </p>
                 <p class="text-center">
-                    Including advanced fitchers such as routes, uniqe template language, reactive data and more..
+                    Including advanced fitchers such as routes, uniqe template language, reactive state and more..
                 </p>
             </div>
             <p class="text-center">
