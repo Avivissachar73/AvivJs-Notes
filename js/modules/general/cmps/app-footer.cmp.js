@@ -12,7 +12,11 @@ export default class AppFooter {
         </footer>
     `;
     style = {
-        gap: '10px'
+        gap: '10px',
+        a: {
+            // 'text-decoration': 'under-line'
+            color: '#feffbd'
+        }
     }
     state = {
         cvLink: 'https://docs.google.com/document/d/1chtvUmRJo38ZakzSWxqIyDgI6K1xi0eS/edit?usp=sharing&ouid=103323829961679615098&rtpof=true&sd=true'
