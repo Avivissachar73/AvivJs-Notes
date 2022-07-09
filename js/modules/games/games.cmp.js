@@ -23,7 +23,7 @@ export default {
     name: 'games-page',
     template: `
         <section class="games-page-container">
-          <div class="games-ul container flex wrap space-between">
+          <div class="games-ul container flex wrap space-around">
             <!-- <RouterLink url="/games">Games</RouterLink> -->
             <RouterLink A-for="gameName in allGamesNames" key="{{gameName}}" url="/games/{{gameName}}">
               {{gameName}}
