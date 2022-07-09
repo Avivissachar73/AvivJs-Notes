@@ -1,19 +1,17 @@
 
+import { BaseBoardGame } from '../BaseBoardGame.class.js';
 import { PackmanController } from './controller.js';
 import { PackmanModel } from './model/index.js';
 
 
-export class PackmanGame {
+export class PackmanGame extends BaseBoardGame {
   static name = 'Packman';
   constructor(Emitter, popupInstance, containerSelector) {
-    this.model = new PackmanModel(Emitter);
-    this.controller = new PackmanController(Emitter, popupInstance, containerSelector);
-  }
-  destroy() {
-    this.model.destroy();
-    this.controller.destroy();
+    super(PackmanModel, PackmanController, Emitter, popupInstance, containerSelector);
   }
 }
+
+
 
 
 // function _geCellUiStr(type, subtype, isEmpty = false) {
