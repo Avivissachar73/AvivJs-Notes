@@ -57,7 +57,7 @@ export default {
         'flex-direction': 'column',
         margin: '30px 0',
         '.board-container': {
-          width: '400px'
+          'max-width': '400px'
         }
       },
       '.games-ul': {
