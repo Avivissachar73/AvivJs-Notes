@@ -9,7 +9,7 @@ import { SpaceInvadersGame } from './games-instances/space-invaders/index.js';
 import { MineSweeperGame } from './games-instances/mine-sweeper/index.js';
 
 
-const allGames = [PackmanGame, SnakeGame, DamkaGame, SpaceInvadersGame, MineSweeperGame];
+const allGames = [DamkaGame, PackmanGame, SnakeGame, SpaceInvadersGame, MineSweeperGame];
 
 ////////// TODO:
 // make geme controller more generic, the component doesnt need to know what game is played, packman and damka shold be handled the same.
@@ -85,7 +85,7 @@ export default {
       },
     },
     onCreated() {
-      if (!this.routeGameName) this.context.router.push('/games/Packman');
+      if (!this.routeGameName) this.context.router.push('/games/Damka');
     },
     async onMounted() {
       this.setupGame();
