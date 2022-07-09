@@ -98,7 +98,7 @@ export class PackmanController {
             this.renderCellByPos(pos, board);
         }),
         this.EventManager.on('game-over', async (isVictory, score, isNewHighScore) => {
-            console.log('game-over, isVictory:', isVictory, 'score:', score, 'isNewBest:', isNewHighScore);
+            // console.log('game-over, isVictory:', isVictory, 'score:', score, 'isNewBest:', isNewHighScore);
             if (isVictory) {
                 if (isNewHighScore) {
                     let playerName = await this.popup.Prompt(`You broke the high score! You got ${score} points! <br/> save score?`, 'Your name');
@@ -124,7 +124,6 @@ export class PackmanController {
   }
   
   renderBoard(board) {
-    console.log(this.tableService);
       this.tableService.render();
       this.tableService.setReSizeBoard();
       // boardGameUtils.renderBoard(board, cell => this.getCellHtmlStr(cell), '#board');
