@@ -17,7 +17,7 @@ export default class AboutPage {
                 </p>
             </div>
             <p class="text-center">
-                All games where written by me and the charts in the dashboard page are also written in Charts library of my own.
+                All games where written by me, and the charts in the dashboard page are also written in Charts library of my own.
             </p>
         </main>
     `;
