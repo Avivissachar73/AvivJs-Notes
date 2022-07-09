@@ -49,7 +49,7 @@ export default {
         display: 'flex',
         'align-items': 'center',
         'flex-direction': 'column',
-        margin: '30px 0',
+        //  margin: '30px 0',
         '.board-container': {
           'max-width': '400px'
         }
