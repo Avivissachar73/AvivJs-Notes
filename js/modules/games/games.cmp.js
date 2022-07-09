@@ -55,7 +55,10 @@ export default {
         display: 'flex',
         'align-items': 'center',
         'flex-direction': 'column',
-        margin: '30px 0'
+        margin: '30px 0',
+        '.board-container': {
+          width: '400px'
+        }
       },
       '.games-ul': {
         gap: '10px',

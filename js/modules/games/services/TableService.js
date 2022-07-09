@@ -1,10 +1,12 @@
 export class TableService {
   static id = 0;
   element = null;
-  constructor(selector = 'body', board = [], getCellContentFunc) {
+  constructor(selector = 'body', board = [], getCellContentFunc, cellClickedCb) {
       this.id = 'table-' + TableService.id++;
       this.parentSelector = selector;
       this.board = board;
+
+      this.cellClickedCb = cellClickedCb
 
       this.getCellContentFunc = getCellContentFunc;
       this.getCellContent = (pos, cell) => {
@@ -37,10 +39,24 @@ export class TableService {
       el.innerHTML = htmlStr;
       el = el.firstChild;
 
+      el.querySelectorAll('td').forEach(c => {
+        c.onclick = (ev) => this.onCellClick(ev);
+      });
+
       var elParent = document.querySelector(this.parentSelector);
       if (this.element) elParent.removeChild(this.element);
       this.element = el;
       elParent.appendChild(el);
+  }
+
+  onCellClick(ev) {
+    const elTd = ev.path.find(c => c.nodeName === 'TD');
+    if (this.cellClickedCb) this.cellClickedCb(this._getPosFromCell(elTd), elTd);
+  }
+
+  _getPosFromCell(elCell) {
+    const splittedId = elCell.id.split('-');
+    return { i: +splittedId[1], j: +splittedId[2] };
   }
 
   updateCell(pos, item) {

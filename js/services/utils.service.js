@@ -56,6 +56,7 @@ export function getRandomInt(num1, num2) {
 }
 
 export function copy(obj) {
+    return JSON.parse(JSON.stringify(obj));
     if (typeof(obj) !== 'object') return obj;
     var copied = (Array.isArray(obj))? [...obj] : {...obj};
     var keys = Object.keys(obj);
