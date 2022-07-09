@@ -12,7 +12,13 @@ export default class AboutPage {
                 <p class="text-center">
                     Mostly inspired by VueJs.
                 </p>
+                <p class="text-center">
+                    Including advanced fitchers such as routes, uniqe template language, reactive data and more..
+                </p>
             </div>
+            <p class="text-center">
+                All games where written by me and the charts in the dashboard page are also written in Charts library of my own.
+            </p>
         </main>
     `;
 }
