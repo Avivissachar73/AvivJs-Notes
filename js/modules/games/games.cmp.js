@@ -11,13 +11,7 @@ import { MineSweeperGame } from './games-instances/mine-sweeper/index.js';
 
 const allGames = [DamkaGame, PackmanGame, SnakeGame, SpaceInvadersGame, MineSweeperGame];
 
-////////// TODO:
-// make geme controller more generic, the component doesnt need to know what game is played, packman and damka shold be handled the same.
-// move style to style prop or to another file;
-// change functions to cmp methods
-// add all the games, routable (damka, snake, space invaders);
-
-var game = null;
+var gGame = null;
 
 export default {
     name: 'games-page',
@@ -106,11 +100,11 @@ export default {
         this.stopGame();
         const popup = new A_Alert('.content-container', true);
         if (!this.currGame) return;
-        game = new this.currGame(EventManager, popup, '.game-container');
+        gGame = new this.currGame(EventManager, popup, '.game-container');
       },
       stopGame() {
-        game?.destroy();
-        game = null;
+        gGame?.destroy();
+        gGame = null;
         // const gameCotainer = document.querySelector('.game-container');
         // if (gameCotainer) gameCotainer.innerHTML = '';
       }
