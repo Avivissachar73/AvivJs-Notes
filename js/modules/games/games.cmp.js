@@ -4,12 +4,12 @@ const EventManager = new EventEmiter();
 
 import { PackmanGame } from './games-instances/packman/index.js';
 import { SnakeGame } from './games-instances/snake/index.js';
-import { DamkeGame } from './games-instances/damka.js';
-import { SpaceInvadersGame } from './games-instances/space-invaders.js';
-import { MineSweeperGame } from './games-instances/mine-sweeper.js';
+import { DamkaGame } from './games-instances/damka/index.js';
+import { SpaceInvadersGame } from './games-instances/space-invaders/index.js';
+import { MineSweeperGame } from './games-instances/mine-sweeper/index.js';
 
 
-const allGames = [PackmanGame, SnakeGame, DamkeGame, SpaceInvadersGame, MineSweeperGame];
+const allGames = [PackmanGame, SnakeGame, DamkaGame, SpaceInvadersGame, MineSweeperGame];
 
 ////////// TODO:
 // make geme controller more generic, the component doesnt need to know what game is played, packman and damka shold be handled the same.
