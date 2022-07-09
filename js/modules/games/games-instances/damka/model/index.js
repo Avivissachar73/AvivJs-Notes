@@ -12,8 +12,8 @@ export class DamkaModel {
   
   static KING_ROW_STEP = 2;
 
-  boardSize = 8;
-  comStepsToCalcAhead = 3;
+  boardSize = 6;
+  comStepsToCalcAhead = 4;
   
   constructor(Emitter) {
     this.EventManager = Emitter;
