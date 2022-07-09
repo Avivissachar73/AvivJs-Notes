@@ -26,7 +26,7 @@ export class PackmanController {
   async init() {
     this.setDomMethods();
     this.connectEvents();
-    createBtnsController(this.handleKeyPress, null, 'main');
+    createBtnsController((ev) => this.handleKeyPress(ev), null, 'main');
     this.initGame(false);
     // setReSizeBoard();
     if (await this.popup.Confirm(this.WELCOME_MSG)) {
