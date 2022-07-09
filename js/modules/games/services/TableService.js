@@ -54,26 +54,33 @@ export class TableService {
 
   _getElCellByPos(pos) {
       var cellId = this._getCellIdByPos(pos);
-      return document.querySelector(`#${this.id} #${cellId}`);
+      return this.element.querySelector(`#${cellId}`);
   }
 
+  reSizeBoard = () => {
+      var elParent = this.element.parentNode;
+      var boardWidth = elParent.offsetWidth;
+      var elTable = this.element;
+      var rowCount = elTable.querySelector('tr').querySelectorAll('td').length;
+      var tdWidth = boardWidth / rowCount;
+      var boardFontSize = tdWidth/1.55;
+      elTable.querySelectorAll('td').forEach(elTd => {
+          elTd.style.width = tdWidth + 'px';
+          elTd.style.height = tdWidth + 'px';
+      })
+      elTable.style.width = boardWidth + 'px';
+      elTable.style.height = boardWidth + 'px';
+      elTable.style['font-size'] = boardFontSize + 'px';
+  }
   setReSizeBoard(isListenToResize = false) {
-      const reSizeBoard = () => {
-          var elParent = this.element.parentNode;
-          var boardWidth = elParent.offsetWidth;
-          var elTable = this.element;
-          var rowCount = elTable.querySelector('tr').querySelectorAll('td').length;
-          var tdWidth = boardWidth / rowCount;
-          var boardFontSize = tdWidth/1.55;
-          elTable.querySelectorAll('td').forEach(elTd => {
-              elTd.style.width = tdWidth + 'px';
-              elTd.style.height = tdWidth + 'px';
-          })
-          elTable.style.width = boardWidth + 'px';
-          elTable.style.height = boardWidth + 'px';
-          elTable.style['font-size'] = boardFontSize + 'px';
-      }
-      reSizeBoard();
-      if (isListenToResize) window.addEventListener('resize', reSizeBoard); // TODO: fix this bug - disconnect after destroyed;
+      this.reSizeBoard();
+      if (isListenToResize) window.addEventListener('resize', this.reSizeBoard); // TODO: fix this bug - disconnect after destroyed;
+  }
+
+  destroy() {
+    try {
+        document.querySelector(this.parentSelector).removeChild(this.element);
+        window.removeEventListener('resize', this.reSizeBoard);
+    } catch (e) {}
   }
 }

@@ -2,11 +2,11 @@ import { EventEmiter } from '../../../lib/EventEmiter.js';
 import A_Alert from '../../../lib/Alert.js';
 const EventManager = new EventEmiter();
 
-import { PackmanGame } from './games-instances/packman.js';
+import { PackmanGame } from './games-instances/packman/index.js';
+import { SnakeGame } from './games-instances/snake/index.js';
 import { DamkeGame } from './games-instances/damka.js';
 import { SpaceInvadersGame } from './games-instances/space-invaders.js';
 import { MineSweeperGame } from './games-instances/mine-sweeper.js';
-import { SnakeGame } from './games-instances/snake.js';
 
 
 const allGames = [PackmanGame, SnakeGame, DamkeGame, SpaceInvadersGame, MineSweeperGame];
@@ -91,7 +91,8 @@ export default {
       this.stopGame();
     },
     watch: {
-      'router.params.gameName'() {
+      'router.params.gameName'(val) {
+        if (!val) return;
         setTimeout(() => {   /// fix params reactive bug;
           this.setupGame();
         });
@@ -107,8 +108,8 @@ export default {
       stopGame() {
         game?.destroy();
         game = null;
-        const gameCotainer = document.querySelector('.game-container');
-        if (gameCotainer) gameCotainer.innerHTML = '';
+        // const gameCotainer = document.querySelector('.game-container');
+        // if (gameCotainer) gameCotainer.innerHTML = '';
       }
     }
 }
