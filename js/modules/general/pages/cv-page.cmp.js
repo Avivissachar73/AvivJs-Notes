@@ -45,7 +45,7 @@ export default {
         '.title': {
           width: '110px',
           color: 'black',
-          'font-weight': 'bold',
+          fontWeight: 'bold',
           'margin-bottom': '10px'
         },
         '.content': {
@@ -56,7 +56,7 @@ export default {
           'flex-direction': 'column',
           '.title': {
             // color: 'black',,
-            'font-weight': 'unset',
+            fontWeight: 'unset',
             width: '100%'
           }
         },
