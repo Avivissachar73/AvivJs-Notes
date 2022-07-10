@@ -1,8 +1,8 @@
 'use strict';
 
-export default class AboutPage {
-    name = 'about-page';
-    template = `
+export default {
+    name: 'about-page',
+    template: `
         <main class="app-main container flex column align-center space-around">
             <h2>ABOUT</h2>
             <div class="space-children-y">
@@ -13,12 +13,12 @@ export default class AboutPage {
                     Mostly inspired by VueJs.
                 </p>
                 <p class="text-center">
-                    Including advanced fitchers such as routes, uniqe template language, reactive state and more..
+                    Including advanced features such as routes. store, uniqe template language, reactive state and more..
                 </p>
             </div>
             <p class="text-center">
                 All games where written by me, and the charts in the dashboard page are also written in Charts library of my own.
             </p>
         </main>
-    `;
+    `
 }
