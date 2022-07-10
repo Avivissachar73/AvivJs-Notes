@@ -69,7 +69,24 @@ export default {
         ul: {
           margin: 0,
           padding: 0,
-          'padding-left': '20px'
+          'padding-left': '20px',
+          'list-style': 'none',
+          ul: {
+            'list-style': 'circle',
+          },
+        },
+        '&:nth-child(5), &:nth-child(6), &:nth-child(7)': {
+          ul: {
+            'list-style': 'disc',
+            // 'list-style': 'none',
+            // 'li': {
+            //   // 'text-indent': '-5px',
+            //   '&:before': {
+            //     content: '"-"',
+            //     // 'text-indent': '-5px'
+            //   }
+            // }
+          }
         }
       }
     },
