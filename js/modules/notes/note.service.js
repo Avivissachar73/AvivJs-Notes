@@ -1,7 +1,7 @@
 'use strict';
 
-import {DbService} from '../../services/db-service.js';
-import { Utils } from '../../services/utils.service.js';
+import {DbService} from '../../../lib/mockDbService.js';
+import { Utils } from '../../../lib/utils.service.js';
 const dbService = new DbService('notes', '_id');
 
 export default {

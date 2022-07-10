@@ -2,8 +2,8 @@
 
 import noteService from './modules/notes/note.service.js';
 
-import A_Alert from './services/alert.service.js';
-import { Utils } from './services/utils.service.js';
+import A_Alert from '../lib/Alert.js';
+import { Utils } from '../lib/utils.service.js';
 const {Confirm, Prompt, Alert} = new A_Alert();
 
 class Store {

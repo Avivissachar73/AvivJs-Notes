@@ -1,4 +1,4 @@
-import { Utils } from '../../../../../services/utils.service.js';
+import { Utils } from '../../../../../../lib/utils.service.js';
 
 
 export const BOARD_SIZE = 6;

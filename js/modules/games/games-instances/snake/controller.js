@@ -1,5 +1,5 @@
-import createBtnsController from '../../services/btn-controls.cmp.js';
-import { TableService } from '../../services/TableService.js';
+import createBtnsController from '../../../../../lib/btn-controls.cmp.js';
+import { TableService } from '../../../../../lib/TableService.js';
 
 
 export class SnakeController {

@@ -1,7 +1,7 @@
 'use strict';
 
 import noteService from '../note.service.js';
-import {Utils} from '../../../services/utils.service.js';
+import {Utils} from '../../../../lib/utils.service.js';
 
 import TextNote from './note_info_cmps/text-note.cmp.js';
 import TodoNote from './note_info_cmps/todo-note.cmp.js';

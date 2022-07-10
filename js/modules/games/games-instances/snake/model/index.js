@@ -1,4 +1,4 @@
-import { Utils } from '../../../../../services/utils.service.js'
+import { Utils } from '../../../../../../lib/utils.service.js'
 import { mainMethods } from './main.js';
 import { playerMethods } from './player.js';
 

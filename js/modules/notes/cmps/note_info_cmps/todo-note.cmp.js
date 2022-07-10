@@ -1,5 +1,5 @@
 'use strict';
-import {Utils} from '../../../../services/utils.service.js';
+import {Utils} from '../../../../../lib/utils.service.js';
 
 export default class TodoNote {
     name = 'todo-note';
