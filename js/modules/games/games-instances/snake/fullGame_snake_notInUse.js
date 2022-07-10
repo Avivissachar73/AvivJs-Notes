@@ -1,4 +1,4 @@
-import { Utils } from '../../../../lib/utils.service.js'
+import { Utils } from '../../../../../lib/utils.service.js'
 import createBtnsController from '../../../../../lib/btn-controls.cmp.js';
 import { TableService } from '../../../../../lib/TableService.js';
 
