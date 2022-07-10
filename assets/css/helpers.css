@@ -3,6 +3,8 @@
 
 .flex {display: flex;}
 .align-center {align-items: center;}
+.align-start {align-items: flex-start;}
+.align-end {align-items: flex-end;}
 .justify-center {justify-content: center;}
 .space-around {justify-content: space-around;}
 .space-between {justify-content: space-between;}
