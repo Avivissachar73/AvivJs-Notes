@@ -1,6 +1,6 @@
 import { Utils } from '../../../../../lib/utils.service.js'
 import boardGameUtils from '../services/board-game-utils.js';
-import createBtnsController from '../../../../../lib/TableService.js';
+import createBtnsController from '../../services/TableService.js';
 
 
 

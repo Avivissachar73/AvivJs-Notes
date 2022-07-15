@@ -1,6 +1,6 @@
 import { Utils } from '../../../../../lib/utils.service.js'
-import createBtnsController from '../../../../../lib/btn-controls.cmp.js';
-import { TableService } from '../../../../../lib/TableService.js';
+import createBtnsController from '../../services/btn-controls.cmp.js';
+import { TableService } from '../../services/TableService.js';
 
 
 export class SnakeModel {

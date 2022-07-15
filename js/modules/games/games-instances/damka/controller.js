@@ -1,4 +1,4 @@
-import { TableService } from '../../../../../lib/TableService.js';
+import { TableService } from '../../services/TableService.js';
 
 const MARKED_CLASS = 'marked';
 const SELECTED_CLASS = 'selected'
