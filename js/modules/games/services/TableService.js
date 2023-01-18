@@ -50,8 +50,10 @@ export class TableService {
   }
 
   onCellClick(ev) {
-    const elTd = ev.path.find(c => c.nodeName === 'TD');
-    if (this.cellClickedCb) this.cellClickedCb(this._getPosFromCell(elTd), elTd);
+    const elTd = ev.composedPath().find(c => c.nodeName === 'TD');
+    const pos = this._getPosFromCell(elTd);
+    const cell = this.board[pos.i][pos.j];
+    if (this.cellClickedCb) this.cellClickedCb(pos, cell, elTd);
   }
 
   _getPosFromCell(elCell) {
@@ -90,13 +92,24 @@ export class TableService {
   }
   setReSizeBoard(isListenToResize = false) {
       this.reSizeBoard();
+      this.resizeData = { listen: isListenToResize }
+      this.ulListenToREsize();
       if (isListenToResize) window.addEventListener('resize', this.reSizeBoard); // TODO: fix this bug - disconnect after destroyed;
+  }
+  ulListenToREsize() {
+    if (this.resizeData && this.resizeData.listen) window.removeEventListener('resize', this.reSizeBoard);
   }
 
   destroy() {
     try {
         document.querySelector(this.parentSelector).removeChild(this.element);
-        window.removeEventListener('resize', this.reSizeBoard);
+        this.ulListenToREsize();
     } catch (e) {}
+  }
+
+  updateBoard(newBoard) {
+    this.board = newBoard;
+    this.render();
+    if (this.resizeData) this.setReSizeBoard(this.resizeData.listen);
   }
 }

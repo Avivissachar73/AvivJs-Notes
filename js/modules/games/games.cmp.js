@@ -7,9 +7,10 @@ import { SnakeGame } from './games-instances/snake/index.js';
 import { DamkaGame } from './games-instances/damka/index.js';
 import { SpaceInvadersGame } from './games-instances/space-invaders/index.js';
 import { MineSweeperGame } from './games-instances/mine-sweeper/index.js';
+import { SheshBeshGame } from './games-instances/shesh-besh/index.js';
 
 
-const allGames = [DamkaGame, PackmanGame, SnakeGame, SpaceInvadersGame, MineSweeperGame];
+const allGames = [DamkaGame, PackmanGame, SnakeGame, SpaceInvadersGame, MineSweeperGame, SheshBeshGame];
 
 var gGame = null;
 
@@ -44,6 +45,10 @@ export default {
       '.content-container': {
         position: 'relative',
       },
+      // '.app-main': {
+      //   'max-height': '80%',
+
+      // },
       '.game-container': {
         width: '100%',
         display: 'flex',
