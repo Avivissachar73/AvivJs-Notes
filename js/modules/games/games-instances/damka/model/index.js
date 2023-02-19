@@ -2,9 +2,10 @@ import { mainMethods } from "./main.js";
 import { comMethods } from "./com.js";
 import { boardMethods } from "./board.js";
 import { moveMethods } from "./move.js";
+import { BaseGameModel } from "../../BaseBoardGame.class.js";
 
 
-export class DamkaModel {
+export class DamkaModel extends BaseGameModel {
   state = null;
   static PLAYER_1_ID = 1;
   static PLAYER_2_ID = 2;
@@ -16,14 +17,14 @@ export class DamkaModel {
   comStepsToCalcAhead = 4;
   
   constructor(Emitter) {
-    this.EventManager = Emitter;
-    this.connectEvents();
+    super(Emitter);
+    this.connectEvents()
   }
   
+  evs = mainMethods.getEvs(this);
+
+
   // main methods::
-  disconnectEvs = mainMethods.disconnectEvs;
-  destroy = mainMethods.destroy;
-  connectEvents = mainMethods.connectEvents;
   $init = mainMethods.$init;
   static setState = mainMethods.setState;
   $cellClicked = mainMethods.$cellClicked;

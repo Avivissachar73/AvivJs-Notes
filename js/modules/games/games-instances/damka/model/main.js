@@ -2,7 +2,6 @@ import { Utils } from '../../../../../../lib/utils.service.js';
 
 
 export const mainMethods = {
-  connectEvents,
   $init,
   setState,
   $cellClicked,
@@ -18,40 +17,39 @@ export const mainMethods = {
   doComTurn,
   computerTurn,
   getOtherId,
-  disconnectEvs,
-  destroy
+  getEvs
 }
 
-
-function destroy() {
-    this.disconnectEvs();
-}
-
-function disconnectEvs() {
-    this.offers.forEach(c => c?.());
-}
-
-
-function connectEvents() {
-    this.offers = [
-      this.EventManager.on('set-game', (isVsCom) => {
-          this.$init(isVsCom);
-      }),
-      this.EventManager.on('cell-clicked', ({i,j}) => {
-          this.$cellClicked({i,j});
-      }),
-      this.EventManager.on('skip-turn', () => {
-          if (this.state.isVsCom && this.state.currPlayerIdTurn === this.constructor.PLAYER_COM_ID) return;
-          this.$setGameNextTurn();
-          if (this.state.isVsCom && this.state.currPlayerIdTurn === this.constructor.PLAYER_COM_ID) this.doComTurn(this.state, true);
-      })
+function getEvs() {
+    return [
+        {
+            on: 'set-game',
+            do(isVsCom) {
+                this.$init(isVsCom);
+            }
+        },
+        {
+            on: 'cell-clicked',
+            do({i,j}) {
+                this.$cellClicked({i,j});
+            }
+        },
+        {
+            on: 'skip-turn',
+            do() {
+                if (this.state.isVsCom && this.state.currPlayerIdTurn === this.constructor.PLAYER_COM_ID) return;
+                this.$setGameNextTurn();
+                if (this.state.isVsCom && this.state.currPlayerIdTurn === this.constructor.PLAYER_COM_ID) this.doComTurn(this.state, true);
+            }
+        }
     ]
 }
 
 
+
 function $init(isVsCom) {
     this.state = this.constructor.setState(isVsCom, this.boardSize);
-    this.EventManager.emit('game-seted', Utils.copy(this.state));
+    this.EvEmitter.emit('game-seted', Utils.copy(this.state));
     this.$setGameNextTurn()
 }
 
@@ -108,7 +106,7 @@ async function $cellClicked(currSelectedPos) {
                 state.selectedPos = null;
                 return;
             }
-            this.EventManager.emit('cell-selected', Utils.copy(currSelectedPos), 
+            this.EvEmitter.emit('cell-selected', Utils.copy(currSelectedPos), 
                                                Utils.copy(validMoves), 
                                                Utils.copy(validEatMoves));
             return
@@ -120,12 +118,12 @@ async function $cellClicked(currSelectedPos) {
                state.validEatPoss.find(pos => pos.i === currSelectedPos.i && pos.j === currSelectedPos.j))) {
         
         state.selectedPos = null;
-        this.EventManager.emit('un-select');
+        this.EvEmitter.emit('un-select');
         return;
     }
     else {
         let moveRes = this.constructor.movePiece(state, prevSelectedPos, currSelectedPos);
-        this.EventManager.emit('un-select');
+        this.EvEmitter.emit('un-select');
         await this.$doHandleMoveRes(moveRes);
     }
 }
@@ -133,14 +131,14 @@ async function $cellClicked(currSelectedPos) {
 function $checkGameVictory() {
     let possibleWinnerId = this.constructor.checkVictory(this.state);
     if (possibleWinnerId) {
-        this.EventManager.emit('game-over', possibleWinnerId, this.state.isVsCom, possibleWinnerId === this.constructor.PLAYER_COM_ID);
+        this.EvEmitter.emit('game-over', possibleWinnerId, this.state.isVsCom, possibleWinnerId === this.constructor.PLAYER_COM_ID);
     }
 }
 
 function $setGameNextTurn() {
     this.constructor.setNextTurn(this.state);
-    this.EventManager.emit('un-select');
-    this.EventManager.emit('turn-setted', this.state.currPlayerIdTurn);
+    this.EvEmitter.emit('un-select');
+    this.EvEmitter.emit('turn-setted', this.state.currPlayerIdTurn);
 }
 
 function toggleSelectCellByPos({i, j}, state) {
@@ -253,16 +251,16 @@ export function checkVictory(state) {
 async function $doHandleMoveRes(moveRes = {}) {
     const { state } = this;
     if (moveRes.isMoved) {
-        this.EventManager.emit('player-moved', Utils.copy(moveRes.fromPos), Utils.copy(moveRes.toPos), Utils.copy(state.board));
+        this.EvEmitter.emit('player-moved', Utils.copy(moveRes.fromPos), Utils.copy(moveRes.toPos), Utils.copy(state.board));
     }
     if (moveRes.isEaten) {
-        this.EventManager.emit('player-eaten', Utils.copy(moveRes.eatenPos), Utils.copy(state.board), state.playersPoints);
+        this.EvEmitter.emit('player-eaten', Utils.copy(moveRes.eatenPos), Utils.copy(state.board), state.playersPoints);
     }
     if (moveRes.isReTurn) {
         if (state.isVsCom && state.currPlayerIdTurn === this.constructor.PLAYER_COM_ID) {
             this.doComTurn(state, true);
         }
-        else this.EventManager.emit('cell-selected', Utils.copy(moveRes.toPos), [], Utils.copy(state.validEatPoss));
+        else this.EvEmitter.emit('cell-selected', Utils.copy(moveRes.toPos), [], Utils.copy(state.validEatPoss));
     } else {
             this.$checkGameVictory();
             this.$setGameNextTurn();

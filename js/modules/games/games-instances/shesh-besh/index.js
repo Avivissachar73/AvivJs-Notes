@@ -4,7 +4,7 @@ import { SheshBeshModel } from "./model/index.js";
 
 
 export class SheshBeshGame extends BaseBoardGame {
-  static name = 'Shesh-Besh';
+  static name = 'Shesh-besh';
   constructor(Emitter, popupInstance, containerSelector) {
     super(SheshBeshModel, SheshBeshController, popupInstance, containerSelector, Emitter);
   }

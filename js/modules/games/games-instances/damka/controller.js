@@ -1,16 +1,12 @@
-import { TableService } from '../../services/TableService.js';
+import { BaseGameController } from '../BaseBoardGame.class.js';
 
 const MARKED_CLASS = 'marked';
 const SELECTED_CLASS = 'selected'
 const MARKED_TO_EAT_CLASS = 'eatable'
 
-export class DamkaController {
-  offers = [];
-
+export class DamkaController extends BaseGameController {
   constructor(Emitter, popupInstance, containerSelector) {
-    this.EventManager = Emitter;
-    this.popup = popupInstance;
-    this.container = document.querySelector(containerSelector);
+    super(Emitter, popupInstance, containerSelector);
 
     document.querySelector(containerSelector).innerHTML = 'COMING SOON';
     
@@ -18,68 +14,86 @@ export class DamkaController {
     this.init(true);
   }
 
-
-  init(isVsCom) {
-      this.EventManager.emit('set-game', isVsCom);
-  }
-
-  destroy() {
-      this.disconnectEvs();
-      this.tableService.destroy();
-  }
-
-  disconnectEvs() {
-    this.offers.forEach(c => c?.());
-  }
-
-  connectEvents() {
-      this.offers = [
-        this.EventManager.on('game-seted', ({board, isVsCom}) => {
+  evs = [
+    {
+        on: 'game-seted',
+        do({board, isVsCom}) {
             this.container.innerHTML = this.constructor.HTMLcontent;
             this.container.querySelector('.skip-turn-btn').onclick = (ev) => this.onSkipTurn(ev);
             this.container.querySelector('#regMode').onclick = (ev) => this.init(false);
             this.container.querySelector('#comMode').onclick = (ev) => this.init(true);
-            this.tableService = new TableService('#board', board, (pos, cell) => this.constructor.getCellHtmlStr(cell), (pos) => this.cellClicked(pos));
-            this.tableService.render();
-            this.tableService.setReSizeBoard(true);
+            this.initTableService(board);
             isVsCom ? 
                 this.selectBtn('comMode') :
                 this.selectBtn('regMode') ;
-        }),
-        this.EventManager.on('select-el', pos => {
+        }
+    },
+    {
+        on: 'select-el',
+        do(pos) {
             this.selectElByPos(pos);
-        }),
-        this.EventManager.on('clear-select', () => {
+        }
+    },
+    {
+        on: 'clear-select',
+        do() {
             this.clearAllElsClass(SELECTED_CLASS);
-        }),
-        this.EventManager.on('player-moved', (fromPos, toPos, board) => {
+        }
+    },
+    {
+        on: 'player-moved',
+        do(fromPos, toPos, board) {
             this.tableService.updateCell(fromPos, board[fromPos.i][fromPos.j]);
             this.tableService.updateCell(toPos, board[toPos.i][toPos.j]);
-        }),
-        this.EventManager.on('cell-selected', (currSelectedPos, validMoves, validEatMoves) => {
+        }
+    },
+    {
+        on: 'cell-selected',
+        do(currSelectedPos, validMoves, validEatMoves) {
             this.toggleSelectCellByPos(currSelectedPos);
             this.toggleMarkCells(validMoves);
             this.toggleMarkEatCells(validEatMoves);
-        }),
-        this.EventManager.on('un-select', () => {
+        }
+    },
+    {
+        on: 'un-select',
+        do() {
             this.clearAllElsClass(SELECTED_CLASS);
             this.clearAllElsClass(MARKED_CLASS);
             this.clearAllElsClass(MARKED_TO_EAT_CLASS);
-        }),
-        this.EventManager.on('player-eaten', (pos, board) => {
+        }
+    },
+    {
+        on: 'player-eaten',
+        do(pos, board) {
             this.tableService.updateCell(pos, board[pos.i][pos.j]);
-        }),
-        this.EventManager.on('game-over', winnerId => {
+        }
+    },
+    {
+        on: 'game-over',
+        do(winnerId) {
             this.popup.Alert(`Player ${winnerId} won!`);
-        }),
-        this.EventManager.on('turn-setted', currPlayerId => {
+        }
+    },
+    {
+        on: 'turn-setted',
+        do(currPlayerId) {
             this.renderCurrPlayerTurn(currPlayerId);
-        }),
-      ]
+        }
+    }
+  ]
+
+  init(isVsCom) {
+      this.EvEmitter.emit('set-game', isVsCom);
   }
 
+
+
+  getCellHtmlStr(cell, pos) { return this.constructor.getCellHtmlStr(cell) }
+
+
   cellClicked(pos) {
-      this.EventManager.emit('cell-clicked', pos);
+      this.EvEmitter.emit('cell-clicked', pos);
   }
 
 
@@ -129,7 +143,7 @@ export class DamkaController {
   }
 
   onSkipTurn() {
-      this.EventManager.emit('skip-turn');
+      this.EvEmitter.emit('skip-turn');
   }
 
   renderCurrPlayerTurn(currPlayerId) {

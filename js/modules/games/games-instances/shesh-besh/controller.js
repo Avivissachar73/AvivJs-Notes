@@ -1,6 +1,12 @@
 import { BaseGameController } from "../BaseBoardGame.class.js";
 
-export class SheshBeshController extends BaseGameController {
+export class SheshBeshController {
+  constructor(Emitter, popupInstance, containerSelector) {
+    document.querySelector(containerSelector).innerHTML = 'Shesh-besh is COMING SOON';
+  }
+}
+
+export class _SheshBeshController extends BaseGameController {
   constructor(Emitter, popupInstance, containerSelector) {
     super(Emitter, popupInstance, containerSelector);
     
