@@ -2,9 +2,7 @@ import { Utils } from '../../../../../../lib/utils.service.js';
 
 
 export const mainMethods = {
-  destroy,
-  disConnectEvents,
-  connectEvents,
+  getEvs,
   init,
   setState,
   startGame,
@@ -20,23 +18,20 @@ export const mainMethods = {
   spreadCherry
 }
 
-function destroy() {
-  this.clearIntervals();
-  this.disConnectEvents();
-}
 
 
-function disConnectEvents() {
-  this.offers.forEach(c => c?.());
-}
-
-function connectEvents() {
-  this.offers = [
-    this.EventManager.on('set-game', async (isStartGame) => {
+function getEvs() {
+  return [
+    {
+      on: 'set-game',
+      async do(isStartGame) {
         await this.init(isStartGame);
-        this.EventManager.emit('game-setted', this.state.board, this.state.bestScore);
-    }),
-    this.EventManager.on('move-player', posDiffs => {
+        this.EvEmitter.emit('game-setted', this.state.board, this.state.bestScore);
+      }
+    },
+    {
+      on: 'move-player',
+      do(posDiffs) {
         const {i : diffI, j : diffJ} = posDiffs;
         // var {player} = this.state;
         // this.state.playerDirection = (() => {
@@ -48,12 +43,54 @@ function connectEvents() {
         this.state.playerMoveDiff = posDiffs
         // if (!this.state.playerInterval) this.state.playerInterval = setInterval(movePlayer, 100);
         // moveObj(player, {i:player.pos.i+diffI, j:player.pos.j+diffJ});
-    }),
-    this.EventManager.on('pause-game', () => this.pauseGame()),
-    this.EventManager.on('resurm-game', () => this.startGame()),
-    this.EventManager.on('save-score', name => {
+      }
+    },
+    {
+      on: 'move-player',
+      do(posDiffs) {
+        const {i : diffI, j : diffJ} = posDiffs;
+        // var {player} = this.state;
+        // this.state.playerDirection = (() => {
+        //     if (i === -1 && j === 0) return 'UP';
+        //     if (i === 1 && j === 0) return 'DOWN';
+        //     if (i === 0 && j === 1) return 'RIGHT';
+        //     if (i === 0 && j === -1) return 'LEFT';
+        // })();
+        this.state.playerMoveDiff = posDiffs
+        // if (!this.state.playerInterval) this.state.playerInterval = setInterval(movePlayer, 100);
+        // moveObj(player, {i:player.pos.i+diffI, j:player.pos.j+diffJ});
+      }
+    },
+    {
+      on: 'move-player',
+      do(posDiffs) {
+        const {i : diffI, j : diffJ} = posDiffs;
+        // var {player} = this.state;
+        // this.state.playerDirection = (() => {
+        //     if (i === -1 && j === 0) return 'UP';
+        //     if (i === 1 && j === 0) return 'DOWN';
+        //     if (i === 0 && j === 1) return 'RIGHT';
+        //     if (i === 0 && j === -1) return 'LEFT';
+        // })();
+        this.state.playerMoveDiff = posDiffs
+        // if (!this.state.playerInterval) this.state.playerInterval = setInterval(movePlayer, 100);
+        // moveObj(player, {i:player.pos.i+diffI, j:player.pos.j+diffJ});
+      }
+    },
+    {
+      on: 'pause-game',
+      do() { return this.pauseGame(); }
+    },
+    {
+      on: 'resurm-game',
+      do() { return this.startGame(); }
+    },
+    {
+      on: 'save-score',
+      do(name) {
         this.constructor.saveScore({name, score: this.state.score});
-    })
+      }
+    }
   ]
 }
 
@@ -119,7 +156,7 @@ async function doGameOver(isVictory = false) {
       isNewHighScore = await this.constructor.checkNewHighScore(state.score);
   }
   state.isGameOver = true;
-  this.EventManager.emit('game-over', isVictory, state.score, isNewHighScore);
+  this.EvEmitter.emit('game-over', isVictory, state.score, isNewHighScore);
 }
 
 
@@ -189,7 +226,7 @@ function moveObj(obj, toPos) {
   board[toPos.i][toPos.j] = obj;
   obj.pos = toPos;
 
-  this.EventManager.emit('object-moved', prevPos, toPos, board);
+  this.EvEmitter.emit('object-moved', prevPos, toPos, board);
 
   this.checkVictory();
 }
@@ -215,7 +252,7 @@ function moveEnemies() {
 
 function updateScore(diff) {
   this.state.score += diff;
-  this.EventManager.emit('score-update', this.state.score);
+  this.EvEmitter.emit('score-update', this.state.score);
 }
 
 function setSupperMode() {
@@ -229,12 +266,12 @@ function setSupperMode() {
           enemy.isDead = false;
           enemy.pos = {...enemy.initialPos};
           board[enemy.initialPos.i][enemy.initialPos.j] = enemy;
-          this.EventManager.emit('obj-added', enemy.pos, board);
+          this.EvEmitter.emit('obj-added', enemy.pos, board);
       }
   }
   state.isSuperMode = true;
   setTimeout(reviveEnemies, supperDuration);
-  this.EventManager.emit('supper-mode', supperDuration);
+  this.EvEmitter.emit('supper-mode', supperDuration);
 }
 
 
@@ -267,5 +304,5 @@ function spreadCherry(board) {
       score: 15,
       // uiStr: _geCellUiStr('food', 'cherry')
   }
-  this.EventManager.emit('obj-added', randomPos, board);
+  this.EvEmitter.emit('obj-added', randomPos, board);
 }

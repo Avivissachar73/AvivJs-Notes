@@ -2,22 +2,19 @@
 import { mainMethods } from './main.js';
 import { boardMethods } from './board.js';
 import { scoreMethods } from './score.js';
+import { BaseGameModel } from '../../BaseBoardGame.class.js';
 
-export class PackmanModel {
+export class PackmanModel extends BaseGameModel {
   state = {};
-  EventManager = null;
-
-  offers = [];
 
   constructor(Emitter) {
-    this.EventManager = Emitter;
+    super(Emitter);
     this.connectEvents();
   }
 
+  evs = mainMethods.getEvs(this);
+
   // MAIN METHODS::
-  destroy = mainMethods.destroy;
-  disConnectEvents = mainMethods.disConnectEvents;
-  connectEvents = mainMethods.connectEvents;
   init = mainMethods.init;
   setState = mainMethods.setState;
   startGame = mainMethods.startGame;

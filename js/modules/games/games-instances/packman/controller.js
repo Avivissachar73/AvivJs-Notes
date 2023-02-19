@@ -1,25 +1,20 @@
 // import { Utils } from '../../../../../lib/utils.service.js'
 import createBtnsController from '../../services/btn-controls.cmp.js';
-
-import { TableService } from '../../services/TableService.js';
-
+import { BaseGameController } from '../BaseBoardGame.class.js';
 
 
 
-export class PackmanController {
+
+export class PackmanController extends BaseGameController {
   isSupperMode = false;
   isGameOver = true;
   WELCOME_MSG = 'Hello!<br/>do you think you can collect all the foods in the market without being infected by any of the other costumers?<br/>Lets play!';
   PAUSE_MSG = '';
-  offers = [];
-  popup = null;
-  tableService = null;
 
   constructor(Emitter, popupInstance, containerSelector) {
-    this.EventManager = Emitter;
-    this.container = document.querySelector(containerSelector);
-    this.popup = popupInstance;
+    super(Emitter, popupInstance, containerSelector);
 
+    this.connectEvents();
     this.init();
   }
   
@@ -49,9 +44,9 @@ export class PackmanController {
   
   async pauseGame() {
       if (this.isGameOver) return;
-      this.EventManager.emit('pause-game');
+      this.EvEmitter.emit('pause-game');
       await this.popup.Alert(this.PAUSE_MSG);
-      this.EventManager.emit('resurm-game');
+      this.EvEmitter.emit('resurm-game');
   }
   
   handleKeyPress(event) {
@@ -60,68 +55,76 @@ export class PackmanController {
       if (event.preventDefault && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(key)) {
           event.preventDefault();
       }
-      if (key === 'ArrowLeft') this.EventManager.emit('move-player', {i:0,j:-1});
-      if (key === 'ArrowRight') this.EventManager.emit('move-player', {i:0,j:1});
-      if (key === 'ArrowUp') this.EventManager.emit('move-player', {i:-1,j:0});
-      if (key === 'ArrowDown') this.EventManager.emit('move-player', {i:1,j:0});
+      if (key === 'ArrowLeft') this.EvEmitter.emit('move-player', {i:0,j:-1});
+      if (key === 'ArrowRight') this.EvEmitter.emit('move-player', {i:0,j:1});
+      if (key === 'ArrowUp') this.EvEmitter.emit('move-player', {i:-1,j:0});
+      if (key === 'ArrowDown') this.EvEmitter.emit('move-player', {i:1,j:0});
       if (key === 'Escape') this.pauseGame();
   }
   
   initGame(isStart) {
-      this.EventManager.emit('set-game', isStart);
-  }
-
-  destroy() {
-    this.tableService.destroy();
-    this.disconnectEvs();
+      this.EvEmitter.emit('set-game', isStart);
   }
   
-  
-  disconnectEvs() {
-    this.offers.forEach(c => c?.());
-  }
-  
-  connectEvents() {
-      this.offers = [
-        this.EventManager.on('game-setted', (board, bestScore) => {
-          if (this.tableService) this.tableService.destroy();
-            this.tableService = new TableService('#board', board, (pos, cell) => this.getCellHtmlStr(cell));
-            this.renderBoard(board);
+  evs = [
+    {
+        on: 'game-setted',
+        do(board, bestScore) {
+            if (this.tableService) this.tableService.destroy();
+            this.initTableService(board);
             this.PAUSE_MSG = bestScore ? `Game paused <br/><br/> Best score: ${bestScore.score} by - ${bestScore.name}` : 'Game paused';
             // reSizeBoard();
-        }),
-        this.EventManager.on('object-moved', (fromPos, toPos, board) => {
+        }
+    },
+    {
+        on: 'object-moved',
+        do(fromPos, toPos, board) {
             this.renderCellByPos(fromPos, board);
             this.renderCellByPos(toPos, board);
-        }),
-        this.EventManager.on('player-eaten', (pos, board) => {
+        }
+    },
+    {
+        on: 'player-eaten',
+        do(pos, board) {
             this.renderCellByPos(pos, board);
-        }),
-        this.EventManager.on('game-over', async (isVictory, score, isNewHighScore) => {
+        }
+    },
+    {
+        on: 'game-over',
+        async do(isVictory, score, isNewHighScore) {
             // console.log('game-over, isVictory:', isVictory, 'score:', score, 'isNewBest:', isNewHighScore);
             if (isVictory) {
                 if (isNewHighScore) {
                     let playerName = await this.popup.Prompt(`You broke the high score! You got ${score} points! <br/> save score?`, 'Your name');
-                    if (playerName) this.EventManager.emit('save-score', playerName)
+                    if (playerName) this.EvEmitter.emit('save-score', playerName)
                 }
                 else this.popup.Alert(`You win! Score: ${score}`);
             }
             // else this.popup.Alert(`Game over...  Score: ${score}`);
             else this.popup.Alert(`Game over... <br/> You been infected by a sick costumer.. <br/> Score: ${score}`);
             this.isGameOver = true;
-        }),
-        this.EventManager.on('score-update', score => {
+        }
+    },
+    {
+        on: 'score-update',
+        do(score) {
             document.querySelector('.score-span').innerText = score;
-        }),
-        this.EventManager.on('obj-added', (pos, board) => {
+        }
+    },
+    {
+        on: 'obj-added',
+        do(pos, board) {
             this.renderCellByPos(pos, board);
-        }),
-        this.EventManager.on('supper-mode', duration => {
+        }
+    },
+    {
+        on: 'supper-mode',
+        do(duration) {
             this.isSupperMode = true;
             setTimeout(() => this.isSupperMode = false, duration);
-        })
-      ];
-  }
+        }
+    },
+  ];
   
   renderBoard(board) {
       this.tableService.render();
@@ -136,7 +139,7 @@ export class PackmanController {
   }
   
   
-  getCellHtmlStr(cell) {
+  static getCellHtmlStr(cell) {
       // const contentStr = cell.uiStr;
       const contentStr = (() => {
         if (cell.isEmpty || cell.type === 'border') return ' ';
