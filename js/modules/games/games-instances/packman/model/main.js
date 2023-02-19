@@ -3,6 +3,7 @@ import { Utils } from '../../../../../../lib/utils.service.js';
 
 export const mainMethods = {
   getEvs,
+  destroy,
   init,
   setState,
   startGame,
@@ -16,6 +17,11 @@ export const mainMethods = {
   checkVictory,
   movePlayer,
   spreadCherry
+}
+
+function destroy() {
+  this.clearIntervals();
+  this.disconnectEvs();
 }
 
 

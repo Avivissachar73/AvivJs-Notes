@@ -15,6 +15,7 @@ export class PackmanModel extends BaseGameModel {
   evs = mainMethods.getEvs(this);
 
   // MAIN METHODS::
+  destroy = mainMethods.destroy;
   init = mainMethods.init;
   setState = mainMethods.setState;
   startGame = mainMethods.startGame;
