@@ -7,7 +7,8 @@ export const mainMethods = {
   endGame,
   spreadFood,
   getEvs,
-  evs: getEvs()
+  evs: getEvs(),
+  destroy
 }
 
 function createState() {
@@ -29,6 +30,10 @@ function createState() {
   }
 }
 
+function destroy() {
+  this.pauseGame();
+  this.disconnectEvs();
+}
 
 function getEvs(that) {
   return [

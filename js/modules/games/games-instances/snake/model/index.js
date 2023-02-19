@@ -17,6 +17,7 @@ export class SnakeModel extends BaseGameModel {
   evs = mainMethods.getEvs(this);
 
   // main methods:
+  destroy = mainMethods.destroy;
   static createState = mainMethods.createState;
   startGame = mainMethods.startGame;
   pauseGame = mainMethods.pauseGame;
