@@ -1,26 +1,23 @@
 import { Utils } from '../../../../../../lib/utils.service.js'
+import { BaseGameModel } from '../../BaseBoardGame.class.js';
 import { mainMethods } from './main.js';
 import { playerMethods } from './player.js';
 
 
-export class SnakeModel {
-  evManager = null;
+export class SnakeModel extends BaseGameModel {
   state = null;
-  offers = [];
 
   static STORAGE_KEY = 'snake_best_score';
 
-  constructor(evManager) {
-    this.evManager = evManager;
-
-    this.conectEvents();
+  constructor(EvEmitter) {
+    super(EvEmitter);
+    this.connectEvents();
   }
+  
+  evs = mainMethods.getEvs(this);
 
   // main methods:
   static createState = mainMethods.createState;
-  destroy = mainMethods.destroy;
-  disConnectEvents = mainMethods.disConnectEvents;
-  conectEvents = mainMethods.conectEvents;
   startGame = mainMethods.startGame;
   pauseGame = mainMethods.pauseGame;
   endGame = mainMethods.endGame;
@@ -28,10 +25,10 @@ export class SnakeModel {
 
   ///// playerService //////
   static setPlayer = playerMethods.setPlayer;
-  movePlayer = playerMethods.movePlayer;
   static getMoveDiff = playerMethods.getMoveDiff;
   static createPlayerPart = playerMethods.createPlayerPart;
   static getTargetPos = playerMethods.getTargetPos;
+  movePlayer = playerMethods.movePlayer;
   
 
 

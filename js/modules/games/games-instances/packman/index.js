@@ -7,7 +7,7 @@ import { PackmanModel } from './model/index.js';
 export class PackmanGame extends BaseBoardGame {
   static name = 'Packman';
   constructor(Emitter, popupInstance, containerSelector) {
-    super(PackmanModel, PackmanController, Emitter, popupInstance, containerSelector);
+    super(PackmanModel, PackmanController, popupInstance, containerSelector, Emitter);
   }
 }
 

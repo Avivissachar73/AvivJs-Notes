@@ -1,21 +1,20 @@
 
 
-
 export class BaseBoardGame {
   static name = 'BaseBoardGame';
   modelInstance = null;
   controllerInstance = null;
 
-  constructor(modelInstance, controllerInstance, Emitter, popupInstance, containerSelector) {
+  constructor(modelInstance, controllerInstance, popupInstance, containerSelector, Emitter) {
     this.modelInstance = modelInstance;
     this.controllerInstance = controllerInstance;
     this.model = new this.modelInstance(Emitter);
     this.controller = new this.controllerInstance(Emitter, popupInstance, containerSelector);
   }
 
-  destroy() {
+  destroy = () => {
     this.model.destroy?.();
-    this.controller.destroy?.();
+    this.controller.destroy?.(); // this.controller.destroy exists, not clear yet wtf;
   }
 }
 
@@ -31,7 +30,8 @@ export class BaseGameEntity {
   }
 
   connectEvents() {
-    this.offers = this.evs.map(c => c = this.EvEmitter.on(c.on, c.do));
+    if (this.offers.length) this.disconnectEvs();
+    this.offers = this.evs.map(c => c = this.EvEmitter.on(c.on, c.do.bind(this)));
   }
   disconnectEvs() {
     this.offers.forEach(c => c?.());
@@ -47,6 +47,9 @@ export class BaseGameEntity {
 }
 
 export class BaseGameModel extends BaseGameEntity {
+  constructor(Emitter) {
+    super(Emitter);
+  }
 }
 
 
@@ -54,16 +57,18 @@ import { TableService } from '../services/TableService.js';
 
 export class BaseGameController extends BaseGameEntity {
   
-  constructor(Emitter, popupInstance, containerSelector) {
+  constructor(Emitter, popupInstance, containerSelector, onGameOver) {
     super(Emitter);
     this.popup = popupInstance;
     this.container = document.querySelector(containerSelector);
+    this.onGameOver = onGameOver
     
     this.connectEvents();
   }
 
   tableService = null;
   initTableService(board) {
+    if (this.tableService) this.tableService.destroy();
     this.tableService = new TableService('#board', board, (pos, cell) => this.constructor.getCellHtmlStr(cell, pos), (pos, cell, elTd) => this.cellClicked(pos, cell, elTd));
     this.tableService.render();
     this.tableService.setReSizeBoard(true);
@@ -80,6 +85,14 @@ export class BaseGameController extends BaseGameEntity {
     super.destroy();
     this.tableService.destroy();
     this.tableService = null;
+  }
+
+  defaultEvents() {
+    return [
+      this.EvEmitter.on('game_over', ({score, winnerId, isVictory}) => {
+        if (this.onGameOver) this.onGameOver({score, winnerId, isVictory});
+      })
+    ]
   }
   
 }

@@ -40,7 +40,7 @@ function movePlayer() {
       playerParts.push(newPart);
       board[targetPos.i][targetPos.j] = newPart;
       state.score += targetCell.score;
-      this.evManager.emit('score_update', state.score);
+      this.EvEmitter.emit('score_update', state.score);
       if (targetCell.operation) targetCell.operation();
   }
   var LastPrevPos = lastPart.pos;
@@ -54,10 +54,10 @@ function movePlayer() {
   board[LastPrevPos.i][LastPrevPos.j] = this.constructor.createBoardCell(LastPrevPos);
   board[targetPos.i][targetPos.j] = lastPart;
 
-  this.evManager.emit('cell_updated', LastPrevPos, board[LastPrevPos.i][LastPrevPos.j]);
-  this.evManager.emit('cell_updated', lastPart.pos, lastPart);
-  this.evManager.emit('cell_updated', beforelast.pos, beforelast);
-  this.evManager.emit('cell_updated', firstPart.pos, firstPart);
+  this.EvEmitter.emit('cell_updated', LastPrevPos, board[LastPrevPos.i][LastPrevPos.j]);
+  this.EvEmitter.emit('cell_updated', lastPart.pos, lastPart);
+  this.EvEmitter.emit('cell_updated', beforelast.pos, beforelast);
+  this.EvEmitter.emit('cell_updated', firstPart.pos, firstPart);
 }
 
 function getMoveDiff(moveDirection) {

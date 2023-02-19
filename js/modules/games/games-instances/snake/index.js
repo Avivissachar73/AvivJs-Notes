@@ -6,6 +6,6 @@ import { SnakeModel } from './model/index.js';
 export class SnakeGame extends BaseBoardGame {
   static name = 'Snake';
   constructor(Emitter, popupInstance, containerSelector) {
-    super(SnakeModel, SnakeController, Emitter, popupInstance, containerSelector);
+    super(SnakeModel, SnakeController, popupInstance, containerSelector, Emitter);
   }
 }

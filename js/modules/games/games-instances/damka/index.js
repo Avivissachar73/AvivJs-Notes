@@ -6,6 +6,6 @@ import { DamkaModel } from "./model/index.js";
 export class DamkaGame extends BaseBoardGame {
   static name = 'Damka';
   constructor(Emitter, popupInstance, containerSelector) {
-    super(DamkaModel, DamkaController, Emitter, popupInstance, containerSelector);
+    super(DamkaModel, DamkaController, popupInstance, containerSelector, Emitter);
   }
 }

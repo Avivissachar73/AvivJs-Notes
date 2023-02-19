@@ -2,14 +2,12 @@ import { Utils } from '../../../../../../lib/utils.service.js'
 
 export const mainMethods = {
   createState,
-  destroy,
-  disConnectEvents,
-  conectEvents,
   startGame,
   pauseGame,
   endGame,
   spreadFood,
-
+  getEvs,
+  evs: getEvs()
 }
 
 function createState() {
@@ -31,42 +29,49 @@ function createState() {
   }
 }
 
-function destroy() {
-  this.pauseGame();
-  this.disConnectEvents();
+
+function getEvs(that) {
+  return [
+    {
+      on: 'set_game',
+      do(isToStart) {
+        if (this.state) this.pauseGame();
+        this.state = this.constructor.createState();
+        this.EvEmitter.emit('game_setted', {board: this.state.board, bestScore: this.state.bestScore});
+        this.EvEmitter.emit('score_update', 0);
+        if (isToStart) this.startGame();
+      }
+    },
+    {
+      on: 'pause_game',
+      do() {
+        this.pauseGame(true);
+      }
+    },
+    {
+      on: 'resurme_game',
+      do() { this.startGame(); }
+    },
+    {
+      on: 'change_direction',
+      do(direction) {
+        this.state.directionToSet = direction;
+      }
+    },
+    {
+      on: 'save_new_score',
+      do(byPlayerName) {
+        this.constructor.saveScore(this.state.score, byPlayerName);
+      }
+    }
+  ];
+  // ].map(c => (c.do.bind(that || this), c));
 }
 
-
-function disConnectEvents() {
-  this.offers.forEach(c => c?.());
-}
-
-function conectEvents() {
-let { state } = this;
-this.offers = [
-  this.evManager.on('set_game', (isToStart) => {
-      if (state) this.pauseGame();
-      this.state = state = this.constructor.createState();
-      this.evManager.emit('game_setted', {board:state.board, bestScore: state.bestScore});
-      this.evManager.emit('score_update', 0);
-      if (isToStart) this.startGame();
-  }),
-  this.evManager.on('pause_game', () => {
-      this.pauseGame(true);
-  }),
-  this.evManager.on('resurme_game', () => this.startGame()),
-  this.evManager.on('change_direction', direction => {
-      state.directionToSet = direction;
-  }),
-  this.evManager.on('save_new_score', byPlayerName => {
-      this.constructor.saveScore(state.score, byPlayerName);
-  })
-];
-
-}
 
 function startGame() {
   const  {state} = this;
+  console.log(state);
   if (!state || state.isOn) return;
   state.playerInterval = setInterval(() => {
       var direction = state.directionToSet;
@@ -90,14 +95,14 @@ function pauseGame(isToEmit) {
   clearInterval(state.playerInterval);
   clearInterval(state.foodInterval);
   state.isOn = false;
-  if (isToEmit) this.evManager.emit('game_paused');
+  if (isToEmit) this.EvEmitter.emit('game_paused');
 }
 
 function endGame() {
   const  {state} = this;
   this.pauseGame();
   var isNewScore = this.constructor.checkIfNewBestScore(state.score);
-  this.evManager.emit('game_over', state.score, isNewScore);
+  this.EvEmitter.emit('game_over', state.score, isNewScore);
   state.isOn = false;
 }
 
@@ -124,15 +129,15 @@ function spreadFood() {
           operation: () => {
               if (state.superModeTimeout) clearTimeout(state.superModeTimeout);
               state.isSuperMode = true;
-              this.evManager.emit('supermode_on');
+              this.EvEmitter.emit('supermode_on');
               state.superModeTimeout = setTimeout(() => {
                   state.isSuperMode = false;
-                  this.evManager.emit('supermode_off');
+                  this.EvEmitter.emit('supermode_off');
               }, 8000);
           }
       }
   }
   
   board[pos.i][pos.j] = food;
-  this.evManager.emit('cell_updated', pos, food);
+  this.EvEmitter.emit('cell_updated', pos, food);
 }
