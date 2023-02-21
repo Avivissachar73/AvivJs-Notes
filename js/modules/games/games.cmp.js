@@ -1,11 +1,7 @@
 import A_Alert from '../../../lib/Alert.js';
 
 import { Games } from './games-instances/index.js';
-
-
 const allGames = Games.allGames;
-
-Games
 
 var gGame = null;
 

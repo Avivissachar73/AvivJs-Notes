@@ -1,5 +1,5 @@
 import { TableService } from '../services/TableService.js';
-import { EventEmiter } from '../services/common.js';
+import { A_Alert, EventEmiter, Utils } from '../services/common.js';
 
 export class BaseGameEntity {
   evs = []; // [{on: 'example-event', do: () => console.log('example-event is running')}];
@@ -61,15 +61,17 @@ export class BaseGameModel extends BaseGameEntity {
 
 
 export class BaseGameController extends BaseGameEntity {
-  
+  id = Utils.getRandomId('');
   constructor(containerSelector, Emitter, popupInstance) {
     super(Emitter);
-    this.popup = popupInstance;
-    this.container = document.querySelector(containerSelector);
-
+    this.parentContainer = document.querySelector(containerSelector);
+    this.parentContainer.innerHTML = `<div style="width:100%;height:100%;" id="${this.id}">
+      <div style="width:100%;height:100%;" class="game-container"></div>
+    </div>`;
+    this.container = this.parentContainer.querySelector('.game-container');
+    this.popup = popupInstance || new A_Alert(`#${this.id}`, true);
     this.connectEvents();
   }
-
 
   tableService = null;
   initTableService(board) {
