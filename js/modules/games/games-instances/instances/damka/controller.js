@@ -8,7 +8,7 @@ export class DamkaController extends BaseGameController {
   constructor(containerSelector, Emitter, popupInstance) {
     super(containerSelector, Emitter, popupInstance);
 
-    document.querySelector(containerSelector).innerHTML = 'COMING SOON';
+    // document.querySelector(containerSelector).innerHTML = 'COMING SOON';
     
     this.connectEvents();
     this.init(true);

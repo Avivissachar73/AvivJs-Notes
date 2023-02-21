@@ -64,6 +64,7 @@ export class BaseGameController extends BaseGameEntity {
   id = Utils.getRandomId('');
   constructor(containerSelector, Emitter, popupInstance) {
     super(Emitter);
+    this.containerSelector = containerSelector;
     this.parentContainer = document.querySelector(containerSelector);
     this.parentContainer.innerHTML = `<div style="width:100%;height:100%;" id="${this.id}">
       <div style="width:100%;height:100%;" class="game-container"></div>
@@ -76,7 +77,7 @@ export class BaseGameController extends BaseGameEntity {
   tableService = null;
   initTableService(board) {
     if (this.tableService) this.tableService.destroy();
-    this.tableService = new TableService('#board', board, (pos, cell) => this.constructor.getCellHtmlStr(cell, pos), (pos, cell, elTd) => this.cellClicked(pos, cell, elTd));
+    this.tableService = new TableService(`#${this.id} #board`, board, (pos, cell) => this.constructor.getCellHtmlStr(cell, pos), (pos, cell, elTd) => this.cellClicked(pos, cell, elTd));
     this.tableService.render();
     this.tableService.setReSizeBoard(true);
   }
@@ -92,5 +93,7 @@ export class BaseGameController extends BaseGameEntity {
     super.destroy();
     this.tableService.destroy();
     this.tableService = null;
+    this.popup.reset?.();
+    this.popup.destroy?.();
   }
 }

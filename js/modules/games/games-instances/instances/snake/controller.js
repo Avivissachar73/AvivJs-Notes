@@ -78,7 +78,7 @@ export class SnakeController extends BaseGameController {
     document.body.onkeydown = (ev) => this.handleKey(ev);
     this.container.querySelector('.restart-btn').onclick = () => this.EvEmitter.emit('set_game', true);
     this.container.querySelector('.pause-btn').onclick = () => this.pauseGame();
-    createBtnsController((ev) => this.handleKey(ev), null, 'main');
+    createBtnsController((ev) => this.handleKey(ev), null, this.containerSelector);
   }
 
   
@@ -167,14 +167,14 @@ export class SnakeController extends BaseGameController {
             }
         }
       </style>
-      <div class="info flex align-center space-between wrap width-all container">
+      <div class="info flex align-center space-between wrap width-all">
           <button class="pause-btn">Pause</button>
           <button class="restart-btn">Restart</button>
       </div>
-      <div class="info flex align-center space-between wrap width-all container">
+      <div class="info flex align-center space-between wrap width-all">
           <h5 class="score">Score: <span>0</span></h5>
           <h5 class="best-score">Best: <span>0</span></h5>
       </div>
-      <div id="board" class="board-container container"></div>
+      <div id="board" class="board-container"></div>
   `;
 }
