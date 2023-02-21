@@ -1,16 +1,11 @@
-import { EventEmiter } from '../../../lib/EventEmiter.js';
 import A_Alert from '../../../lib/Alert.js';
-const EventManager = new EventEmiter();
 
-import { PackmanGame } from './games-instances/packman/index.js';
-import { SnakeGame } from './games-instances/snake/index.js';
-import { DamkaGame } from './games-instances/damka/index.js';
-import { SpaceInvadersGame } from './games-instances/space-invaders/index.js';
-import { MineSweeperGame } from './games-instances/mine-sweeper/index.js';
-import { SheshBeshGame } from './games-instances/shesh-besh/index.js';
+import { Games } from './games-instances/index.js';
 
 
-const allGames = [DamkaGame, PackmanGame, SnakeGame, SpaceInvadersGame, MineSweeperGame, SheshBeshGame];
+const allGames = Games.allGames;
+
+Games
 
 var gGame = null;
 
@@ -105,7 +100,7 @@ export default {
         this.stopGame();
         const popup = new A_Alert('.content-container', true);
         if (!this.currGame) return;
-        gGame = new this.currGame(EventManager, popup, '.game-container');
+        gGame = new this.currGame('.game-container', popup);
       },
       stopGame() {
         gGame?.destroy();
