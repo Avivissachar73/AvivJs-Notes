@@ -1,7 +1,7 @@
 export class TableService {
   static id = 0;
   element = null;
-  constructor(selector = 'body', board = [], getCellContentFunc, cellClickedCb) {
+  constructor(selector = 'body', board = [], getCellContentFunc, cellClickedCb, squareToMax = false) {
       this.id = 'table-' + TableService.id++;
       this.parentSelector = selector;
       this.board = board;
@@ -77,6 +77,7 @@ export class TableService {
 
   reSizeBoard = () => {
       var elParent = this.element.parentNode;
+      // var boardWidth = elParent.offsetWidth > elParent.offsetHeight? elParent.offsetHeight : elParent.offsetWidth;
       var boardWidth = elParent.offsetWidth;
       var elTable = this.element;
       var rowCount = elTable.querySelector('tr').querySelectorAll('td').length;

@@ -78,7 +78,7 @@ function _getDefaultStyle() {
                 .mobile-controllers {
                     background-color: #a49a9a4a;
                     padding: 10px;
-                    margin-top: 5px;
+                    /* margin-top: 5px; */
                     /* position: fixed; */
                     z-index: 15;
                     bottom: 0;

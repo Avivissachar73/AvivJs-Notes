@@ -19,7 +19,7 @@ export class PackmanController extends BaseGameController {
   async init() {
     this.setDomMethods();
     this.connectEvents();
-    createBtnsController((ev) => this.handleKeyPress(ev), null, this.containerSelector);
+    createBtnsController((ev) => this.handleKeyPress(ev), null, '.game-container');
     this.initGame(false);
     // setReSizeBoard();
     if (await this.popup.Confirm(this.WELCOME_MSG)) {
@@ -30,7 +30,7 @@ export class PackmanController extends BaseGameController {
 
   
   setDomMethods() {
-      this.container.innerHTML = this.constructor.HTMLcontent;
+      this.container.innerHTML = this.constructor.wrapInDefaultHtml(this.constructor.HTMLcontent);
       this.container.querySelector('.reset-btn').onclick = () => {
           this.initGame(true);
           this.isGameOver = false;
@@ -206,11 +206,11 @@ export class PackmanController extends BaseGameController {
       }
     </style>
     <section class="game-info width-all flex align-center space-around wrap">
-        <button class="reset-btn">Restart</button>
-        <h3>Score: <span class="score-span">0</span></h3>
-        <button class="pause-btn">Pause</button>
+    <button class="reset-btn">Restart</button>
+    <h3>Score: <span class="score-span">0</span></h3>
+    <button class="pause-btn">Pause</button>
     </section>
-
+    
     <div id="board" class="board-container"></div>
   `;
 }

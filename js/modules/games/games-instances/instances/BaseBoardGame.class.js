@@ -96,4 +96,26 @@ export class BaseGameController extends BaseGameEntity {
     this.popup.reset?.();
     this.popup.destroy?.();
   }
+
+  static wrapInDefaultHtml(htmlContent = '') {
+    return `
+      <style>
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+        }
+        .game-container .board-container {
+          // flex: 1;
+        }
+      </style>
+      <div class="game-container">
+        ${htmlContent}
+      </div>
+    `
+  }
 }

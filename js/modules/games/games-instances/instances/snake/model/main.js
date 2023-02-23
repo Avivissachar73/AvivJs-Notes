@@ -106,8 +106,8 @@ function pauseGame(isToEmit) {
 function endGame() {
   const {state} = this;
   this.pauseGame();
-  var isNewScore = this.constructor.checkIfNewBestScore(state.score);
-  this.EvEmitter.emit('game_over', { ...state, isNewScore });
+  var isNewBest = this.constructor.checkIfNewBestScore(state.score);
+  this.EvEmitter.emit('game_over', { ...state, isNewBest });
   state.isOn = false;
 }
 

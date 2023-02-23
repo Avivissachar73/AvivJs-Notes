@@ -18,7 +18,7 @@ export class DamkaController extends BaseGameController {
     {
         on: 'game-seted',
         do({board, isVsCom}) {
-            this.container.innerHTML = this.constructor.HTMLcontent;
+            this.container.innerHTML = this.constructor.wrapInDefaultHtml(this.constructor.HTMLcontent);
             this.container.querySelector('.skip-turn-btn').onclick = (ev) => this.onSkipTurn(ev);
             this.container.querySelector('#regMode').onclick = (ev) => this.init(false);
             this.container.querySelector('#comMode').onclick = (ev) => this.init(true);

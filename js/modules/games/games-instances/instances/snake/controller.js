@@ -74,11 +74,11 @@ export class SnakeController extends BaseGameController {
   }
 
   connectDomEvents() {
-    this.container.innerHTML = this.constructor.HTMLcontent;
+    this.container.innerHTML = this.constructor.wrapInDefaultHtml(this.constructor.HTMLcontent);
     document.body.onkeydown = (ev) => this.handleKey(ev);
     this.container.querySelector('.restart-btn').onclick = () => this.EvEmitter.emit('set_game', true);
     this.container.querySelector('.pause-btn').onclick = () => this.pauseGame();
-    createBtnsController((ev) => this.handleKey(ev), null, this.containerSelector);
+    createBtnsController((ev) => this.handleKey(ev), null, '.game-container');
   }
 
   
@@ -121,9 +121,12 @@ export class SnakeController extends BaseGameController {
   static HTMLcontent = `
       <style>
         .board-container {
-            width: 400px;
-            margin-bottom: 10px;
-        } @media (max-width: 500px) {
+            width:100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            // width: 400px;
+        } @mediaa (max-width: 500px) {
             .board-container {
                 width: 90%;
             }  
