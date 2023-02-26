@@ -22,6 +22,7 @@ function createState() {
       directionToSet: 'RIGHT',
       foodInterval: null,
       score: 0,
+      eatCount: 0,
       operation: 0,
       bestScore: this.loadScore(),
       isOn: false,

@@ -165,7 +165,7 @@ export class PackmanController extends BaseGameController {
       .board-container {
           width: 100%;
           max-width: 400px;
-          background-color: #fff;
+          /* background-color: #fff; */
       }
 
       .board-container table {

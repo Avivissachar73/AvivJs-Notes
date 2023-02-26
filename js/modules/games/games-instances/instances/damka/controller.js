@@ -170,7 +170,7 @@ export class DamkaController extends BaseGameController {
           /* width: 50vw;
           height: 50vw; */
           width: 100%;
-          background-color: #fff;
+          /* background-color: #fff; */
           /* height: 100%; */
       }
       

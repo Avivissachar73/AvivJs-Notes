@@ -3,7 +3,7 @@ import { A_Alert, EventEmiter, Utils } from '../services/common.js';
 
 export class BaseGameEntity {
   evs = []; // [{on: 'example-event', do: () => console.log('example-event is running')}];
-  extraEvs = []; // same as evs, but are dynamicly declared by the controllered user
+  // extraEvs = []; // same as evs, but are dynamicly declared by the controllered user
   offers = [];
   state = null
   constructor(Emitter) {
@@ -13,7 +13,7 @@ export class BaseGameEntity {
 
   connectEvents() {
     if (this.offers.length) this.disconnectEvs();
-    this.offers = [...this.evs, ...this.extraEvs].map(c => c = this.EvEmitter.on(c.on, c.do.bind(this)));
+    this.offers = this.evs.map(c => c = this.EvEmitter.on(c.on, c.do.bind(this)));
   }
   disconnectEvs() {
     this.offers.forEach(c => c?.());
@@ -110,7 +110,7 @@ export class BaseGameController extends BaseGameEntity {
             overflow-y: auto;
         }
         .game-container .board-container {
-          // flex: 1;
+            flex: 1;
         }
       </style>
       <div class="game-container">
