@@ -137,7 +137,7 @@ export class PackmanController extends BaseGameController {
   }
   
   
-  static getCellHtmlStr(cell) {
+  getCellHtmlStr(cell) {
       // const contentStr = cell.uiStr;
       const contentStr = (() => {
         if (cell.isEmpty || cell.type === 'border') return ' ';

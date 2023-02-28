@@ -77,7 +77,8 @@ export class BaseGameController extends BaseGameEntity {
   tableService = null;
   initTableService(board) {
     if (this.tableService) this.tableService.destroy();
-    this.tableService = new TableService(`#${this.id} #board`, board, (pos, cell) => this.constructor.getCellHtmlStr(cell, pos), (pos, cell, elTd) => this.cellClicked(pos, cell, elTd));
+    const getHtmlCb = (this.getCellHtmlStr?.bind(this) || this.constructor.getCellHtmlStr?.bind(this.constructor))
+    this.tableService = new TableService(`#${this.id} #board`, board, (pos, cell) => getHtmlCb(cell, pos), (pos, cell, elTd) => this.cellClicked(pos, cell, elTd));
     this.tableService.render();
     this.tableService.setReSizeBoard(true);
   }
