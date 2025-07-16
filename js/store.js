@@ -2,7 +2,10 @@
 
 import noteService from './modules/notes/note.service.js';
 
-import A_Alert from '../lib/Alert.js';
+// import A_Alert from '../lib/Alert.js';
+import { alertService } from '../lib/Alert.js';
+const A_Alert = alertService.A_Alert;
+
 import { Utils } from '../lib/utils.service.js';
 const {Confirm, Prompt, Alert} = new A_Alert();
 

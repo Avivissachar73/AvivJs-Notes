@@ -1,4 +1,6 @@
-import A_Alert from '../../../lib/Alert.js';
+// import A_Alert from '../../../lib/Alert.js';
+import { alertService } from '../../../lib/Alert.js';
+const A_Alert = alertService.A_Alert;
 
 import { Games } from './games-instances/index.js';
 const allGames = Games.allGames;
@@ -19,7 +21,7 @@ export default {
             <main class="app-main container flex column align-center space-around">
               <!-- <h2>Game: {{currGameName}}</h2> -->
               
-              <div A-if="currGame" class="game-container"></div>
+              <div A-if="currGame" class="curr-game-container"></div>
 
               <div A-if="!currGame" class="error-container flex column align-center space-between">
                 <h2>404</h2>
@@ -40,7 +42,7 @@ export default {
       //   'max-height': '80%',
 
       // },
-      '.game-container': {
+      '.curr-game-container': {
         width: '100%',
         display: 'flex',
         'align-items': 'center',
@@ -94,14 +96,14 @@ export default {
     methods: {
       setupGame() {
         this.stopGame();
-        const popup = new A_Alert('.content-container', true);
         if (!this.currGame) return;
-        gGame = new this.currGame('.game-container', popup);
+        const popup = new A_Alert('.content-container', true);
+        gGame = new this.currGame('.curr-game-container', popup);
       },
       stopGame() {
         gGame?.destroy();
         gGame = null;
-        // const gameCotainer = document.querySelector('.game-container');
+        // const gameCotainer = document.querySelector('.curr-game-container');
         // if (gameCotainer) gameCotainer.innerHTML = '';
       }
     }
