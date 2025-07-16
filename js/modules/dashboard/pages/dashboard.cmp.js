@@ -27,7 +27,7 @@ export default {
         margin: '30px 0'
       },
       '.charts-container': {
-        gap: '10px',
+        gap: '50px',
         '.chart' : {
           width: '300px',
           height: '200px',
@@ -110,8 +110,8 @@ export default {
         ]
       
         // setTimeout(() => {
-        //   new Heatmap(heatmapData, '.hitmap-container', true);
         // }, 1000)
+        // new Heatmap(heatmapData, '.hitmap-container', true);
       }
     }
 }
