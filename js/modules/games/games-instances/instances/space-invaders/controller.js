@@ -167,7 +167,7 @@ export class SpaceInvadersController extends BaseGameController {
     this.container.querySelector('.restart-btn').onclick = () => this.restartGame();
     this.container.querySelector('.save-btn').onclick = () => this.saveGame();
     if (this.btnControllerEl) this.btnControllerEl.parentElement.removeChild(this.btnControllerEl);
-    this.btnControllerEl = createBtnsController((ev) => this.handleKey(ev), null, '.game-container', true);
+    this.btnControllerEl = createBtnsController((ev) => this.handleKey(ev), 50, '.game-container', true);
   }
 
 
