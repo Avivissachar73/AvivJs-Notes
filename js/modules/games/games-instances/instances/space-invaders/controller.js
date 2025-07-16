@@ -167,7 +167,7 @@ export class SpaceInvadersController extends BaseGameController {
     this.container.querySelector('.restart-btn').onclick = () => this.restartGame();
     this.container.querySelector('.save-btn').onclick = () => this.saveGame();
     if (this.btnControllerEl) this.btnControllerEl.parentElement.removeChild(this.btnControllerEl);
-    this.btnControllerEl = createBtnsController((ev) => this.handleKey(ev), null, '.game-container');
+    this.btnControllerEl = createBtnsController((ev) => this.handleKey(ev), null, '.game-container', true);
   }
 
 
@@ -180,10 +180,14 @@ export class SpaceInvadersController extends BaseGameController {
     ArrowRight: () => this.movePlayer(this.player1Id, {i: 0, j: 1}),
     ArrowLeft: () => this.movePlayer(this.player1Id, {i: 0, j: -1}),
     Space: () => this.fire(this.player1Id),
+    F: () => this.fire(this.player1Id),
   }
 
   handleKey(ev) {
     const key = ev.code;
+    // if (['ArrowUp','ArrowDown','ArrowRight','ArrowLeft', 'SPACE'].includes(key) && ev.preventDefault) {
+    //     ev.preventDefault();
+    // }
     if (!this.keysActionMap[key]) return;
     ev.preventDefault?.();
     this.keysActionMap[key]();

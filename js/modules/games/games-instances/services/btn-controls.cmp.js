@@ -1,7 +1,7 @@
 'use strict';
 
 
-export default function createBtnsController(cbFunc, speed = 100, parentSelector = 'body', styleTemplate = _getDefaultStyle()) {
+export default function createBtnsController(cbFunc, speed = 100, parentSelector = 'body', includeActions = false, styleTemplate = _getDefaultStyle()) {
     const template = {
         template: `
             <div class="mobile-controllers">
@@ -12,9 +12,9 @@ export default function createBtnsController(cbFunc, speed = 100, parentSelector
                     <button value="ArrowLeft" class="arrow-btn left-btn">L</button>
                     <button value="ArrowRight" class="arrow-btn right-btn">R</button>
                 </div>
-                <!-- <div>
-                    <button onmouseup="clearActionInterval()" onmousedown="pressActionBtn()" class="fire-btn">F</button>
-                </div> -->
+                ${ includeActions ? `<div class="action-btns">
+                    <button value="F" class="arrow-btn fire-btn" onmouseup_="clearActionInterval()" onmousedown_="pressActionBtn()">F</button>
+                </div>` : '' }
             </div>
         `
     }.template;
@@ -29,12 +29,12 @@ export default function createBtnsController(cbFunc, speed = 100, parentSelector
         if (state.arrowsInterval || state.arrowsTimeOut) return;
         if (state.isArrowPress) return;
         state.isArrowPress = true;
-        cbFunc({key});
+        cbFunc({key, code: key});
         if (!speed) return;
         state.arrowsTimeOut = setTimeout(() => {
             state.arrowsInterval = setInterval(() => {
                 // if (!state.arrowsInterval && state.arrowsInterval !== 0 ) return;
-                cbFunc({key});
+                cbFunc({key, code: key});
             }, speed);
             state.arrowsTimeOut = null;
         }, 200);
@@ -63,7 +63,7 @@ export default function createBtnsController(cbFunc, speed = 100, parentSelector
         // elBtn.onmouseup = elBtn.ontouchend = clearArrowInterval;
         elBtn.ontouchstart = () => pressArowBtn(elBtn.value);
         elBtn.ontouchend = clearArrowInterval;
-    })
+    });
 
     document.querySelector(parentSelector).appendChild(el);
 }
