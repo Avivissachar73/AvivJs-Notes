@@ -25,11 +25,12 @@ export default function createBtnsController(cbFunc, speed = 100, parentSelector
 
         // actionInterval: null,
     }
-    const pressArowBtn = key => {
+    const pressArowBtn = (key, activateInterval = true) => {
         if (state.arrowsInterval || state.arrowsTimeOut) return;
         if (state.isArrowPress) return;
         state.isArrowPress = true;
         cbFunc({key, code: key});
+        if (!activateInterval) return;
         if (!speed) return;
         state.arrowsTimeOut = setTimeout(() => {
             state.arrowsInterval = setInterval(() => {
@@ -38,7 +39,8 @@ export default function createBtnsController(cbFunc, speed = 100, parentSelector
             }, speed);
             state.arrowsTimeOut = null;
         }, 200);
-    }; const clearArrowInterval = () => {
+    };
+    const clearArrowInterval = () => {
         state.isArrowPress = false;
         if (!speed) return;
         clearTimeout(state.arrowsTimeOut);state.arrowsTimeOut = null;
@@ -61,6 +63,9 @@ export default function createBtnsController(cbFunc, speed = 100, parentSelector
     el.querySelectorAll('.arrow-btn').forEach(elBtn => {
         // elBtn.onmousedown = elBtn.ontouchstart = () => pressArowBtn(elBtn.value);
         // elBtn.onmouseup = elBtn.ontouchend = clearArrowInterval;
+        // elBtn.onclick = () => pressArowBtn(elBtn.value, false);
+        elBtn.onmousedown = () => pressArowBtn(elBtn.value);
+        elBtn.onmouseup = clearArrowInterval;
         elBtn.ontouchstart = () => pressArowBtn(elBtn.value);
         elBtn.ontouchend = clearArrowInterval;
     });
