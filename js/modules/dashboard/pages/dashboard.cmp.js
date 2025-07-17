@@ -1,6 +1,7 @@
 'use strict';
 
 import { LineChart, BarChart, PiChart, DonatChart, DiscChart, FrameDiscChart, Heatmap } from '../../../../lib/AvivChart.js';
+import { Utils } from '../../../../lib/utils.service.js';
 
 import heatmapData from '../heatmapData.js';
 
@@ -11,6 +12,7 @@ export default {
             <h2>Dashboard</h2>
             <div class="charts-container flex wrap align-center space-around">
               <div class="chart bar2-container"/>
+              <div class="chart donat2-container"/>
               <div class="chart frame-container"/>
               <div class="chart line-container"/>
               <div class="chart bar3-container"/>
@@ -24,7 +26,7 @@ export default {
     `,
     style: {
       h2: {
-        margin: '30px 0'
+        margin: '20px 0'
       },
       '.charts-container': {
         gap: '50px',
@@ -83,7 +85,8 @@ export default {
         })
 
         this.charts = [
-          new DonatChart(baseOptions(), '.donat-container'),
+          new DonatChart({...baseOptions(), donatWidthPercents: 50 }, '.donat-container'),
+          new DonatChart({...baseOptions(), donatWidthPercents: 50, style: {lineWidth: 50, strokeStyle: Utils.getColorLighterOrDarker('gold', 20, false)}}, '.donat2-container'),
       
           new BarChart(baseOptions(), '.bar-container'),
           
