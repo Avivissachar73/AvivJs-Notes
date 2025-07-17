@@ -60,15 +60,15 @@ export default {
         const labels = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'];
         const randData = (min = false) => range(labels.length).map(c => randInt(min? -50 : 0, 100));
 
-        const baseOptions = () => ({ 
+        const baseOptions = (clrs = ['#abcdeb', '#fdaaaa', '#b4ffd9', '#fcfdcd', '#f2ddff'], darkenLevel = 100) => ({ 
           // width: 1500,
           // height: 1000,
           data: [
-            {tag: 'Data sample 1', vals: randData(), style: {color: '#abcdeb'}},
-            {tag: 'Data sample 2', vals: randData(), style: {color: '#fdaaaa'}},
-            {tag: 'Data sample 3', vals: randData(), style: {color: '#b4ffd9'}},
-            {tag: 'Data sample 4', vals: randData(), style: {color: '#fcfdcd'}},
-            {tag: 'Data sample 5', vals: randData(), style: {color: '#f2ddff'}},
+            {tag: 'Data sample 1', vals: randData(), style: {color: Utils.getColorLighterOrDarker(clrs[0], darkenLevel, true)}},
+            {tag: 'Data sample 2', vals: randData(), style: {color: Utils.getColorLighterOrDarker(clrs[1], darkenLevel, true)}},
+            {tag: 'Data sample 3', vals: randData(), style: {color: Utils.getColorLighterOrDarker(clrs[2], darkenLevel, true)}},
+            {tag: 'Data sample 4', vals: randData(), style: {color: Utils.getColorLighterOrDarker(clrs[3], darkenLevel, true)}},
+            {tag: 'Data sample 5', vals: randData(), style: {color: Utils.getColorLighterOrDarker(clrs[4], darkenLevel, true)}},
           ], 
           labels,
           horizontal: false,
@@ -85,8 +85,8 @@ export default {
         })
 
         this.charts = [
-          new DonatChart({...baseOptions(), donatWidthPercents: 50 }, '.donat-container'),
-          new DonatChart({...baseOptions(), donatWidthPercents: 50, style: {lineWidth: 50, strokeStyle: Utils.getColorLighterOrDarker('gold', 20, false)}}, '.donat2-container'),
+          new DonatChart(baseOptions(), '.donat-container'),
+          new DonatChart({...baseOptions(), donatWidthPercents: 70, style: {lineWidth: 45, strokeStyle: Utils.getColorLighterOrDarker('gold', 20, false)}}, '.donat2-container'),
       
           new BarChart(baseOptions(), '.bar-container'),
           
