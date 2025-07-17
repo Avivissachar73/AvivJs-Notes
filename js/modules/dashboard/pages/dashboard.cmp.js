@@ -13,7 +13,6 @@ export default {
             <div class="charts-container flex wrap align-center space-around">
               <div class="chart bar2-container"/>
               <div class="chart donat2-container"/>
-              <div class="chart donat3-container"/>
               <div class="chart frame-container"/>
               <div class="chart line-container"/>
               <div class="chart bar3-container"/>
@@ -21,6 +20,7 @@ export default {
               <div class="chart bar-container"/>
               <div class="chart disc-container"/>
               <div class="chart pi-container"/>
+              <div class="chart donat3-container"/>
               <!-- <div class="chart hitmap-container"></div> -->
             </div>
         </main>
@@ -88,7 +88,7 @@ export default {
         this.charts = [
           new DonatChart(baseOptions(), '.donat-container'),
           new DonatChart({...baseOptions(), donatWidthPercents: 70, style: {lineWidth: 45, strokeStyle: Utils.getColorLighterOrDarker('gold', 20, false)}}, '.donat2-container'),
-          new DonatChart({...baseOptions(), donatWidthPercents: 60, totalPiDegries: 180, paintFromDegrie: 180, piDegries: [, 180], style: {lineWidth: 20, strokeStyle: 'black' || Utils.getColorLighterOrDarker('gold', 20, false)}}, '.donat3-container'),
+          new DonatChart({...baseOptions(), donatWidthPercents: 60, totalPiDegries: 180, paintFromDegrie: 180, piDegries: [, 180], style: {lineWidth: 20, strokeStyle: Utils.getColorLighterOrDarker('gold', 20, false)}}, '.donat3-container'),
       
           new BarChart(baseOptions(), '.bar-container'),
           
