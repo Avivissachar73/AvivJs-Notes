@@ -1,0 +1,1 @@
+export const alertService = window.alertServiceModule.alertService;
