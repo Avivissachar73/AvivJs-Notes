@@ -10,6 +10,8 @@ import noteEdit from './modules/notes/cmps/note-edit.cmp.js';
 import dashboardPage from './modules/dashboard/pages/dashboard.cmp.js';
 import gamesPage from './modules/games/games.cmp.js';
 
+import sandBox from './modules/general/pages/sandBox.cmp.js';
+
 export default [
     {
         path: '/',
@@ -47,5 +49,9 @@ export default [
     {
         path: '/games/:gameName',
         component: gamesPage
-    }
+    },
+    {
+        path: '/sand-box',
+        component: sandBox
+    },
 ];
