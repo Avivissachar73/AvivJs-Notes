@@ -1,0 +1,28 @@
+@import url('./helpers.css');
+
+
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+
+/* APP */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-header, .app-footer {
+  background-color: bisque;
+}
+.app-footer {
+  text-align: center;
+}
+
+.app-main {
+  flex: 1;
+}
