@@ -13,11 +13,11 @@ export default {
                     Mostly inspired by VueJs.
                 </p>
                 <p class="text-center">
-                    Including advanced features such as routes. store, uniqe template language, reactive state and more..
+                    Including advanced features such as routes, store, uniqe template language, reactive state and more..
                 </p>
             </div>
             <p class="text-center">
-                All games where written by me, and the charts in the dashboard page are also written in Charts library of my own.
+                All games were written by me, and the charts in the dashboard page are also written in Charts library of my own.
             </p>
         </main>
     `
