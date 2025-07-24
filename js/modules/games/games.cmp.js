@@ -97,8 +97,9 @@ export default {
       setupGame() {
         this.stopGame();
         if (!this.currGame) return;
-        const popup = new A_Alert('.content-container', true);
-        gGame = new this.currGame('.curr-game-container', popup);
+        // const popup = new A_Alert('.content-container', true);
+        // gGame = new this.currGame('.curr-game-container', popup);
+        gGame = new this.currGame('.curr-game-container');
       },
       stopGame() {
         gGame?.destroy();

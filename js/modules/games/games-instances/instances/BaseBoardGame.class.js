@@ -107,7 +107,7 @@ export class BaseGameController extends BaseGameEntity {
       <div style="width:100%;height:100%;" class="game-container"></div>
     </div>`;
     this.container = this.parentContainer.querySelector('.game-container');
-    this.popup = popupInstance || new A_Alert(`#${this.elId}`, true);
+    this.popup = popupInstance || new A_Alert(`#${this.elId}`, undefined, true);
     this.connectEvents();
   }
 
