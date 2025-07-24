@@ -19,13 +19,13 @@ export default class AppHeader {
                         <RouterLink className="flex-center" url="/dashboard">Dashboard</RouterLink>
                     </li>
                     <li>
+                        <RouterLink className="flex-center" url="/sand-box">SandBox</RouterLink>
+                    </li>
+                    <li>
                         <RouterLink className="flex-center" url="/about">About</RouterLink>
                     </li>
                     <li A-if="false">
                         <RouterLink className="flex-center" url="/cv">C.V</RouterLink>
-                    </li>
-                    <li>
-                        <RouterLink className="flex-center" url="/sand-box">SandBox</RouterLink>
                     </li>
                 </ul>
             </nav>

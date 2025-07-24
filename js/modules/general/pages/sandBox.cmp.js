@@ -73,7 +73,10 @@ export default class SandBox {
                 <hr class="width-all"/>
                 <div class="timer-container"></div>
                 <hr class="width-all"/>
-                <div class="element-components"></div>
+                <div class="flex column align-center gap30">
+                    <h2 class="logo flex-center">ElementComponents</h2>
+                    <div class="element-components"></div>
+                </div>
                 <hr class="width-all"/>
             </div>
         </main>
