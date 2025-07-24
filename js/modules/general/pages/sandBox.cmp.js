@@ -48,14 +48,34 @@ var nestedMicro = AvivJs.element({
         }
     },
 });
-
+import initCanvasAnimation from '../../../../coolThings/coolCanvasVideoAnimation/index.js';
+import { TimerWithUi } from '../../../../lib/Timer.js';
+import { SunSistem } from '../../../../coolThings/preatyLoaders/SunSistem.js';
+import { AnimatedLoader } from '../../../../coolThings/preatyLoaders/AnimationLoader.js';
 export default class SandBox {
     name = 'SandBox';
+    state = {
+        destroyers: []
+    }
     template = `
-        <main class="SandBox app-main container flex-center1 flex column align-center space-around">
+        <main class="SandBox app-main container flex-center1 flex column align-center space-around gap30">
             <h1 class="logo flex-center">SandBox</h1>
-            <nestedMicro/>
-            <div class="element-components"></div>
+            <div class="flex column align-center gap30">
+                <hr class="width-all"/>
+                <div class="flex column align-center gap30">
+                    <h2 class="logo flex-center">CanvasService</h2>
+                    <div class="sun-sistem-container"></div>
+                    <div class="animated-loader-container"></div>
+                    <div class="canvas-animation-container width-all" style="aspect-ratio:125/100;width:300px;max-width:90vw"></div>
+                </div>
+                <hr class="width-all"/>
+                <nestedMicro/>
+                <hr class="width-all"/>
+                <div class="timer-container"></div>
+                <hr class="width-all"/>
+                <div class="element-components"></div>
+                <hr class="width-all"/>
+            </div>
         </main>
     `;
     methods = {
@@ -73,11 +93,26 @@ export default class SandBox {
                 ]})
             ]);
             console.log(el);
-            document.querySelector('.element-components').appendChild(el.element); 
+            document.querySelector('.element-components').appendChild(el.element);
+
+            const animator = initCanvasAnimation('.canvas-animation-container');
+            this.destroyers.push(animator.destroy.bind());
+
+            const timer = new TimerWithUi('.timer-container');
+            this.destroyers.push(timer.stop.bind(timer));
+
+            const sunSistem = new SunSistem('.sun-sistem-container');
+            this.destroyers.push(sunSistem.destroy.bind(sunSistem));
+            
+            const animLoader = new AnimatedLoader('.animated-loader-container');
+            this.destroyers.push(animLoader.destroy.bind(animLoader));
         }
     }
     onMounted() {
         this.init();
+    }
+    onDestroyed() {
+        this.destroyers.forEach(c => c());
     }
     components = {
         nestedMicro
