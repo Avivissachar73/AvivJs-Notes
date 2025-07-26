@@ -11,6 +11,7 @@ import dashboardPage from './modules/dashboard/pages/dashboard.cmp.js';
 import gamesPage from './modules/games/games.cmp.js';
 
 import sandBox from './modules/general/pages/sandBox.cmp.js';
+import settingsPage from './modules/general/pages/settingsPage.cmp.js';
 
 export default [
     {
@@ -53,5 +54,10 @@ export default [
     {
         path: '/sand-box',
         component: sandBox
+    },
+    {
+        path: '/settings',
+        name: 'settingsPage',
+        component: settingsPage
     },
 ];

@@ -8,8 +8,8 @@ import heatmapData from '../heatmapData.js';
 export default {
     name: 'about-page',
     template: `
-        <main class="app-main container flex column align-center space-around">
-            <h2>Dashboard</h2>
+        <main class="app-main container flex column align-center space-around main-pad-y gap20">
+            <h2>{{$t('_dashboardLocales.dashboard')}}</h2>
             <div class="charts-container flex wrap align-center space-around">
               <div class="chart bar2-container"/>
               <div class="chart donat2-container"/>
@@ -27,7 +27,7 @@ export default {
     `,
     style: {
       h2: {
-        margin: '20px 0'
+        // margin: '20px 0'
       },
       '.charts-container': {
         gap: '50px',

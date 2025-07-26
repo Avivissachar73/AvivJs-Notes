@@ -6,11 +6,11 @@ import NoteFilter from '../cmps/note-filter.cmp.js';
 export default class NotePage {
     name = 'note-page';
     template = `
-        <main class="note-page app-main column-layout">
-            <h2>Notes</h2>
+        <main class="note-page app-main column-layout main-pad-y">
+            <h2>{{$t('_noteLocales.notes')}}</h2>
             <div class="actions container width-all flex align-center space-between wrap">
                 <NoteFilter @filter="setFilter"/>
-                <RouterLink className="inline-block" url="/note/edit">New</RouterLink>
+                <RouterLink className="inline-block" url="/note/edit">{{$t('_commonLocales.new')}}</RouterLink>
             </div>
             <NoteList A-if="pinedNotes && pinedNotes.length" className="pinned-notes" notes="{{pinedNotes}}" @noteUpdate="updateNote" @removeNote="removeNote" @pinNote="pinNote"/>
             <note-list A-if="unPinedNotes && unPinedNotes.length" className="" notes="{{unPinedNotes}}" @noteUpdate="updateNote" @removeNote="removeNote" @pinNote="pinNote"/>

@@ -11,7 +11,7 @@
     height: 60px;
 }
 .app-header li:not(:first-child) a {
-    margin-left: 20px;
+    /* margin-left: 20px; */
 }
 
 .app-header a {

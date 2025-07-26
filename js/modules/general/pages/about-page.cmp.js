@@ -3,7 +3,7 @@
 export default {
     name: 'about-page',
     template: `
-        <main class="app-main container flex column align-center space-around">
+        <main class="app-main container flex column align-center space-around ltr">
             <h2>ABOUT</h2>
             <div class="space-children-y">
                 <p class="text-center">

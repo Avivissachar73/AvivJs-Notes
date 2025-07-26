@@ -15,6 +15,12 @@
 
 
 
+.logo {
+    font-weight: 700;
+    direction: ltr !important;
+    /* color: red !important; */
+    color: red !important;
+}
 .logo span {
     color: black;
     text-transform: lowercase;
@@ -35,4 +41,12 @@
     .home-page .logo {
         font-size: 2.2rem;
     }
+}
+
+
+
+
+.main-pad-y {
+    padding-top: 1.25rem; /* 20px; */
+    /* text-decoration: underline; */
 }

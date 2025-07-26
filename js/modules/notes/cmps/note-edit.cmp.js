@@ -26,17 +26,17 @@ export default class NoteEdit {
                 <{{infoType}} type="{{noteToEdit.type}}" info="{{noteToEdit.info}}" isEditable="{{true}}" @infoUpdated="updateInfo"/>  
                 <div A-if="colorPalate" class="style-pannel width-all">
                     <div class="flex align-center space-between width-all">
-                        Text-color:
+                        {{$t('_noteLocales.txtClr')}}:
                         <ColorPicker colors="{{colorPalate.txtColors}}" A-model="noteToEdit.style.color"/>
                     </div>
                     <div class="flex align-center space-between width-all">
-                        Bg-color:
+                        {{$t('_noteLocales.bgClr')}}:
                         <ColorPicker colors="{{colorPalate.bgColors}}" A-model="noteToEdit.style.backgroundColor"/>
                     </div>
                 </div>
-                <button A-if="!isColorEditMode" @click="toggleColorEditMode">change colors?</button>
+                <button A-if="!isColorEditMode" @click="toggleColorEditMode">{{$t('_noteLocales.changeClrs')}}?</button>
                 <ColorsEdit A-if="isColorEditMode" colors="{{colorPalate}}" @colorsUpdate="updateColors" @close="toggleColorEditMode"/>
-                <button @click="save">Save</button>
+                <button @click="save">{{$t('_commonLocales.save')}}</button>
             </div>
         </section>
     `;
@@ -55,8 +55,8 @@ export default class NoteEdit {
     getters = {
         title() {
             if (!this.noteToEdit) return '';
-            if (this.noteToEdit._id) return 'Edit note';
-            return 'Add note';
+            if (this.noteToEdit._id) return this.$t('_noteLocales.editNotes');
+            return this.$t('_noteLocales.addNote');
         },
         noteType() {
             if (!this.noteToEdit) return 'text';

@@ -22,7 +22,7 @@ export default {
     name: 'cv-page',
     components: {CVSection},
     template: `
-        <main class="app-main container flex column align-center space-around">
+        <main class="app-main container flex column align-center space-around ltr">
             <div class="flex align-start space-between wrap width-all cv-head">
               <h2>{{cvData.title}}</h2>
               <div>

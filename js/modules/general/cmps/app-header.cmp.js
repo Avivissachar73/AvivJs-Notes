@@ -8,24 +8,27 @@ export default class AppHeader {
                 <RouterLink url="/"><h1 class="logo flex-center">Aviv<span>Js</span></h1></RouterLink>
                 <button class="nav-btn" @click="toggleNav"><img src="assets/img/navBurger.png"/></button>
                 <div ref="screen" class="screen {{navClass}}" @click="toggleNav"/>
-                <ul ref="nav" @click="toggleNav" class="app-nav {{navClass}} clean-list flex align-center space-between wrap">
+                <ul ref="nav" @click="toggleNav" class="app-nav {{navClass}} clean-list flex align-center space-between wrap gap20">
                     <li>
-                        <RouterLink className="flex-center" url="/note">Notes</RouterLink> 
+                        <RouterLink className="flex-center" url="/note">{{$t('_noteLocales.notes', 'notes')}}</RouterLink> 
                     </li>
                     <li>
-                        <RouterLink className="flex-center" url="/games">Games</RouterLink>
+                        <RouterLink className="flex-center" url="/games">{{$t('_gameLocales.games')}}</RouterLink>
                     </li>
                     <li>
-                        <RouterLink className="flex-center" url="/dashboard">Dashboard</RouterLink>
+                        <RouterLink className="flex-center" url="/dashboard">{{$t('_dashboardLocales.dashboard')}}</RouterLink>
                     </li>
                     <li>
-                        <RouterLink className="flex-center" url="/sand-box">SandBox</RouterLink>
+                        <RouterLink className="flex-center" url="/sand-box">{{$t('_sandBoxLocales.sandBox')}}</RouterLink>
                     </li>
                     <li>
-                        <RouterLink className="flex-center" url="/about">About</RouterLink>
+                        <RouterLink className="flex-center" url="/about">{{$t('_aboutLocales.about')}}</RouterLink>
+                    </li>
+                    <li>
+                        <RouterLink className="flex-center" url="{{ { name: 'settingsPage' } }}">{{$t('_settingsLocales.settings')}}</RouterLink>
                     </li>
                     <li A-if="false">
-                        <RouterLink className="flex-center" url="/cv">C.V</RouterLink>
+                        <RouterLink className="flex-center" url="/cv">{{$t('_cvLocales.cv')}}</RouterLink>
                     </li>
                 </ul>
             </nav>
@@ -33,8 +36,11 @@ export default class AppHeader {
     `;
     style = {
         '.app-nav': {
+            // color: 'white',
+            // color: 'var(--clr-3)',
             '.active': {
                 color: 'black'
+                // color: 'var(--clr-2)'
             } 
 
         }

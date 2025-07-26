@@ -10,7 +10,7 @@ var gGame = null;
 export default {
     name: 'games-page',
     template: `
-        <section class="games-page-container">
+        <section class="app-main games-page-container ltr">
           <div class="games-ul container flex wrap space-around">
             <!-- <RouterLink url="/games">Games</RouterLink> -->
             <RouterLink A-for="gameName in allGamesNames" key="{{gameName}}" url="/games/{{gameName}}">
@@ -18,7 +18,7 @@ export default {
             </RouterLink>
           </div>
           <section class="content-container">
-            <main class="app-main container flex column align-center space-around">
+            <main class="app-main_ container flex column align-center space-around">
               <!-- <h2>Game: {{currGameName}}</h2> -->
               
               <div A-if="currGame" class="curr-game-container"></div>
