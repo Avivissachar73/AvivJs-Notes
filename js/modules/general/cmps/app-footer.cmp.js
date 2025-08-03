@@ -16,7 +16,7 @@ export default class AppFooter {
         // color: 'unset !important',
         a: {
             // 'text-decoration': 'under-line'
-            color: '#feffbd'
+            color: '#feffbd !important'
         }
     }
     state = {
