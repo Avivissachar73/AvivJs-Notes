@@ -14,7 +14,7 @@ export default class AppFooter {
     style = {
         gap: '10px',
         // color: 'unset !important',
-        a: {
+        'a, h3': {
             // 'text-decoration': 'under-line'
             color: '#feffbd !important'
         }
