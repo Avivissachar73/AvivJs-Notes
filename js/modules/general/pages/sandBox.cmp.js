@@ -58,26 +58,28 @@ export default class SandBox {
         destroyers: []
     }
     template = `
-        <main class="SandBox app-main container flex-center1 flex column align-center space-around gap30 main-pad-y">
-            <h1 class="flex-center">{{$t('_sandBoxLocales.sandBox')}}</h1>
-            <div class="flex column align-center gap30">
-                <hr class="width-all"/>
+        <main class="SandBox app-main">
+            <div class="container flex-center1 flex column align-center space-around gap30 main-pad-y">
+                <h1 class="flex-center">{{$t('_sandBoxLocales.sandBox')}}</h1>
                 <div class="flex column align-center gap30">
-                    <h2 class="flex-center">CanvasService</h2>
-                    <div class="sun-sistem-container"></div>
-                    <div class="animated-loader-container"></div>
-                    <div class="canvas-animation-container width-all" style="aspect-ratio:125/100;width:300px;max-width:90vw"></div>
+                    <hr class="width-all"/>
+                    <div class="flex column align-center gap30">
+                        <h2 class="flex-center">CanvasService</h2>
+                        <div class="sun-sistem-container"></div>
+                        <div class="animated-loader-container"></div>
+                        <div class="canvas-animation-container width-all" style="aspect-ratio:125/100;width:300px;max-width:90vw"></div>
+                    </div>
+                    <hr class="width-all"/>
+                    <nestedMicro/>
+                    <hr class="width-all"/>
+                    <div class="timer-container"></div>
+                    <hr class="width-all"/>
+                    <div class="flex column align-center gap30">
+                        <h2 class="flex-center">ElementComponents</h2>
+                        <div class="element-components"></div>
+                    </div>
+                    <hr class="width-all"/>
                 </div>
-                <hr class="width-all"/>
-                <nestedMicro/>
-                <hr class="width-all"/>
-                <div class="timer-container"></div>
-                <hr class="width-all"/>
-                <div class="flex column align-center gap30">
-                    <h2 class="flex-center">ElementComponents</h2>
-                    <div class="element-components"></div>
-                </div>
-                <hr class="width-all"/>
             </div>
         </main>
     `;

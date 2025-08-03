@@ -12,15 +12,17 @@ export default class SettingsPage {
       uiConfig: uiPreferenceService.loadUiPreferences(),
     }
     template = `
-        <main class="SandBox app-main container flex column gap30 main-pad-y">
-            <h1 class="flex-center">{{$t('_settingsLocales.settings')}}</h1>
-            <div class="simple-form" A-if="false">
-                <FormInput type="select" class="gap10" labelholder="settingsLocales.locale" v-model="uiConfig.locale" :items="langs"/>
-                <!-- <FormInput type="select" class="gap10" labelholder="settingsLocales.theme" v-model="uiConfig.theme" :items="themes"/> -->
-                <FormInput type="select" class="gap10" labelholder="settingsLocales.theme" v-model="uiConfig.themesByOrg[org?._id || 'default'][selectedAppData.name]" @change="saveUiConfig" :items="themes"/>
-                <FormInput type="select" class="gap10" labelholder="settingsLocales.textSize" v-model="uiConfig.remSize" :items="remOpts"/>
-                <!-- <FormInput class="gap10 row-reverse" label="settings.darkMode" :value="uiConfig.darkMode" type="checkbox" @input="setDarkMode"/> -->
-                <!-- <FormInput type="checkbox" class="gap10" label="settings.accessability" v-model="uiConfig.accessabilityMode"/> -->
+        <main class="SandBox app-main">
+            <div class="container flex column gap30 main-pad-y">
+              <h1 class="flex-center">{{$t('_settingsLocales.settings')}}</h1>
+              <div class="simple-form" A-if="false">
+                  <FormInput type="select" class="gap10" labelholder="settingsLocales.locale" v-model="uiConfig.locale" :items="langs"/>
+                  <!-- <FormInput type="select" class="gap10" labelholder="settingsLocales.theme" v-model="uiConfig.theme" :items="themes"/> -->
+                  <FormInput type="select" class="gap10" labelholder="settingsLocales.theme" v-model="uiConfig.themesByOrg[org?._id || 'default'][selectedAppData.name]" @change="saveUiConfig" :items="themes"/>
+                  <FormInput type="select" class="gap10" labelholder="settingsLocales.textSize" v-model="uiConfig.remSize" :items="remOpts"/>
+                  <!-- <FormInput class="gap10 row-reverse" label="settings.darkMode" :value="uiConfig.darkMode" type="checkbox" @input="setDarkMode"/> -->
+                  <!-- <FormInput type="checkbox" class="gap10" label="settings.accessability" v-model="uiConfig.accessabilityMode"/> -->
+              </div>
             </div>
         </main>
     `;
