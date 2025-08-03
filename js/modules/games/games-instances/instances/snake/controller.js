@@ -112,7 +112,7 @@ export class SnakeController extends BaseGameController {
     })();
     var className = item.type.toLowerCase();
     if (item.subtype) className += `-${item.subtype.toLowerCase()}`;
-    return `<div class="${className} flex-center" style="transform:rotate(${direction}deg);height:100%;width:100%;">
+    return `<div class="cell ${className} flex-center" style="transform:rotate(${direction}deg);height:100%;width:100%;">
                 ${content}
             </div>`;
   }
@@ -138,9 +138,12 @@ export class SnakeController extends BaseGameController {
         }
         
         table {
-            border-spacing: 0;
+            border-spacing: 0 !important;
         }
         
+        .cell {
+            outline: 2px solid white;
+        }
         .wall {
             background-color: rgb(240, 199, 150);
         } 

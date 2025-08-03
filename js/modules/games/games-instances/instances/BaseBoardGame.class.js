@@ -1,5 +1,5 @@
 import { TableService } from '../services/TableService.js';
-import { A_Alert, EventEmiter, Utils } from '../services/common.js';
+import { A_Alert, elementService, EventEmiter, Utils } from '../services/common.js';
 import { Intervaler } from '../services/common.js';
 import { Timer } from '../services/common.js';
 
@@ -138,6 +138,9 @@ export class BaseGameController extends BaseGameEntity {
   static wrapInDefaultHtml(htmlContent = '') {
     return `
       <style>
+        .game-container, .game-container * {
+          box-sizing: border-box;
+        }
         .game-container {
             display: flex;
             flex-direction: column;
@@ -150,6 +153,60 @@ export class BaseGameController extends BaseGameEntity {
         .game-container .board-container {
             flex: 1;
         }
+            
+        .game-container table {
+          border-collapse: separate;
+          border-spacing_: ${elementService._.em(2)};
+          border-spacing_: 2px;
+        }
+        .game-container td {
+          border_: ${elementService._.em(2)} solid white;
+          outline: 1px solid white;
+          vertical-align: top;
+        }
+        .game-container_ td span {
+          font-size: 0.8em;
+        }
+
+
+
+        .game-container_ table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        .game-container_ table, .game-container_ tr, .game-container_ td, .game-container_ tbody {
+          margin: 0;
+          padding: 0;
+          border: 0;
+          font-size': 100%;
+          font: inherit;
+          vertical-align': baseline;
+        }
+
+
+        .game-container_ table {
+          display: table;
+          border-collapse: separate;
+          border-spacing: 2px;
+          text-indent: initial;
+          border-color: gray;
+        }
+
+        .game-container_ tr {
+          display: table-row;
+          vertical-align: inherit;
+          border-color: inherit;
+        }
+
+        .game-container_ td,
+        .game-container_ th {
+          display: table-cell;
+          vertical-align: inherit;
+          padding: initial;
+          border: initial;
+          text-align: initial;
+        }
+
       </style>
       <div class="game-container">
         ${htmlContent}

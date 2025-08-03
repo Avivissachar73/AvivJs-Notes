@@ -170,6 +170,7 @@ export class PackmanController extends BaseGameController {
 
       .board-container table {
           border-radius: 5px;
+          overflow_: hidden;
           box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
           margin: 0 auto;
           width: 100%;

@@ -43,7 +43,7 @@ App.RootCmp('#App', class {
             const uiPreferences = uiPreferenceService.loadUiPreferences();
             this.i18n.setLocale(uiPreferences.locale);
             
-            dynamicCssPagesService.setDynamicStylingThemeEl(appThemes[0] || appThemes[0], '.app', 16);
+            dynamicCssPagesService.setDynamicStylingThemeEl(appThemes.find(c => c.name === uiPreferences.theme) || appThemes[0], '.app', 16);
         }
     }
     components = {

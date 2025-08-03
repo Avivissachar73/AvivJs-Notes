@@ -297,12 +297,19 @@ export class SpaceInvadersController extends BaseGameController {
         }
         ${getBaseCssAndHelpers('.space-invaders-game-container')}
         ${elementService.dataToCss('.game-container .space-invaders-game-container', {
+          color: 'black',
+          '*': {
+            color: 'black !important',
+          },
           position: 'relative',
           fontSize: '12px',
           fontFamily: "'Courier New', monospace",
-          // width: '100%',
+          width: '100%',
           margin: '0 auto',
-          width: '300px',
+          display: 'flex',
+          'flex-direction': 'column',
+          'align-items': 'center',
+          // width: '300px',
           '.board-container': {
             width: '100%',
             // maxWidth: '100%',
@@ -410,6 +417,6 @@ export class SpaceInvadersController extends BaseGameController {
         </div>
       </div>
       <div id="board" class="board-container"></div>
-    <div>
+    </div>
   `;
 }
