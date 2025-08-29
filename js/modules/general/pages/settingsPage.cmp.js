@@ -67,6 +67,9 @@ export default class SettingsPage {
       'label span': {
         display: 'inline-block',
         'width': '6em'
+      },
+      select: {
+        'width': '5em'
       }
     }
 

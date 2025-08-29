@@ -37,11 +37,11 @@
     }
 } @media (max-width: 750px) {
     .container {
-        padding: 0 2px;
+        /* padding: 0 2px; */
         max-width: unset;
     }
 } @media (max-width: 450px) {
     .container {
-        padding: 0;
+        /* padding: 0; */
     }
 }
