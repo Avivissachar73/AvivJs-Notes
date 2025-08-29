@@ -48,6 +48,9 @@ var nestedMicro = AvivJs.element({
         }
     },
 });
+
+
+
 import initCanvasAnimation from '../../../../coolThings/coolCanvasVideoAnimation/index.js';
 import { TimerWithUi } from '../../../../lib/Timer.js';
 import { SunSistem } from '../../../../coolThings/preatyLoaders/SunSistem.js';
@@ -56,7 +59,7 @@ export default class SandBox {
     name = 'SandBox';
     state = {
         destroyers: [],
-        testTxtModel: ''
+        // testTxtModel: ''
     }
     template = `
         <main class="SandBox app-main">
@@ -71,7 +74,7 @@ export default class SandBox {
                         <div class="canvas-animation-container width-all" style="aspect-ratio:125/100;width:300px;max-width:90vw"></div>
                     </div>
                     <hr class="width-all"/>
-                    <nestedMicro/>
+                    <NestedMicro/>
                     <hr class="width-all"/>
                     <div class="timer-container"></div>
                     <hr class="width-all"/>
@@ -80,10 +83,6 @@ export default class SandBox {
                         <div class="element-components"></div>
                     </div>
                     <hr class="width-all"/>
-                    <!-- <div>
-                        <FormInput type="text" class="gap10" labelholder="test" A-model="testTxtModel"/>
-                        <p>{{testTxtModel}}</p>
-                    </div> -->
                 </div>
             </div>
         </main>
@@ -102,7 +101,6 @@ export default class SandBox {
                     ToggleBtns({ value: toggleBtnsState.toggleBtnsVal, onChange: (val => toggleBtnsState.toggleBtnsVal = val), options: [ 1, 2, 3, 4 ] })
                 ]})
             ]);
-            console.log(el);
             document.querySelector('.element-components').appendChild(el.element);
 
             const animator = initCanvasAnimation('.canvas-animation-container');
@@ -128,3 +126,10 @@ export default class SandBox {
         nestedMicro
     }
 }
+
+
+
+// <!-- <div>
+//     <FormInput type="text" class="gap10" labelholder="test" A-model="testTxtModel"/>
+//     <p>{{testTxtModel}}</p>
+// </div> -->
