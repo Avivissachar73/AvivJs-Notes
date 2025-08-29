@@ -17,7 +17,7 @@ export default class SettingsPage {
             <div class="container flex column gap30 main-pad-y">
               <h1 class="flex-center">{{$t('_settingsLocales.settings')}}</h1>
               <div class="simple-form width-content">
-                  <label class="flex align-center gap10">
+                  <label class="flex align-center gap10 wrap">
                     <span>{{$t('_settingsLocales.locale')}}</span>
                     <select A-model="uiConfig.locale" @change="saveUiConfig" placeholder="{{$t('_settingsLocales.locale')}}">
                       <option
@@ -28,7 +28,7 @@ export default class SettingsPage {
                       ></option>
                     </select>
                   </label>
-                  <label class="flex align-center gap10">
+                  <label class="flex align-center gap10 wrap">
                     <span>{{$t('_settingsLocales.theme')}}</span>
                     <select A-model="uiConfig.theme" @change="saveUiConfig" placeholder="{{$t('_settingsLocales.theme')}}">
                       <option
@@ -39,7 +39,7 @@ export default class SettingsPage {
                       ></option>
                     </select>
                   </label>
-                  <label class="flex align-center gap10">
+                  <label class="flex align-center gap10 wrap">
                     <span>{{$t('_settingsLocales.textSize')}}</span>
                     <select A-model="uiConfig.remSize" @change="saveUiConfig" placeholder="{{$t('_settingsLocales.textSize')}}">
                       <option
