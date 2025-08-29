@@ -79,7 +79,7 @@
     .app-nav {
         flex-direction: column;
         position: fixed;
-        right: 0;
+        inset-inline-end: 0;
         top: 0;
         /* top: 60px; */
         /* background-color: rgb(252, 47, 47); */
@@ -97,7 +97,8 @@
         justify-content: unset;
     }
     .app-nav.hide {
-        transform: translate(100%, 0);
+        /* transform: translate(-100%, 0); */
+        inset-inline-end: -100%;
     }
     .app-nav li a {
         width: 150px;
