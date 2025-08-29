@@ -55,7 +55,8 @@ import { AnimatedLoader } from '../../../../coolThings/preatyLoaders/AnimationLo
 export default class SandBox {
     name = 'SandBox';
     state = {
-        destroyers: []
+        destroyers: [],
+        testTxtModel: ''
     }
     template = `
         <main class="SandBox app-main">
@@ -79,6 +80,10 @@ export default class SandBox {
                         <div class="element-components"></div>
                     </div>
                     <hr class="width-all"/>
+                    <div>
+                        <FormInput type="text" class="gap10" labelholder="test" A-model="testTxtModel"/>
+                        <p>{{testTxtModel}}</p>
+                    </div>
                 </div>
             </div>
         </main>

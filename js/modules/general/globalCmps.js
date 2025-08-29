@@ -1,5 +1,6 @@
 'use strict';
 
+
 AvivJs.Component('TextWrapper', class TextWrapper {
     name = 'text-wrapper';
     props = ['text', 'limit'];
@@ -105,5 +106,24 @@ AvivJs.Component('ColorPicker', class ColorPicker {
         value(curr, prev) {
             this.state.selectedColor = this.value;
         }
+    }
+});
+
+
+import { FormInput } from "../../../lib/frontComponents/common/FormInput.cmp.js";
+AvivJs.Component('FormInput', class AjsFormInput {
+    name = 'FormInput';
+    props = ['type', 'value', 'placeholder', 'label', 'labelholder'];
+    template = `<div><div ref="inputContainer"></div></div>`;
+    methods = {
+        select(value) {
+            this.state.selectedColor = value;
+            this.context.emit('input', value);
+        }
+    }
+    onMounted() {
+        const inputCmp = FormInput({ type: this.type, value: this.value, placeholder: this.placeholder, label: this.label, labelholder: this.labelholder, onChange: val => {this.context.emit('input', val);this.context.emit('change', val);console.log('WOWOWOWO', val)} });
+        this.context.refs.inputContainer.innerHTML = '';
+        this.context.refs.inputContainer.appendChild(inputCmp.element);
     }
 });
