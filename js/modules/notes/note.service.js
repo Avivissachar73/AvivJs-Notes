@@ -82,14 +82,15 @@ function _getDefaultColorPalate() {
 
 
 function _getDefaultNotes() {
+    const _url = (endpoint) => `js/modules/notes/sampleAssets/${endpoint}`;
     return [
         createNote('text', 'text', {txt: 'this is a text note!'}),
         createNote('todos', 'todo', {todos: [{txt: 'do this', isDone: false, id: '1'}, {txt: 'do that', isDone: true, id: '2'}, {txt: 'go to sleep', isDone: false, id: '3'}]}),
-        createNote('The Beatles', 'video', {url: 'https://www.youtube.com/embed/otrH5hxJ2GE'}, null, true),
-        createNote('audio', 'audio', {url: 'http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3'}),
-        createNote('another spiderMan', 'image', {url: 'https://jakeallston.com/wp-content/uploads/2019/09/Marvels-Spider-Man-Desktop-Wallpaper-3-1.jpg'}, {backgroundColor: "#e02626",color: "#fffdbf"}),
-        createNote('Hasa guy', 'video', {url: 'https://www.youtube.com/embed/KxSd-l-urj8'}, {backgroundColor: "#fffdbf",color: "#99bdff"}),
+        createNote('The Beatles', 'video', {url: _url('The Beatles - I Want To Hold Your Hand_HD - The Beatles Stuff (720p, h264, youtube).mp4'), url_: 'https://www.youtube.com/embed/otrH5hxJ2GE'}, null, true),
+        createNote('audio', 'audio', {url: _url('Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3'), url_: 'http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3'}),
+        createNote('another spiderMan', 'image', {url: _url('Marvels-Spider-Man-Desktop-Wallpaper-3-1.jpg'), url_: 'https://jakeallston.com/wp-content/uploads/2019/09/Marvels-Spider-Man-Desktop-Wallpaper-3-1.jpg'}, {backgroundColor: "#e02626",color: "#fffdbf"}),
+        createNote('Hasa guy', 'video', {url: _url('Feng Suave - Sink into the Floor - alona chemerys (480p, h264, youtube).mp4'), url_: 'https://www.youtube.com/embed/KxSd-l-urj8'}, {backgroundColor: "#fffdbf",color: "#99bdff"}),
         createNote('lorem!', 'text', {txt: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt dolorum temporibus enim ea quibusdam molestias illo facilis culpa voluptate dolor tempore maiores, pariatur aut est debitis officiis vel molestiae laboriosam.'}, null, true),
-        createNote('SpiderMan', 'image', {url: 'http://vignette1.wikia.nocookie.net/marveldatabase/images/a/a9/Spider-Man_Vol_1_1.jpg/revision/latest?cb=20080331205551'}, null, true),
+        createNote('SpiderMan', 'image', {url: _url('Spider-Man_Vol_1_1.webp'), url_: 'http://vignette1.wikia.nocookie.net/marveldatabase/images/a/a9/Spider-Man_Vol_1_1.jpg/revision/latest?cb=20080331205551'}, null, true),
     ];
 }
