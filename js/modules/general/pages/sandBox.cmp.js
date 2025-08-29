@@ -80,10 +80,10 @@ export default class SandBox {
                         <div class="element-components"></div>
                     </div>
                     <hr class="width-all"/>
-                    <div>
+                    <!-- <div>
                         <FormInput type="text" class="gap10" labelholder="test" A-model="testTxtModel"/>
                         <p>{{testTxtModel}}</p>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </main>
