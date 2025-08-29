@@ -50,6 +50,13 @@ export default {
                 "pink": "la Vie en Rose",
                 "blue": "Baby Blue"
             },
+            "textSize": "Text size",
+            "_textSize": {
+                "small": "Small",
+                "medium": "Medium",
+                "big": "Big",
+                "bigger": "Bigger"
+            },
             "_alerts": {}
         }
     },
@@ -103,6 +110,13 @@ export default {
                 "purple": "סגול עמוק",
                 "pink": "החיים בורוד",
                 "blue": "ערב כחול עמוק"
+            },
+            "textSize": "גודל טקסט",
+            "_textSize": {
+                "small": "קטן",
+                "medium": "בינוני",
+                "big": "גדול",
+                "bigger": "ענק"
             },
             "_alerts": {}
         }

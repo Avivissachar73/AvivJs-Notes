@@ -13,6 +13,7 @@ import { baseCssService } from '../lib/getBaseCss.function.js';
 import { uiPreferenceService } from '../lib/uiPreferensesService.js';
 import { appThemes } from '../lib/themes/index.js';
 import { dynamicCssPagesService } from '../lib/dynamicCssPages.service.js';
+import evEmmiter from '../lib/EventEmiter.js';
 
 const App = new AvivJs();
 App.RootCmp('#App', class {
@@ -37,13 +38,16 @@ App.RootCmp('#App', class {
             document.head.prepend(baseStyleEl);
         }
         this.setupUiPreferences();
+        
+        evEmmiter.on('app_config_update', this.setupUiPreferences);
     }
     methods = {
         setupUiPreferences() {
             const uiPreferences = uiPreferenceService.loadUiPreferences();
             this.i18n.setLocale(uiPreferences.locale);
+            this.context.render();
             
-            dynamicCssPagesService.setDynamicStylingThemeEl(appThemes.find(c => c.name === uiPreferences.theme) || appThemes[0], '.app', 16);
+            dynamicCssPagesService.setDynamicStylingThemeEl(appThemes.find(c => c.name === uiPreferences.theme) || appThemes[0], '.app',  +uiPreferences.remSize || 16);
         }
     }
     components = {
