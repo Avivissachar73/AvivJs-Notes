@@ -47,7 +47,7 @@ export default {
                 "dark": "Dark",
                 "red": "Simply Red",
                 "purple": "Deep Purple",
-                "pink": "la Vie en Rose",
+                "pink": "La Vie en Rose",
                 "blue": "Baby Blue"
             },
             "textSize": "Text size",
