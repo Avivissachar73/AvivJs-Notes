@@ -82,9 +82,11 @@
         right: 0;
         top: 0;
         /* top: 60px; */
-        background-color: rgb(252, 47, 47);
+        /* background-color: rgb(252, 47, 47); */
+        background-color: var(--clr-3);
         /* color: black; */
-        border-left: 1px solid rgba(0, 0, 0, 0.5);
+        /* border-left: 1px solid rgba(0, 0, 0, 0.5); */
+        border-left: 1px solid var(--clr-2-l-50);
         transition: 0.4s;
         z-index: 40;
         height: 100vh;
@@ -102,6 +104,7 @@
         height: 100px;
     }
     .app-nav li {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+        /* border-bottom: 1px solid rgba(0, 0, 0, 0.5); */
+        border-bottom: 1px solid var(--clr-2-l-50);
     }
 }
