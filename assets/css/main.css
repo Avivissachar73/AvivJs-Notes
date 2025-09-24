@@ -2,6 +2,7 @@
 @import './base.css';
 @import './helpers.css';
 @import './layout.css';
+@import './fonts.css';
 
 @import './cmps/app-header.css';
 @import './cmps/app-footer.css';

@@ -1,0 +1,20 @@
+
+@font-face {
+  font-family: "Rubik-local";
+  src: url("/assets/fonts/Rubik/Rubik-VariableFont_wght.ttf");
+}
+@font-face {
+  font-family: "Arimo-local";
+  src: url("/assets/fonts/Arimo/Arimo-VariableFont_wght.ttf");
+}
+@font-face {
+  font-family: "Heebo-local";
+  src: url("/assets/fonts/Heebo/Heebo-VariableFont_wght.ttf");
+}
+@font-face {
+  font-family: "Amatic_SC-local";
+  src: url("/assets/fonts/Amatic_SC/AmaticSC-Regular.ttf");
+}
+.artistic-font {
+    font-family: Amatic_SC-local;
+}
