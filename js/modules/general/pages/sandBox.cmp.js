@@ -55,6 +55,8 @@ import initCanvasAnimation from '../../../../coolThings/coolCanvasVideoAnimation
 import { TimerWithUi } from '../../../../lib/Timer.js';
 import { SunSistem } from '../../../../coolThings/preatyLoaders/SunSistem.js';
 import { AnimatedLoader } from '../../../../coolThings/preatyLoaders/AnimationLoader.js';
+import { CanvasEditor } from '../../../../coolThings/CanvasPaiterEditor.js';
+import { WavyAnimation } from '../../../../coolThings/WavyAnimation/WavyAnimation.class.js';
 export default class SandBox {
     name = 'SandBox';
     state = {
@@ -69,6 +71,10 @@ export default class SandBox {
                     <hr class="width-all"/>
                     <div class="flex column align-center gap30">
                         <h2 class="flex-center">CanvasService</h2>
+                        <!--
+                            <div class="canvas-editor-container"></div>
+                            <div class="wavy-animation-container" style="width:1000px;aspect-ratio:1/0.5;max-width:90vw"></div>
+                        -->
                         <div class="sun-sistem-container"></div>
                         <div class="animated-loader-container"></div>
                         <div class="canvas-animation-container width-all" style="aspect-ratio:125/100;width:300px;max-width:90vw"></div>
@@ -114,6 +120,14 @@ export default class SandBox {
             
             const animLoader = new AnimatedLoader('.animated-loader-container');
             this.destroyers.push(animLoader.destroy.bind(animLoader));
+            
+
+            // const canvasEditor = new CanvasEditor('.canvas-editor-container');
+            // // this.destroyers.push(canvasEditor.destroy.bind(canvasEditor));
+
+            // // compile it, in file folder:: tsc WavyAnimation.class.ts --target es2016 --module es6
+            // const wavyAnimation = new WavyAnimation('.wavy-animation-container');
+            // this.destroyers.push(wavyAnimation.destroy.bind(wavyAnimation));
         }
     }
     onMounted() {
