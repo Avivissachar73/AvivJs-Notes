@@ -45,7 +45,7 @@ export default function init(selector = '.canvas-container') {
         staticShapes: [
             ...site.polygons,
             ...site.passages,
-            { zIndex: 1, x: 60, y: 230, h: 100, w: 100, text: '🦊', style: {fillStyle: 'black', textAlign: 'center', textBaseline: 'middle'}},
+            { zIndex: 1, x: 200 || 60, y: 230, h: 100, w: 100, text: '🦊', style: {fillStyle: 'black', textAlign: 'center', textBaseline: 'middle'}},
             {
                 geoShape: [
                     { x: 340, y: 460 },
