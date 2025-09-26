@@ -65,6 +65,7 @@ export class CanvasEditor {
                     {value: 'Arial', label: 'Arial'},
                     {value: 'Noto_Serif_Hebrew-local', label: 'Noto Serif He'},
                     {value: 'Noto Serif', label: 'Noto Serif'},
+                    {value: 'Courier New', label: 'Courier New'},
                 ])}
                 ${inputCmp('canvas-alignment-field', 'select', '', 'alignment', [
                     {value: 'center', label: 'center'},
