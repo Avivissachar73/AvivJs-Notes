@@ -70,6 +70,7 @@ export class CanvasEditor {
                     {value: 'Courier new', label: 'Courier new'},
                     {value: 'courier new', label: 'courier new'},
                     {value: 'courier', label: 'courier'},
+                    {value: 'monospace', label: 'monospace'},
                 ])}
                 ${inputCmp('canvas-alignment-field', 'select', '', 'alignment', [
                     {value: 'center', label: 'center'},
