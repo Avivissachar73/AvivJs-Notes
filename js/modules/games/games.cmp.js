@@ -1,5 +1,6 @@
 // import A_Alert from '../../../lib/Alert.js';
 import { alertService } from '../../../lib/Alert.js';
+import { Utils } from '../../../lib/utils.service.js';
 const A_Alert = alertService.A_Alert;
 
 import { Games } from './games-instances/index.js';
@@ -78,6 +79,7 @@ export default {
     },
     onCreated() {
       if (!this.routeGameName) this.context.router.push('/games/Damka');
+      Utils.copyToClipBoard(localStorage.SPACE_INVADERS_SAVES || '');
     },
     async onMounted() {
       this.setupGame();
