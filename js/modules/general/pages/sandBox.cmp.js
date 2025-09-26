@@ -75,9 +75,16 @@ export default class SandBox {
                         <div class="animated-loader-container"></div>
                         <div class="canvas-animation-container width-all" style="aspect-ratio:125/100;width:300px;max-width:90vw"></div>
                     </div>
-                    <hr class="width-all"/>
-                    <div class="canvas-editor-container"></div>
-                    <div class="wavy-animation-container" style="width:1000px;aspect-ratio:1/0.5;max-width:90vw"></div>
+                    <div class="canvas-editor-section">
+                        <hr class="width-all"/>
+                        <h2 class="flex-center">Canvas Editor</h2>
+                        <div class="canvas-editor-container"></div>
+                    </div>
+                    <div class="wavy-animation-section">
+                        <hr class="width-all"/>
+                        <h2 class="flex-center">Wavy Animation</h2>
+                        <div class="wavy-animation-container" style="width:1000px;aspect-ratio:1/0.5;max-width:90vw"></div>
+                    </div>
                     <hr class="width-all"/>
                     <NestedMicro/>
                     <hr class="width-all"/>
@@ -93,10 +100,10 @@ export default class SandBox {
         </main>
     `;
     style = {
-        '.canvas-editor-container': {
+        '.canvas-editor-section': {
             // display: 'none'
         },
-        '.wavy-animation-container': {
+        '.wavy-animation-section': {
             display: 'none'
         }
     }
