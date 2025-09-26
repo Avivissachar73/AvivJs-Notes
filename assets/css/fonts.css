@@ -15,6 +15,10 @@
   font-family: "Amatic_SC-local";
   src: url("../fonts/Amatic_SC/AmaticSC-Regular.ttf");
 }
+@font-face {
+  font-family: "Noto_Serif_Hebrew-local";
+  src: url("../fonts/Noto_Serif_Hebrew/NotoSerifHebrew-VariableFont_wdth\,wght.ttf");
+}
 .artistic-font {
     font-family: Amatic_SC-local;
 }

@@ -63,6 +63,7 @@ export class CanvasEditor {
                     {value: 'Heebo-local', label: 'Heebo'},
                     {value: 'Amatic_SC-local', label: 'Amatic_SC'},
                     {value: 'Arial', label: 'Arial'},
+                    {value: 'Noto_Serif_Hebrew-local', label: 'Noto Serif He'},
                     {value: 'Noto Serif', label: 'Noto Serif'},
                 ])}
                 ${inputCmp('canvas-alignment-field', 'select', '', 'alignment', [
