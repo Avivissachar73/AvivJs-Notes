@@ -157,17 +157,17 @@ export class CanvasEditor {
       shapes: [],
       staticShapes: [],
     }, { selector: '.canvas-editor', enableZoom: false, enableZoomUi: false, enableScrollUi: false, bgc: 'white' }, undefined, {
-      // click: (ev, pos, clickedItems) => {
-      //   const clickedItem = clickedItems.filter(c => c.id !== 'bgcItem')[0];
-      //   if (clickedItem) {
-      //     selectedItem = clickedItem;
-      //     outlineItem.hide = false;
-      //     setFieldValues();
-      //   } else {
-      //     outlineItem.hide = true;
-      //   }
-      //   updateIt();
-      // },
+      click: (ev, pos, clickedItems) => {
+        const clickedItem = clickedItems.filter(c => c.id !== 'bgcItem')[0];
+        if (clickedItem) {
+          selectedItem = clickedItem;
+          outlineItem.hide = false;
+          setFieldValues();
+        } else {
+          outlineItem.hide = true;
+        }
+        updateIt();
+      },
       ...(() => {
         let lastPos = null;
         let dragedItem = null;
@@ -250,7 +250,7 @@ export class CanvasEditor {
       canvasEditorContainer.querySelector('.canvas-posy-field').value = selectedItem.y;
       canvasEditorContainer.querySelector('.canvas-alignment-field').value = selectedItem.style.textAlign;
       canvasEditorContainer.querySelector('.canvas-direction-field').value = selectedItem.style.direction;
-      canvasEditorContainer.querySelector('.canvas-txt-field')?.focus();
+      // canvasEditorContainer.querySelector('.canvas-txt-field')?.focus();
     }
     canvasEditorContainer.querySelector('.canvas-txt-field').oninput = (ev) => {
       selectedItem.text = ev.target.value.trim();
