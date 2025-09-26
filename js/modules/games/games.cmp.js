@@ -79,7 +79,7 @@ export default {
     },
     onCreated() {
       if (!this.routeGameName) this.context.router.push('/games/Damka');
-      Utils.copyToClipBoard(localStorage.SPACE_INVADERS_SAVES || '');
+      // Utils.copyToClipBoard(localStorage.SPACE_INVADERS_SAVES || ''); // for debug
     },
     async onMounted() {
       this.setupGame();
