@@ -71,14 +71,13 @@ export default class SandBox {
                     <hr class="width-all"/>
                     <div class="flex column align-center gap30">
                         <h2 class="flex-center">CanvasService</h2>
-                        <!--
-                            <div class="canvas-editor-container"></div>
-                            <div class="wavy-animation-container" style="width:1000px;aspect-ratio:1/0.5;max-width:90vw"></div>
-                        -->
                         <div class="sun-sistem-container"></div>
                         <div class="animated-loader-container"></div>
                         <div class="canvas-animation-container width-all" style="aspect-ratio:125/100;width:300px;max-width:90vw"></div>
                     </div>
+                    <hr class="width-all"/>
+                    <div class="canvas-editor-container"></div>
+                    <div class="wavy-animation-container" style="width:1000px;aspect-ratio:1/0.5;max-width:90vw"></div>
                     <hr class="width-all"/>
                     <NestedMicro/>
                     <hr class="width-all"/>
@@ -93,6 +92,14 @@ export default class SandBox {
             </div>
         </main>
     `;
+    style = {
+        '.canvas-editor-container': {
+            // display: 'none'
+        },
+        '.wavy-animation-container': {
+            display: 'none'
+        }
+    }
     methods = {
         init() {
             // document.querySelector('.app').innerText = 'Hello world!';
@@ -122,12 +129,47 @@ export default class SandBox {
             this.destroyers.push(animLoader.destroy.bind(animLoader));
             
 
-            // const canvasEditor = new CanvasEditor('.canvas-editor-container');
+            const canvasEditor = new CanvasEditor('.canvas-editor-container', {
+                "bgc": "#ff6666",
+                "textItems": [
+                    {
+                        "id": "ID-1E88-1998794DFB0-CA0",
+                        "fontSize": 110,
+                        "x": 950,
+                        "y": 50,
+                        "text": "אדומת השיער\nהצרפתייה מהונגריה\nישבה עם חברות\nלבושה באדום\nלא היה לה מקום\nלא יה לה בן זוג\nעל ספסל מלוכלך\nללא יין מזוג",
+                        "isCenterPos": false,
+                        "style": {
+                            "fillStyle": "#000000",
+                            "fontFamily": "Amatic_SC-local",
+                            "textAlign": "end",
+                            "textBaseline": "top",
+                            "direction": "ltr"
+                        }
+                    },
+                    {
+                        "id": "ID-1D3A-19987950E47-AF2",
+                        "fontSize": 100,
+                        "x": 50,
+                        "y": 900,
+                        "text": "אביב",
+                        "isCenterPos": false,
+                        "style": {
+                            "fillStyle": "#000000",
+                            "fontFamily": "Amatic_SC-local",
+                            "textAlign": "start",
+                            "textBaseline": "top",
+                            "direction": "rtl"
+                        }
+                    }
+                ]
+            });
+            window.canvasEditor = canvasEditor;
             // // this.destroyers.push(canvasEditor.destroy.bind(canvasEditor));
 
             // // compile it, in file folder:: tsc WavyAnimation.class.ts --target es2016 --module es6
-            // const wavyAnimation = new WavyAnimation('.wavy-animation-container');
-            // this.destroyers.push(wavyAnimation.destroy.bind(wavyAnimation));
+            const wavyAnimation = new WavyAnimation('.wavy-animation-container');
+            this.destroyers.push(wavyAnimation.destroy.bind(wavyAnimation));
         }
     }
     onMounted() {
