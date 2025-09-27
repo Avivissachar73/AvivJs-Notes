@@ -4,22 +4,32 @@ import { Utils } from "../lib/utils.service.js";
 
 
 export class CanvasEditor {
-  constructor(parentSelector = 'body', initState) {
+  state = {
+    bgc: '#ffffff',
+    bgImg: '',
+    w: 1000,
+    h: 1500,
+    textItems: [],
+  };
+  constructor(parentSelector = 'body', initState = null) {
+    if (initState) this.state = initState;
     this.initState = initState;
     this.parentSelector = parentSelector;
     this.parentEl = parentSelector instanceof Element ? parentSelector : document.querySelector(parentSelector);
     this.initCanvasEditor();
   }
 
-  state = {
-    bgc: '#ffffff',
-    textItems: []
-  };
-  config = {
-    w: 1000,
-    pad: {
-      x: 1000/20,
-      y: 1000/20
+  get config() {
+    const w = this.state.w;
+    const h = this.state.h;
+    return {
+      w,
+      h,
+      defaultFontSize: w / 10,
+      pad: {
+        x: w/20,
+        y: h/20
+      }
     }
   }
   canvasService = null;
@@ -42,8 +52,10 @@ export class CanvasEditor {
                     width: '500px',
                     'max-width': '90vw',
                     'aspect-ratio': '1/1',
-                    border: '1px solid black',
-                    overflow: 'hidden'
+                    // overflow: 'hidden',
+                    canvas: {
+                      border: '1px solid black',
+                    }
                 },
                 'input, textarea, select, button': {
                     color: 'black',
@@ -55,9 +67,10 @@ export class CanvasEditor {
                 }
                 
             }) }
-            <div class="flex align-center gap10 wrap align-center justify-center">
+            <div class="flex align-center gap5 wrap align-center justify-center">
+                ${inputCmp('canvas-bg-bgc-field', 'input', 'color', 'bg')}
                 ${inputCmp('canvas-clr-field', 'input', 'color', 'clr')}
-                ${inputCmp('canvas-bgc-field', 'input', 'color', 'bg')}
+                ${inputCmp('canvas-bgc-field', 'input', 'color', 'clr')}
                 ${inputCmp('canvas-font-field', 'select', '', 'font', [
                     {value: 'Arimo-local', label: 'Arimo'},
                     {value: 'Heebo-local', label: 'Heebo'},
@@ -81,7 +94,7 @@ export class CanvasEditor {
                 ${inputCmp('canvas-posy-field', 'input', 'number', 'pos-y')}
                 <!--
                     <input type="color" class="canvas-clr-field"/>
-                    <input type="color" class="canvas-bgc-field"/>
+                    <input type="color" class="canvas-bg-bgc-field"/>
                     <select class="canvas-font-field" placeholder="font">
                         <option value="Arimo-local" label="Arimo"></option>
                         <option value="Heebo-local" label="Heebo"></option>
@@ -102,8 +115,8 @@ export class CanvasEditor {
                     <input type="number" class="canvas-posx-field"/>
                     <input type="number" class="canvas-posy-field"/>
                 -->
-                <button class="print-btn">Download</button>
                 <button class="add-txt">Add txt</button>
+                <button class="print-btn">Download</button>
             </div>
             <!-- <textarea class="canvas-txt-field" name="" id=""></textarea> -->
             ${inputCmp('canvas-txt-field', 'textarea', '', 'Text')}
@@ -122,15 +135,21 @@ export class CanvasEditor {
     //   txtClr: '#000000',
     //   bgc: '#ffffff'
     // }
-    const padData = this.config.pad;
+    // const padData = this.config.pad;
     const initItem = () => ({
       id: Utils.getRandomId(),
       // w: w/10,
-      fontSize: w/10,
-      x: w-padData.x,
-      y: padData.y,
+      zIndex: this.state.textItems.length + 1,
+      fontSize: this.config.defaultFontSize,
+      x: this.config.w-this.config.pad.x,
+      y: this.config.pad.y,
       text: '',
       isCenterPos: false,
+      data: {
+        textItem: true,
+        systemItem: false,
+        bgc: 'white'
+      },
       style: {
         fillStyle: '#000000',
         fontFamily: 'Arial',
@@ -139,13 +158,31 @@ export class CanvasEditor {
         direction: 'ltr'
       }
     });
-    let canvasTextItem = this.initState?.textItems?.length ? this.initState.textItems[0] : initItem();
-    const bgcItem = { zIndex: -1, id: 'bgcItem', w: w, h: w, x: 0, y: 0, style: {fillStyle: this.initState?.bgc || '#ffffff'}};
+    const createTextBgItem = (txtItem) => ({
+      ...txtItem,
+      zIndex: txtItem.zIndex - 0.5 || 0,
+      id: 'bg-' + txtItem.id,
+      isCenterPos: false,
+      hide: true,
+      style: {fillStyle: txtItem.data?.bgc || '', strokeStyle: txtItem.style.fillStyle || '', lineWidth: 5},
+      data: { systemItem: true },
+      text: undefined,
+      fontSize: undefined,
+      ...CanvasService.getrenderAreaItemForTxtItem(txtItem)
+    });
+    let canvasTextItem = this.state?.textItems?.length ? this.state.textItems.filter(c => !c.systemItem)[0] : initItem();
+    const bgcItem = { zIndex: -1, data: { systemItem: true }, id: 'bgcItem', w: this.config.w, h: this.config.h, x: 0, y: 0, img: this.state.bgImg || '', style: {fillStyle: this.state?.bgc || '#ffffff'}};
     this.state.bgc = bgcItem.style.fillStyle;
-    let outlineItem = {id: 'outlineItem', hide: false, isCenterPos: false, style: {strokeStyle: '#000000', lineWidth: 0}};
-    const canvasItems = this.initState?.textItems?.length ? this.initState.textItems : [canvasTextItem];
-    this.state.textItems = canvasItems;
+    let outlineItem = {data: { systemItem: true }, zIndex: 1000, id: 'outlineItem', hide: false, isCenterPos: false, style: {strokeStyle: '#000000', lineWidth: 0}};
+    const textItems = this.state?.textItems?.length ? this.state.textItems : [canvasTextItem];
+    this.state.textItems = [...textItems];
     let selectedItem = canvasTextItem;
+    this.canvasItems = [
+      bgcItem,
+      outlineItem,
+      ...this.state.textItems.reduce((acc, c) => [...acc, c, createTextBgItem(c)], [])
+    ];
+    console.log(this.canvasItems);
     // const getrenderAreaItemForTxtItem = (textItem) => {
     //   const _linesCount = textItem.text.split('\n').length;
     //   const areaItem = { x: textItem.x, y: textItem.y, h: textItem.fontSize*_linesCount, w: Math.max(...textItem.text.split('\n').map(_ => CanvasService.Utils.getTextPxSize(_, textItem.fontSize, textItem.style.fontFamily))) };
@@ -154,13 +191,14 @@ export class CanvasEditor {
     //   return areaItem;
     // }
     this.canvasService = new CanvasService({
-      width: w,
-      height: w,
+      width: this.config.w,
+      height: this.config.h,
       shapes: [],
       staticShapes: [],
     }, { selector: '.canvas-editor', enableZoom: false, enableZoomUi: false, enableScrollUi: false, bgc: 'white' }, undefined, {
       click: (ev, pos, clickedItems) => {
-        const clickedItem = clickedItems.filter(c => c.id !== 'bgcItem')[0];
+        // const clickedItem = clickedItems.filter(c => c.id !== 'bgcItem')[0];
+        const clickedItem = clickedItems.filter(c => !c.data?.systemItem)[0];
         if (clickedItem) {
           selectedItem = clickedItem;
           outlineItem.hide = false;
@@ -173,7 +211,7 @@ export class CanvasEditor {
       ...(() => {
         let lastPos = null;
         let dragedItem = null;
-        function updatePosByDiff(pos) {
+        const updatePosByDiff = (pos) => {
           if (!lastPos || !dragedItem) return;
           // const newPos = Utils.getPosOnTargetElementFromMouseEvent(ev);
           const newPos = pos;
@@ -187,46 +225,52 @@ export class CanvasEditor {
           setFieldValues();
           updateIt();
         }
+        const onMousedown = (ev, pos, items) => {
+          const item = items.filter(c => !c.data?.systemItem)[0];
+          if (!item) {
+            outlineItem.hide = true;
+            return;
+          }
+
+          if (!selectedItem?.id !== item.id) {
+            selectedItem = item;
+            outlineItem.hide = false;
+            setFieldValues();
+          }
+
+          // selectedItem = item;
+          updateIt();
+          // lastPos = Utils.getPosOnTargetElementFromMouseEvent(ev);
+          dragedItem = selectedItem;
+          lastPos = pos;
+        }
+        const onMouseup = (ev, pos) => {
+          updatePosByDiff(pos);
+          lastPos = dragedItem = null;
+        }
+        const onMouseMove = (ev, pos, hoveredItems) => {
+          const hoveredItem = hoveredItems.filter(c => c.id !== 'bgcItem')[0];
+          if (hoveredItem) {
+            this.canvasService.elCanvas.style.cursor = 'pointer';
+          } else {
+            this.canvasService.elCanvas.style.cursor = '';
+          }
+          updatePosByDiff(pos);
+          updateIt();
+        }
         return {
-          mousemove: (ev, pos, hoveredItems) => {
-            const hoveredItem = hoveredItems.filter(c => c.id !== 'bgcItem')[0];
-            if (hoveredItem) {
-              this.canvasService.elCanvas.style.cursor = 'pointer';
-            } else {
-              this.canvasService.elCanvas.style.cursor = '';
-            }
-            updatePosByDiff(pos);
-            updateIt();
-          },
+          mousemove: onMouseMove,
+          touchmove: onMouseMove,
           mouseleave() {
             lastPos = dragedItem = null;
           },
           mouseenter() {
             lastPos = dragedItem = null;
           },
-          mousedown(ev, pos, items) {
-            const item = items.filter(c => c.id !== 'bgcItem')[0];
-            if (!item) {
-              outlineItem.hide = true;
-              return;
-            }
-
-            if (!selectedItem?.id !== item.id) {
-              selectedItem = item;
-              outlineItem.hide = false;
-              setFieldValues();
-            }
-
-            // selectedItem = item;
-            updateIt();
-            // lastPos = Utils.getPosOnTargetElementFromMouseEvent(ev);
-            dragedItem = selectedItem;
-            lastPos = pos;
-          },
-          mouseup(ev, pos) {
-            updatePosByDiff(pos);
-            lastPos = dragedItem = null;
-          }
+          mousedown: onMousedown,
+          touchstart: onMousedown,
+          mouseup: onMouseup,
+          touchend: onMouseup
         }
       })()
     });
@@ -241,11 +285,20 @@ export class CanvasEditor {
       this.canvasService.updateCell(undefined, bgcItem);
       this.canvasService.updateCell(undefined, selectedItem);
       this.canvasService.updateCell(undefined, outlineItem);
+      const selectedBgIdx = this.canvasItems.findIndex(c => c.id === `bg-${selectedItem?.id}`);
+      if (selectedBgIdx !== -1) {
+        this.canvasItems[selectedBgIdx] = {
+          ...this.canvasItems[selectedBgIdx],
+          ...CanvasService.getrenderAreaItemForTxtItem(selectedItem)
+        }
+        this.canvasService.updateCell(undefined, this.canvasItems[selectedBgIdx]);
+      }
     }
     function setFieldValues() {
       canvasEditorContainer.querySelector('.canvas-txt-field').value = selectedItem.text;
       canvasEditorContainer.querySelector('.canvas-clr-field').value = selectedItem.style.fillStyle;
-      canvasEditorContainer.querySelector('.canvas-bgc-field').value = bgcItem.style.fillStyle;
+      canvasEditorContainer.querySelector('.canvas-bgc-field').value = selectedItem.bgc;
+      canvasEditorContainer.querySelector('.canvas-bg-bgc-field').value = bgcItem.style.fillStyle;
       canvasEditorContainer.querySelector('.canvas-font-size-field').value = selectedItem.fontSize;
       canvasEditorContainer.querySelector('.canvas-font-field').value = selectedItem.style.fontFamily;
       canvasEditorContainer.querySelector('.canvas-posx-field').value = selectedItem.x;
@@ -263,6 +316,10 @@ export class CanvasEditor {
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-bgc-field').oninput = (ev) => {
+      selectedItem.bgc = ev.target.value;
+      updateIt();
+    }
+    canvasEditorContainer.querySelector('.canvas-bg-bgc-field').oninput = (ev) => {
       bgcItem.style.fillStyle = ev.target.value;
       this.state.bgc = bgcItem.style.fillStyle;
       updateIt();
@@ -290,9 +347,9 @@ export class CanvasEditor {
     canvasEditorContainer.querySelector('.canvas-alignment-field').oninput = (ev) => {
       const prev = selectedItem.style.textAlign;
       selectedItem.style.textAlign = ev.target.value;
-      if (selectedItem.style.textAlign === 'center') selectedItem.x = w / 2;
-      if (selectedItem.style.textAlign === 'end') selectedItem.x = w-padData.x;
-      if (selectedItem.style.textAlign === 'start') selectedItem.x = padData.x;
+      if (selectedItem.style.textAlign === 'center') selectedItem.x = this.config.w / 2;
+      if (selectedItem.style.textAlign === 'end') selectedItem.x = this.config.w-this.config.pad.x;
+      if (selectedItem.style.textAlign === 'start') selectedItem.x = this.config.pad.x;
       updateIt();
     }
     canvasEditorContainer.querySelector('.add-txt').oninput = (ev) => {
@@ -318,7 +375,11 @@ export class CanvasEditor {
     };
     canvasEditorContainer.querySelector('.add-txt').onclick = () => {
       selectedItem = initItem();
-      canvasItems.push(selectedItem);
+      this.state.textItems.push(selectedItem);
+
+      this.canvasItems.push(selectedItem);
+      this.canvasItems.push(createTextBgItem(selectedItem));
+
       setFieldValues();
       updateIt();
     };

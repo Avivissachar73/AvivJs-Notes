@@ -138,12 +138,16 @@ export default class SandBox {
 
             const canvasEditor = new CanvasEditor('.canvas-editor-container', {
                 "bgc": "#ff6666",
+                // bgImg: 'http://127.0.0.1:5501/js/modules/notes/sampleAssets/Spider-Man_Vol_1_1.webp',
+                "w": 1000,
+                "h": 1000,
                 "textItems": [
                     {
                         "id": "ID-1E88-1998794DFB0-CA0",
                         "fontSize": 110,
                         "x": 950,
                         "y": 50,
+                        zIndex: 1,
                         "text": "אדומת השיער\nהצרפתייה מהונגריה\nישבה עם חברות\nלבושה באדום\nלא היה לה מקום\nלא היה לה בן זוג\nעל ספסל מלוכלך\nללא יין מזוג",
                         "isCenterPos": false,
                         "style": {
@@ -159,6 +163,7 @@ export default class SandBox {
                         "fontSize": 100,
                         "x": 50,
                         "y": 900,
+                        zIndex: 2,
                         "text": "אביב",
                         "isCenterPos": false,
                         "style": {
