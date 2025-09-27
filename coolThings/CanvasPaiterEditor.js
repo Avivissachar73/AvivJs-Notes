@@ -214,6 +214,7 @@ export class CanvasEditor {
           updateIt();
         }
         const onMousedown = (ev, pos, items) => {
+          ev?.preventDefault?.();
           const item = items.filter(c => !c.data?.systemItem)[0];
           if (!item) {
             outlineItem.hide = true;
@@ -233,10 +234,12 @@ export class CanvasEditor {
           lastPos = pos;
         }
         const onMouseup = (ev, pos) => {
+          ev?.preventDefault?.();
           updatePosByDiff(pos);
           lastPos = dragedItem = null;
         }
         const onMouseMove = (ev, pos, hoveredItems) => {
+          ev?.preventDefault?.();
           const hoveredItem = hoveredItems.filter(c => c.id !== 'bgcItem')[0];
           if (hoveredItem) {
             this.canvasService.elCanvas.style.cursor = 'pointer';
