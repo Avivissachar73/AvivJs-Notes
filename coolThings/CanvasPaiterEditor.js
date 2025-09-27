@@ -232,7 +232,7 @@ export class CanvasEditor {
         }
         const onMousedown = (ev, pos, items) => {
           ev?.preventDefault?.();
-          if (this.actionsState.paintModeOn) {
+          if (this.actionsState.paintModeOn && false) {
             this.actionsState.painting = true;
             return;
           }
@@ -257,7 +257,7 @@ export class CanvasEditor {
         }
         const onMouseup = (ev, pos) => {
           ev?.preventDefault?.();
-          if (this.actionsState.paintModeOn) {
+          if (this.actionsState.paintModeOn && false) {
             this.actionsState.painting = false;
             this.actionsState.currPaintingShape = this.actionsState.selectedItem = null;
             return;
@@ -267,7 +267,7 @@ export class CanvasEditor {
         }
         const onMouseMove = (ev, pos, hoveredItems) => {
           ev?.preventDefault?.();
-          if (this.actionsState.paintModeOn) {
+          if (this.actionsState.paintModeOn && false) {
             if (!this.actionsState.painting) return;
             if (!this.actionsState.currPaintingShape) {
               this.actionsState.currPaintingShape = { geoShape: [], zIndex: this.state.textItems.length + 1, data: {  }, style: { strokeStyle: canvasEditorContainer.querySelector('.canvas-clr-field').value || 'red', lineWidth: 8 }, id: Utils.getRandomId() };
