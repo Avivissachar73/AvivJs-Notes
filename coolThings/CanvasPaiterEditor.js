@@ -196,18 +196,6 @@ export class CanvasEditor {
       shapes: [],
       staticShapes: [],
     }, { selector: '.canvas-editor', enableZoom: false, enableZoomUi: false, enableScrollUi: false, bgc: 'white' }, undefined, {
-      click: (ev, pos, clickedItems) => {
-        // const clickedItem = clickedItems.filter(c => c.id !== 'bgcItem')[0];
-        const clickedItem = clickedItems.filter(c => !c.data?.systemItem)[0];
-        if (clickedItem) {
-          selectedItem = clickedItem;
-          outlineItem.hide = false;
-          setFieldValues();
-        } else {
-          outlineItem.hide = true;
-        }
-        updateIt();
-      },
       ...(() => {
         let lastPos = null;
         let dragedItem = null;
@@ -259,18 +247,31 @@ export class CanvasEditor {
           updateIt();
         }
         return {
+          click: (ev, pos, clickedItems) => {
+            // const clickedItem = clickedItems.filter(c => c.id !== 'bgcItem')[0];
+            const clickedItem = clickedItems.filter(c => !c.data?.systemItem)[0];
+            if (clickedItem) {
+              selectedItem = clickedItem;
+              outlineItem.hide = false;
+              setFieldValues();
+            } else {
+              outlineItem.hide = true;
+            }
+            lastPos = dragedItem = null;
+            updateIt();
+          },
+          mousedown: onMousedown,
           mousemove: onMouseMove,
+          mouseup: onMouseup,
+          touchstart: onMousedown,
           touchmove: onMouseMove,
+          touchend: onMouseup,
           mouseleave() {
             lastPos = dragedItem = null;
           },
           mouseenter() {
             lastPos = dragedItem = null;
           },
-          mousedown: onMousedown,
-          touchstart: onMousedown,
-          mouseup: onMouseup,
-          touchend: onMouseup
         }
       })()
     });
