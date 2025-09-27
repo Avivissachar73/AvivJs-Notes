@@ -9,7 +9,7 @@ export class CanvasEditor {
     bgImg: '',
     w: 1000,
     h: 1500,
-    textItems: [],
+    textItems: []
   };
   constructor(parentSelector = 'body', initState = null) {
     if (initState) this.state = initState;
@@ -17,6 +17,14 @@ export class CanvasEditor {
     this.parentSelector = parentSelector;
     this.parentEl = parentSelector instanceof Element ? parentSelector : document.querySelector(parentSelector);
     this.initCanvasEditor();
+  }
+
+  actionsState = {
+    selectedItem: null,
+    dragedItem: null,
+    lastDragPos: null,
+    paintModeOn: false,
+    currPaintingShape: null
   }
 
   get config() {
@@ -116,6 +124,7 @@ export class CanvasEditor {
                     <input type="number" class="canvas-posy-field"/>
                 -->
                 <button class="add-txt">Add txt</button>
+                <button class="toggle-paint-mode-btn">Paint</button>
                 <button class="print-btn">Download</button>
             </div>
             <!-- <textarea class="canvas-txt-field" name="" id=""></textarea> -->
@@ -124,7 +133,7 @@ export class CanvasEditor {
         </div>
     `;
     // const editorContainer = document.querySelector('.canvas-editor');
-    const w = this.config.w;
+    // const w = this.config.w;
     // const txtConfig = {
     //   txt: '',
     //   font: 'Amatic_SC-local',
@@ -176,11 +185,16 @@ export class CanvasEditor {
     let outlineItem = {data: { systemItem: true }, zIndex: 1000, id: 'outlineItem', hide: false, isCenterPos: false, style: {strokeStyle: '#000000', lineWidth: 0}};
     const textItems = this.state?.textItems?.length ? this.state.textItems : [canvasTextItem];
     this.state.textItems = [...textItems];
-    let selectedItem = canvasTextItem;
+    this.actionsState.selectedItem = canvasTextItem;
     this.canvasItems = [
       bgcItem,
       outlineItem,
-      ...this.state.textItems.reduce((acc, c) => [...acc, c, createTextBgItem(c)], [])
+      ...this.state.textItems.reduce((acc, c) => {
+        // [...acc, c]
+        acc.push(c);
+        if (c.data?.textItem) acc.push(createTextBgItem(c));
+        return acc;
+      }, [])
     ];
     // const getrenderAreaItemForTxtItem = (textItem) => {
     //   const _linesCount = textItem.text.split('\n').length;
@@ -196,27 +210,31 @@ export class CanvasEditor {
       staticShapes: [],
     }, { selector: '.canvas-editor', enableZoom: false, enableZoomUi: false, enableScrollUi: false, bgc: '#ffffff' }, undefined, {
       ...(() => {
-        let lastPos = null;
-        let dragedItem = null;
+        // let this.actionsState.lastDragPos = null;
+        // let this.actionsState.dragedItem = null;
         const updatePosByDiff = (pos) => {
-          if (!lastPos || !dragedItem) return;
+          if (!this.actionsState.lastDragPos || !this.actionsState.dragedItem) return;
           // const newPos = Utils.getPosOnTargetElementFromMouseEvent(ev);
           const newPos = pos;
           const diff = {
-            x: newPos.x - lastPos.x,
-            y: newPos.y - lastPos.y
+            x: newPos.x - this.actionsState.lastDragPos.x,
+            y: newPos.y - this.actionsState.lastDragPos.y
           }
-          dragedItem.x += diff.x;
-          dragedItem.y += diff.y;
-          lastPos = newPos;
+          this.actionsState.dragedItem.x += diff.x;
+          this.actionsState.dragedItem.y += diff.y;
+          this.actionsState.lastDragPos = newPos;
           setFieldValues();
           updateIt();
         }
         const getMatchedItems = (items) => {
-          return items.filter(c => !c.data?.systemItem).sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
+          return items.filter(c => c.data?.textItem).sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
         }
         const onMousedown = (ev, pos, items) => {
           ev?.preventDefault?.();
+          if (this.actionsState.paintModeOn) {
+            this.actionsState.painting = true;
+            return;
+          }
           // const item = items.filter(c => !c.data?.systemItem)[0];
           const item = getMatchedItems(items)[0];
           if (!item) {
@@ -224,25 +242,43 @@ export class CanvasEditor {
             return;
           }
 
-          if (!selectedItem?.id !== item.id) {
-            selectedItem = item;
+          if (!this.actionsState.selectedItem?.id !== item.id) {
+            this.actionsState.selectedItem = item;
             outlineItem.hide = false;
             setFieldValues();
           }
 
-          // selectedItem = item;
+          // this.actionsState.selectedItem = item;
           updateIt();
-          // lastPos = Utils.getPosOnTargetElementFromMouseEvent(ev);
-          dragedItem = selectedItem;
-          lastPos = pos;
+          // this.actionsState.lastDragPos = Utils.getPosOnTargetElementFromMouseEvent(ev);
+          this.actionsState.dragedItem = this.actionsState.selectedItem;
+          this.actionsState.lastDragPos = pos;
         }
         const onMouseup = (ev, pos) => {
           ev?.preventDefault?.();
+          if (this.actionsState.paintModeOn) {
+            this.actionsState.painting = false;
+            this.actionsState.currPaintingShape = this.actionsState.selectedItem = null;
+            return;
+          }
           updatePosByDiff(pos);
-          lastPos = dragedItem = null;
+          this.actionsState.lastDragPos = this.actionsState.dragedItem = this.actionsState.currPaintingShape = null;
         }
         const onMouseMove = (ev, pos, hoveredItems) => {
           ev?.preventDefault?.();
+          if (this.actionsState.paintModeOn) {
+            if (!this.actionsState.painting) return;
+            if (!this.actionsState.currPaintingShape) {
+              this.actionsState.currPaintingShape = { geoShape: [], zIndex: this.state.textItems.length + 1, data: {  }, style: { strokeStyle: canvasEditorContainer.querySelector('.canvas-clr-field').value || 'red', lineWidth: 8 }, id: Utils.getRandomId() };
+              this.state.textItems.push(this.actionsState);
+              this.actionsState.selectedItem = null;
+              this.canvasItems.push(this.actionsState.currPaintingShape);
+              updateIt();
+            }
+            this.actionsState.currPaintingShape.geoShape.push(pos);
+            this.canvasService.updateCell(undefined, this.actionsState.currPaintingShape);
+            return;
+          }
           // const hoveredItem = hoveredItems.filter(c => c.id !== 'bgcItem')[0];
           const hoveredItem = getMatchedItems(hoveredItems)[0];
           if (hoveredItem) {
@@ -255,17 +291,19 @@ export class CanvasEditor {
         }
         return {
           click: (ev, pos, clickedItems) => {
+            if (this.actionsState.paintModeOn) return;
             // const clickedItem = clickedItems.filter(c => c.id !== 'bgcItem')[0];
             // const clickedItem = clickedItems.filter(c => !c.data?.systemItem)[0];
             const clickedItem = getMatchedItems(clickedItems)[0];
             if (clickedItem) {
-              selectedItem = clickedItem;
+              this.actionsState.selectedItem = clickedItem;
               outlineItem.hide = false;
               setFieldValues();
             } else {
+              this.actionsState.selectedItem = null;
               outlineItem.hide = true;
             }
-            lastPos = dragedItem = null;
+            this.actionsState.lastDragPos = this.actionsState.dragedItem = this.actionsState.currPaintingShape = null;
             updateIt();
           },
           mousedown: onMousedown,
@@ -274,11 +312,11 @@ export class CanvasEditor {
           touchstart: onMousedown,
           touchmove: onMouseMove,
           touchend: onMouseup,
-          mouseleave() {
-            lastPos = dragedItem = null;
+          mouseleave: () => {
+            this.actionsState.lastDragPos = this.actionsState.dragedItem = this.actionsState.currPaintingShape = null;
           },
-          mouseenter() {
-            lastPos = dragedItem = null;
+          mouseenter: () => {
+            this.actionsState.lastDragPos = this.actionsState.dragedItem = this.actionsState.currPaintingShape = null;
           },
         }
       })()
@@ -289,43 +327,46 @@ export class CanvasEditor {
     const updateIt = () => {
       // canvasTextItem = { id: 'textItem', w: txtConfig.fontSize, x: w-txtConfig.padX, y: txtConfig.padY, text: txtConfig.txt, style: {fillStyle: txtConfig.txtClr, fontFamily: txtConfig.font, textAlign: txtConfig.txtAlign, textBaseline: 'end'}};
       // bgcItem = { id: 'bgcItem', w: w, h: w, x: 0, y: 0, style: {fillStyle: txtConfig.bgc}};
-      outlineItem = {...outlineItem, ...CanvasService.getrenderAreaItemForTxtItem(selectedItem)};
-      // selectedItem = { ...selectedItem, w: outlineItem.w, h: outlineItem.h, x: outlineItem.x, y: outlineItem.y };
+      outlineItem = {...outlineItem, ...(this.actionsState.selectedItem ? CanvasService.getrenderAreaItemForTxtItem(this.actionsState.selectedItem) : { hide: true })};
+      // this.actionsState.selectedItem = { ...this.actionsState.selectedItem, w: outlineItem.w, h: outlineItem.h, x: outlineItem.x, y: outlineItem.y };
       this.canvasService.updateCell(undefined, bgcItem);
-      this.canvasService.updateCell(undefined, selectedItem);
       this.canvasService.updateCell(undefined, outlineItem);
-      const selectedBgIdx = this.canvasItems.findIndex(c => c.id === `bg-${selectedItem?.id}`);
+      if (!this.actionsState.selectedItem) return;
+      this.canvasService.updateCell(undefined, this.actionsState.selectedItem);
+      const selectedBgIdx = this.canvasItems.findIndex(c => c.id === `bg-${this.actionsState.selectedItem?.id}`);
       if (selectedBgIdx !== -1) {
         this.canvasItems[selectedBgIdx] = {
           ...this.canvasItems[selectedBgIdx],
-          ...CanvasService.getrenderAreaItemForTxtItem(selectedItem)
+          ...CanvasService.getrenderAreaItemForTxtItem(this.actionsState.selectedItem)
         }
         this.canvasService.updateCell(undefined, this.canvasItems[selectedBgIdx]);
       }
     }
-    function setFieldValues() {
-      canvasEditorContainer.querySelector('.canvas-txt-field').value = selectedItem.text;
-      canvasEditorContainer.querySelector('.canvas-clr-field').value = selectedItem.style.fillStyle;
-      canvasEditorContainer.querySelector('.canvas-bgc-field').value = selectedItem.data.bgc;
+    const setFieldValues = () => {
+      if (!this.actionsState.selectedItem) return;
+      canvasEditorContainer.querySelector('.canvas-txt-field').value = this.actionsState.selectedItem.text;
+      canvasEditorContainer.querySelector('.canvas-clr-field').value = this.actionsState.selectedItem.style.fillStyle;
+      canvasEditorContainer.querySelector('.canvas-bgc-field').value = this.actionsState.selectedItem.data.bgc;
       canvasEditorContainer.querySelector('.canvas-bg-bgc-field').value = bgcItem.style.fillStyle;
-      canvasEditorContainer.querySelector('.canvas-font-size-field').value = selectedItem.fontSize;
-      canvasEditorContainer.querySelector('.canvas-font-field').value = selectedItem.style.fontFamily;
-      canvasEditorContainer.querySelector('.canvas-posx-field').value = selectedItem.x;
-      canvasEditorContainer.querySelector('.canvas-posy-field').value = selectedItem.y;
-      canvasEditorContainer.querySelector('.canvas-alignment-field').value = selectedItem.style.textAlign;
-      canvasEditorContainer.querySelector('.canvas-direction-field').value = selectedItem.style.direction;
+      canvasEditorContainer.querySelector('.canvas-font-size-field').value = this.actionsState.selectedItem.fontSize;
+      canvasEditorContainer.querySelector('.canvas-font-field').value = this.actionsState.selectedItem.style.fontFamily;
+      canvasEditorContainer.querySelector('.canvas-posx-field').value = this.actionsState.selectedItem.x;
+      canvasEditorContainer.querySelector('.canvas-posy-field').value = this.actionsState.selectedItem.y;
+      canvasEditorContainer.querySelector('.canvas-alignment-field').value = this.actionsState.selectedItem.style.textAlign;
+      canvasEditorContainer.querySelector('.canvas-direction-field').value = this.actionsState.selectedItem.style.direction;
       // canvasEditorContainer.querySelector('.canvas-txt-field')?.focus();
     }
     canvasEditorContainer.querySelector('.canvas-txt-field').oninput = (ev) => {
-      selectedItem.text = ev.target.value.trim();
+      this.actionsState.selectedItem.text = ev.target.value.trim();
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-clr-field').oninput = (ev) => {
-      selectedItem.style.fillStyle = ev.target.value;
+      if (!this.actionsState.selectedItem) return;
+      this.actionsState.selectedItem.style.fillStyle = ev.target.value;
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-bgc-field').oninput = (ev) => {
-      selectedItem.data.bgc = ev.target.value;
+      this.actionsState.selectedItem.data.bgc = ev.target.value;
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-bg-bgc-field').oninput = (ev) => {
@@ -334,39 +375,39 @@ export class CanvasEditor {
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-font-size-field').oninput = (ev) => {
-      selectedItem.fontSize = +ev.target.value;
+      this.actionsState.selectedItem.fontSize = +ev.target.value;
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-font-field').oninput = (ev) => {
-      selectedItem.style.fontFamily = ev.target.value;
+      this.actionsState.selectedItem.style.fontFamily = ev.target.value;
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-posx-field').oninput = (ev) => {
       // padData.x = +ev.target.value;
-      // selectedItem.x = w-padData.x;
-      selectedItem.x = +ev.target.value;
+      // this.actionsState.selectedItem.x = w-padData.x;
+      this.actionsState.selectedItem.x = +ev.target.value;
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-posy-field').oninput = (ev) => {
       // padData.y = +ev.target.value
-      // selectedItem.y = padData.y;
-      selectedItem.y = +ev.target.value;;
+      // this.actionsState.selectedItem.y = padData.y;
+      this.actionsState.selectedItem.y = +ev.target.value;;
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-alignment-field').oninput = (ev) => {
-      const prev = selectedItem.style.textAlign;
-      selectedItem.style.textAlign = ev.target.value;
-      if (selectedItem.style.textAlign === 'center') selectedItem.x = this.config.w / 2;
-      if (selectedItem.style.textAlign === 'end') selectedItem.x = this.config.w-this.config.pad.x;
-      if (selectedItem.style.textAlign === 'start') selectedItem.x = this.config.pad.x;
+      const prev = this.actionsState.selectedItem.style.textAlign;
+      this.actionsState.selectedItem.style.textAlign = ev.target.value;
+      if (this.actionsState.selectedItem.style.textAlign === 'center') this.actionsState.selectedItem.x = this.config.w / 2;
+      if (this.actionsState.selectedItem.style.textAlign === 'end') this.actionsState.selectedItem.x = this.config.w-this.config.pad.x;
+      if (this.actionsState.selectedItem.style.textAlign === 'start') this.actionsState.selectedItem.x = this.config.pad.x;
       updateIt();
     }
     canvasEditorContainer.querySelector('.add-txt').oninput = (ev) => {
-      selectedItem.style.textAlign = ev.target.value;
+      this.actionsState.selectedItem.style.textAlign = ev.target.value;
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-direction-field').oninput = (ev) => {
-      selectedItem.style.direction = ev.target.value;
+      this.actionsState.selectedItem.style.direction = ev.target.value;
       updateIt();
     }
 
@@ -383,16 +424,24 @@ export class CanvasEditor {
       }
     };
     canvasEditorContainer.querySelector('.add-txt').onclick = () => {
-      selectedItem = initItem();
-      this.state.textItems.push(selectedItem);
+      this.actionsState.selectedItem = initItem();
+      this.state.textItems.push(this.actionsState.selectedItem);
 
-      this.canvasItems.push(selectedItem);
-      this.canvasItems.push(createTextBgItem(selectedItem));
+      this.canvasItems.push(this.actionsState.selectedItem);
+      this.canvasItems.push(createTextBgItem(this.actionsState.selectedItem));
 
       setFieldValues();
       updateIt();
     };
-    if (selectedItem) {
+    canvasEditorContainer.querySelector('.toggle-paint-mode-btn').onclick = () => {
+      this.actionsState.dragedItem = this.actionsState.lastDragPos = null;
+      this.actionsState.paintModeOn = !this.actionsState.paintModeOn;
+      canvasEditorContainer.querySelector('.toggle-paint-mode-btn').innerText = this.actionsState.paintModeOn ? 'stop Paint' : 'Paint'
+      this.canvasService.elCanvas.style.cursor = this.actionsState.paintModeOn ? 'help' : '';
+      this.actionsState.selectedItem = null;
+      updateIt();
+    };
+    if (this.actionsState.selectedItem) {
       setFieldValues();
       updateIt();
     }
