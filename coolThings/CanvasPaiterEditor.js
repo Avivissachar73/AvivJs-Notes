@@ -148,7 +148,7 @@ export class CanvasEditor {
       data: {
         textItem: true,
         systemItem: false,
-        bgc: 'white'
+        bgc: '#ffffff'
       },
       style: {
         fillStyle: '#000000',
@@ -182,7 +182,6 @@ export class CanvasEditor {
       outlineItem,
       ...this.state.textItems.reduce((acc, c) => [...acc, c, createTextBgItem(c)], [])
     ];
-    console.log(this.canvasItems);
     // const getrenderAreaItemForTxtItem = (textItem) => {
     //   const _linesCount = textItem.text.split('\n').length;
     //   const areaItem = { x: textItem.x, y: textItem.y, h: textItem.fontSize*_linesCount, w: Math.max(...textItem.text.split('\n').map(_ => CanvasService.Utils.getTextPxSize(_, textItem.fontSize, textItem.style.fontFamily))) };
@@ -195,7 +194,7 @@ export class CanvasEditor {
       height: this.config.h,
       shapes: [],
       staticShapes: [],
-    }, { selector: '.canvas-editor', enableZoom: false, enableZoomUi: false, enableScrollUi: false, bgc: 'white' }, undefined, {
+    }, { selector: '.canvas-editor', enableZoom: false, enableZoomUi: false, enableScrollUi: false, bgc: '#ffffff' }, undefined, {
       ...(() => {
         let lastPos = null;
         let dragedItem = null;
@@ -213,9 +212,13 @@ export class CanvasEditor {
           setFieldValues();
           updateIt();
         }
+        const getMatchedItems = (items) => {
+          return items.filter(c => !c.data?.systemItem).sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
+        }
         const onMousedown = (ev, pos, items) => {
           ev?.preventDefault?.();
-          const item = items.filter(c => !c.data?.systemItem)[0];
+          // const item = items.filter(c => !c.data?.systemItem)[0];
+          const item = getMatchedItems(items)[0];
           if (!item) {
             outlineItem.hide = true;
             return;
@@ -240,7 +243,8 @@ export class CanvasEditor {
         }
         const onMouseMove = (ev, pos, hoveredItems) => {
           ev?.preventDefault?.();
-          const hoveredItem = hoveredItems.filter(c => c.id !== 'bgcItem')[0];
+          // const hoveredItem = hoveredItems.filter(c => c.id !== 'bgcItem')[0];
+          const hoveredItem = getMatchedItems(hoveredItems)[0];
           if (hoveredItem) {
             this.canvasService.elCanvas.style.cursor = 'pointer';
           } else {
@@ -252,7 +256,8 @@ export class CanvasEditor {
         return {
           click: (ev, pos, clickedItems) => {
             // const clickedItem = clickedItems.filter(c => c.id !== 'bgcItem')[0];
-            const clickedItem = clickedItems.filter(c => !c.data?.systemItem)[0];
+            // const clickedItem = clickedItems.filter(c => !c.data?.systemItem)[0];
+            const clickedItem = getMatchedItems(clickedItems)[0];
             if (clickedItem) {
               selectedItem = clickedItem;
               outlineItem.hide = false;
@@ -301,7 +306,7 @@ export class CanvasEditor {
     function setFieldValues() {
       canvasEditorContainer.querySelector('.canvas-txt-field').value = selectedItem.text;
       canvasEditorContainer.querySelector('.canvas-clr-field').value = selectedItem.style.fillStyle;
-      canvasEditorContainer.querySelector('.canvas-bgc-field').value = selectedItem.bgc;
+      canvasEditorContainer.querySelector('.canvas-bgc-field').value = selectedItem.data.bgc;
       canvasEditorContainer.querySelector('.canvas-bg-bgc-field').value = bgcItem.style.fillStyle;
       canvasEditorContainer.querySelector('.canvas-font-size-field').value = selectedItem.fontSize;
       canvasEditorContainer.querySelector('.canvas-font-field').value = selectedItem.style.fontFamily;
@@ -320,7 +325,7 @@ export class CanvasEditor {
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-bgc-field').oninput = (ev) => {
-      selectedItem.bgc = ev.target.value;
+      selectedItem.data.bgc = ev.target.value;
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-bg-bgc-field').oninput = (ev) => {

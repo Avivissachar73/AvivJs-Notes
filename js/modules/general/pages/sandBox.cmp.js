@@ -150,6 +150,11 @@ export default class SandBox {
                         zIndex: 1,
                         "text": "אדומת השיער\nהצרפתייה מהונגריה\nישבה עם חברות\nלבושה באדום\nלא היה לה מקום\nלא היה לה בן זוג\nעל ספסל מלוכלך\nללא יין מזוג",
                         "isCenterPos": false,
+                        data: {
+                            textItem: true,
+                            systemItem: false,
+                            bgc: '#ffffff'
+                        },
                         "style": {
                             "fillStyle": "#000000",
                             "fontFamily": "Amatic_SC-local",
