@@ -125,7 +125,7 @@ export class CanvasEditor {
                     <input type="number" class="canvas-posy-field"/>
                 -->
                 <button class="add-txt">Add txt</button>
-                <button class="toggle-paint-mode-btn">Paint</button>
+                <button class="toggle-paint-mode-btn">Paint OFF</button>
                 <button class="print-btn">Download</button>
             </div>
             <!-- <textarea class="canvas-txt-field" name="" id=""></textarea> -->
