@@ -228,7 +228,7 @@ export class CanvasEditor {
           updateIt();
         }
         const getMatchedItems = (items) => {
-          return items.filter(c => c.data?.textItem).sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0));
+          return items.filter(c => c.data?.textItem).sort((a, b) => (b.zIndex || 0) - (a.zIndex || 0));
         }
         const onMousedown = (ev, pos, items) => {
           ev?.preventDefault?.();
