@@ -171,6 +171,11 @@ export default class SandBox {
                         zIndex: 2,
                         "text": "אביב",
                         "isCenterPos": false,
+                        data: {
+                            textItem: true,
+                            systemItem: false,
+                            bgc: '#ffffff'
+                        },
                         "style": {
                             "fillStyle": "#000000",
                             "fontFamily": "Amatic_SC-local",
