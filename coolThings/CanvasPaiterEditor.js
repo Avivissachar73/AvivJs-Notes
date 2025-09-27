@@ -24,6 +24,7 @@ export class CanvasEditor {
     dragedItem: null,
     lastDragPos: null,
     paintModeOn: false,
+    painting: false,
     currPaintingShape: null
   }
 
@@ -314,9 +315,11 @@ export class CanvasEditor {
           touchend: onMouseup,
           mouseleave: () => {
             this.actionsState.lastDragPos = this.actionsState.dragedItem = this.actionsState.currPaintingShape = null;
+            this.actionsState.painting = false;
           },
           mouseenter: () => {
             this.actionsState.lastDragPos = this.actionsState.dragedItem = this.actionsState.currPaintingShape = null;
+            this.actionsState.painting = false;
           },
         }
       })()
