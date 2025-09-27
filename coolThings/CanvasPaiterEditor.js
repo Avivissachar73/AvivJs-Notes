@@ -207,7 +207,7 @@ export class CanvasEditor {
     this.canvasService = new CanvasService({
       width: this.config.w,
       height: this.config.h,
-      shapes: [],
+      shapes: this.canvasItems,
       staticShapes: [],
     }, { selector: '.canvas-editor', enableZoom: false, enableZoomUi: false, enableScrollUi: false, bgc: '#ffffff' }, undefined, {
       ...(() => {
