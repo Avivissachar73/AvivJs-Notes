@@ -1,3 +1,4 @@
+// // compile it, in file folder:: tsc WavyAnimation.class.ts --target es2016 --module es6
 export const WavyAnimation = (() => {
     type MatrixPos = { i: number, j: number };
     type AnimationPos = { x: number, y: number, z: number, lastUpdateInStep: number, depth: number, farness: number };
@@ -22,8 +23,8 @@ export const WavyAnimation = (() => {
         }
     }
     
-    const WIDTH = 50;
-    const HEIGHT = 37;
+    const WIDTH = 25 || 50;
+    const HEIGHT = 18 || 37;
     const FPS = 80;
     return class WavyAnimation {
         CONFIG = {
@@ -38,7 +39,7 @@ export const WavyAnimation = (() => {
                 i: HEIGHT / 2
             },
             framesPerStep: 12,
-            renderDots: false,
+            renderDots: true,
             renderHiddenDots: false,
             renderConectiveLines: true,
             centerLinesToDotsBolder: true,
@@ -153,7 +154,7 @@ export const WavyAnimation = (() => {
                     doIt();
                 }, this.CONFIG.SPEED);
             } else {
-                const doItForAnimation = (timeFromStart) => {
+                const doItForAnimation = (timeFromStart: number) => {
                     this.state.animationStep = timeFromStart / this.CONFIG.SPEED;
                     doIt();
                     this.state.intervalId = window.requestAnimationFrame(doItForAnimation);

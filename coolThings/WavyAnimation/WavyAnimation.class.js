@@ -1,3 +1,4 @@
+// // compile it, in file folder:: tsc WavyAnimation.class.ts --target es2016 --module es6
 export const WavyAnimation = (() => {
     function getBasicAnimItem(matPos) {
         return {
@@ -15,8 +16,8 @@ export const WavyAnimation = (() => {
             }
         };
     }
-    const WIDTH = 50;
-    const HEIGHT = 37;
+    const WIDTH = 25 || 50;
+    const HEIGHT = 18 || 37;
     const FPS = 80;
     return class WavyAnimation {
         constructor(parent = '') {
@@ -32,7 +33,7 @@ export const WavyAnimation = (() => {
                     i: HEIGHT / 2
                 },
                 framesPerStep: 12,
-                renderDots: false,
+                renderDots: true,
                 renderHiddenDots: false,
                 renderConectiveLines: true,
                 centerLinesToDotsBolder: true,

@@ -104,7 +104,7 @@ export default class SandBox {
             // display: 'none'
         },
         '.wavy-animation-section': {
-            display: 'none'
+            // display: 'none'
         }
     }
     methods = {
@@ -123,17 +123,17 @@ export default class SandBox {
             ]);
             document.querySelector('.element-components').appendChild(el.element);
 
-            const animator = initCanvasAnimation('.canvas-animation-container');
-            this.destroyers.push(animator.destroy.bind());
+            // const animator = initCanvasAnimation('.canvas-animation-container');
+            // this.destroyers.push(animator.destroy.bind());
 
-            const timer = new TimerWithUi('.timer-container');
-            this.destroyers.push(timer.stop.bind(timer));
+            // const timer = new TimerWithUi('.timer-container');
+            // this.destroyers.push(timer.stop.bind(timer));
 
-            const sunSistem = new SunSistem('.sun-sistem-container');
-            this.destroyers.push(sunSistem.destroy.bind(sunSistem));
+            // const sunSistem = new SunSistem('.sun-sistem-container');
+            // this.destroyers.push(sunSistem.destroy.bind(sunSistem));
             
-            const animLoader = new AnimatedLoader('.animated-loader-container');
-            this.destroyers.push(animLoader.destroy.bind(animLoader));
+            // const animLoader = new AnimatedLoader('.animated-loader-container');
+            // this.destroyers.push(animLoader.destroy.bind(animLoader));
             
 
             const canvasEditor = new CanvasEditor('.canvas-editor-container', {
@@ -190,8 +190,8 @@ export default class SandBox {
             // // this.destroyers.push(canvasEditor.destroy.bind(canvasEditor));
 
             // // compile it, in file folder:: tsc WavyAnimation.class.ts --target es2016 --module es6
-            // const wavyAnimation = new WavyAnimation('.wavy-animation-container');
-            // this.destroyers.push(wavyAnimation.destroy.bind(wavyAnimation));
+            const wavyAnimation = new WavyAnimation('.wavy-animation-container');
+            this.destroyers.push(wavyAnimation.destroy.bind(wavyAnimation));
         }
     }
     onMounted() {
