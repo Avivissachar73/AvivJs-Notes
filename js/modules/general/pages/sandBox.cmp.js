@@ -75,12 +75,12 @@ export default class SandBox {
                         <div class="animated-loader-container"></div>
                         <div class="canvas-animation-container width-all" style="aspect-ratio:125/100;width:300px;max-width:90vw"></div>
                     </div>
-                    <div class="canvas-editor-section">
+                    <div class="canvas-editor-section flex column gap10">
                         <hr class="width-all"/>
                         <h2 class="flex-center">Canvas Editor</h2>
                         <div class="canvas-editor-container"></div>
                     </div>
-                    <div class="wavy-animation-section">
+                    <div class="wavy-animation-section flex column gap10">
                         <hr class="width-all"/>
                         <h2 class="flex-center">Wavy Animation</h2>
                         <div class="wavy-animation-container" style="width:1000px;aspect-ratio:1/0.5;max-width:90vw"></div>
@@ -123,17 +123,17 @@ export default class SandBox {
             ]);
             document.querySelector('.element-components').appendChild(el.element);
 
-            // const animator = initCanvasAnimation('.canvas-animation-container');
-            // this.destroyers.push(animator.destroy.bind());
+            const animator = initCanvasAnimation('.canvas-animation-container');
+            this.destroyers.push(animator.destroy.bind());
 
-            // const timer = new TimerWithUi('.timer-container');
-            // this.destroyers.push(timer.stop.bind(timer));
+            const timer = new TimerWithUi('.timer-container');
+            this.destroyers.push(timer.stop.bind(timer));
 
-            // const sunSistem = new SunSistem('.sun-sistem-container');
-            // this.destroyers.push(sunSistem.destroy.bind(sunSistem));
+            const sunSistem = new SunSistem('.sun-sistem-container');
+            this.destroyers.push(sunSistem.destroy.bind(sunSistem));
             
-            // const animLoader = new AnimatedLoader('.animated-loader-container');
-            // this.destroyers.push(animLoader.destroy.bind(animLoader));
+            const animLoader = new AnimatedLoader('.animated-loader-container');
+            this.destroyers.push(animLoader.destroy.bind(animLoader));
             
 
             const canvasEditor = new CanvasEditor('.canvas-editor-container', {
