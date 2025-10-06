@@ -104,7 +104,7 @@ export default class SandBox {
             // display: 'none'
         },
         '.wavy-animation-section': {
-            // display: 'none'
+            display: 'none'
         }
     }
     methods = {
@@ -189,9 +189,8 @@ export default class SandBox {
             window.canvasEditor = canvasEditor;
             // // this.destroyers.push(canvasEditor.destroy.bind(canvasEditor));
 
-            // // compile it, in file folder:: tsc WavyAnimation.class.ts --target es2016 --module es6
-            const wavyAnimation = new WavyAnimation('.wavy-animation-container');
-            this.destroyers.push(wavyAnimation.destroy.bind(wavyAnimation));
+            // const wavyAnimation = new WavyAnimation('.wavy-animation-container');
+            // this.destroyers.push(wavyAnimation.destroy.bind(wavyAnimation));
         }
     }
     onMounted() {
