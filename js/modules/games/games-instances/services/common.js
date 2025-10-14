@@ -3,7 +3,7 @@
 import { Utils as _Utils } from '../../../../../lib/utils.service.js';
 import { EventEmiter as _EventEmiter } from '../../../../../lib/EventEmiter.js';
 // import _A_Alert from '../../../../../lib/Alert.js';
-import { alertService } from '../../../../../lib/Alert.js';
+import { alertService as _alertService } from '../../../../../lib/Alert.js';
 import { elementService as _elementService } from '../../../../../lib/element.service.js';
 import { baseCssService } from '../../../../../lib/getBaseCss.function.js';
 import { Intervaler as _Intervaler } from '../../../../../lib/Intervaler.js';
@@ -11,7 +11,8 @@ import { Timer as _Timer } from '../../../../../lib/Timer.js';
 
 export const Utils = _Utils;
 export const EventEmiter = _EventEmiter;
-export const A_Alert = alertService.A_Alert;
+export const A_Alert = _alertService.A_Alert;
+export const alertService = _alertService;
 export const elementService = _elementService;
 export const getBaseCssAndHelpers = baseCssService.getBaseCssAndHelpers;
 export const Intervaler = _Intervaler;

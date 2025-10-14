@@ -21,6 +21,10 @@ export function createPlayer(state, clientId) {
     bulletData: {
       type: '',
       level: 1,
+      baseDamage: 2,
+      shootingFriquency: 0,
+      speed: 2,
+      img: 'images/bullet.png'
     },
   };
   players.push(player);

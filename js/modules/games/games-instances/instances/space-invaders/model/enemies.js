@@ -21,19 +21,24 @@ export function createEnemy(state, pos, isSuper) {
     subType: isSuper? 'SUPER' : 'REG',
     id: Utils.getRandomId(),
     pos,
-    speed: 1,
+    speed: isSuper ? 2 : 1,
     img: 'images/enemy_ship.png',
     size: { w: 4, h: 2.3 },
     directions: { i: 1, j: 0 },
-    damage: isSuper ? 100 : 10,
+    damage: isSuper ? 40 : 10,
     health: isSuper ? 100 : 10,
-    maxHealth: isSuper ? 100 : 10,
-    points: isSuper ? 50 : 1,
+    maxHealth: isSuper ? 500 : 10,
+    points: isSuper ? 30 : 1,
     score: 0,
     killCount: 0,
     bulletData: isSuper ? {
       type: '',
-      level: 2
+      level: 1,
+      baseDamage: 30,
+      shootingFriquency: 40 || 7,
+      speed: 3,
+      // power: 30,
+      img: 'images/enemy_bullet.png'
     } : null,
     onMove: isSuper ? onMoveSuperEnemy : null
   };

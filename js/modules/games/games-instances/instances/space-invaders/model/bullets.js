@@ -3,9 +3,9 @@
 import { Utils } from "../../../services/common.js";
 
 export function fire(shooter, directions) {
-  const isMaxBullets = this.getAllBulletsOfShooter(shooter.id).length >= (shooter.bulletData.level**2);
+  const isMaxBullets = this.getAllBulletsOfShooter(shooter.id).length >= (shooter.bulletData?.level**2);
   if (isMaxBullets) return;
-  const newBullets = this.createBullets(shooter, 'images/bullet.png', directions);
+  const newBullets = this.createBullets(shooter, shooter.bulletData?.img || 'images/bullet.png', directions);
   this.state.bullets.push(...newBullets);
   this.state.entities.push(...newBullets);
   newBullets.forEach(c => {
@@ -28,11 +28,11 @@ export function createBullet(shooter, img, pos, directions) { // static
     subType: shooter.type === 'PLAYER' ? 'FRIENDLY' : 'ENEMY',
     shooterId: shooter.id,
     pos,
-    damage: Math.max(shooter.bulletData.level**2, 5),
+    damage: Math.max(shooter.bulletData.level**2, shooter.bulletData.baseDamage ? shooter.bulletData.baseDamage * shooter.bulletData.level : 5),
     directions,
     img,
     size: { w: 1, h: 2 },
-    speed: 2
+    speed: shooter.bulletData.speed || 2
   }
 }
 

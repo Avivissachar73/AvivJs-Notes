@@ -1,7 +1,13 @@
+import { Utils } from "../../../services/common.js";
 
 export function moveItems(items) {
   items.forEach(item => {
     this.updateItemPos(item);
+    if (item.bulletData) {
+      if (Utils.getRandomInt(0, 100) <= item.bulletData.shootingFriquency) {
+          this.fire(item, item.directions)
+      }
+    }
   });
 }
 
@@ -10,6 +16,7 @@ export function updateItemPos(item, diffs) {
   let hittedItemBetween;
   if (!this.boardService.isOutOfBoard(item.pos) && !this.boardService.isOutOfBoard(newPos)) hittedItemBetween = this.boardService.getHittedItemsBetweenPoss(item, item.pos, newPos, [...this.state.entities, ...(this.state.boardData.items || [])], ['SPACE']);
   if (hittedItemBetween) return this.handleHit(item, hittedItemBetween, newPos)
+  if (!this.boardService.isPosOut(item.pos) && this.boardService.isPosOut(newPos)) return this.terminateItem(item);
   else return this.doMoveItem(item, newPos);
 }
 
@@ -122,7 +129,7 @@ export function handleBulletHit(hitted, bullet) {
     }
     if (hitted.type === 'PLAYER') {
       this.EvEmitter.emit('player_down', hitted.pos, hitted);
-      this.checkGameOver();
+      this.checkAndHandleGameOver();
     }
   }
 }

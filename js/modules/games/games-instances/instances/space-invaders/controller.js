@@ -1,4 +1,4 @@
-import { A_Alert as alertService } from "../../services/common.js";
+import { alertService } from "../../services/common.js";
 import { BaseGameController } from "../BaseBoardGame.class.js";
 import createBtnsController from '../../services/btn-controls.cmp.js';
 import { elementService } from "../../services/common.js";
@@ -122,6 +122,7 @@ export class SpaceInvadersController extends BaseGameController {
     this.container.querySelector('.time span').innerText = `${Utils.padNum(timeData.formatedTime.min)}:${Utils.padNum(timeData.formatedTime.sec)}`;
   }
   renderWave(wave) {
+    if (this.didStart) alertService.toast({type: '', msg: `Wave ${wave}!`, timeout: 2000, parentSelector: '.game-container' });
     this.container.querySelector('.wave span').innerText = `${wave || 0}`;
   }
   renderScore(score) {
@@ -373,7 +374,7 @@ export class SpaceInvadersController extends BaseGameController {
             'box-shadow': `0 0 ${elementService._.em(10)} ${elementService._.em(1)} rgba(0,0,0,0.5)`
           }
         })}
-        .health-bar {
+        .game-container .space-invaders-game-container .health-bar {
             background-color: red;
             border: 1px solid red;
             border-radius: 3px;
@@ -386,10 +387,13 @@ export class SpaceInvadersController extends BaseGameController {
             text-align: left;
             z-index: 3;
         }
-        .inner-health-bar {
+        .game-container .space-invaders-game-container .inner-health-bar {
             background-color: blue;
             border-radius: 3px;
             height: 100%;
+        }   
+        .game-container .toast-alert {
+          opacity: 0.7
         }
       </style>
       <div class="info flex align-center space-between wrap width-all">

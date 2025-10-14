@@ -8,6 +8,8 @@ import { generateGift, createBulletLevelGift, createGiftItem, createHealthGift }
 
 import { Utils } from "../../../services/common.js";
 
+// import testStates from '../test-states/27.9.2025-stacked-bullets-on-top.js';
+
 const boardItems = [
   {
     type: 'PATH',
@@ -39,6 +41,7 @@ export class SpaceInvadersModel extends BaseGameModel {
   }
 
   createState() {
+    // return testStates[1];
     const state = {
       id: Utils.getRandomId(),
       boardData: {
@@ -200,12 +203,7 @@ export class SpaceInvadersModel extends BaseGameModel {
       this.EvEmitter.emit('wave_update', this.state.wave);
       this.generateNewEnemies();
     }
-    const isGameOver = this.checkGameOver();
-    if (isGameOver) {
-      this.pause();
-      const isNewBest = await this.storageService.checkHighScore({ score: this.state.score })
-      this.EvEmitter.emit('game_over', {score: this.state.score, isNewBest: isNewBest});
-    }
+    this.checkAndHandleGameOver();
   }
   
   
@@ -227,6 +225,15 @@ export class SpaceInvadersModel extends BaseGameModel {
 
   checkGameOver() {
     return this.state.players.every(c => c.dead);
+  }
+
+  async checkAndHandleGameOver() {
+    const isGameOver = this.checkGameOver();
+    if (isGameOver) {
+      this.pause();
+      const isNewBest = await this.storageService.checkHighScore({ score: this.state.score })
+      this.EvEmitter.emit('game_over', {score: this.state.score, isNewBest: isNewBest});
+    }
   }
 
   reviveState(state) {
