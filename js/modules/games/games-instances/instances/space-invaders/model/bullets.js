@@ -28,7 +28,7 @@ export function createBullet(shooter, img, pos, directions) { // static
     subType: shooter.type === 'PLAYER' ? 'FRIENDLY' : 'ENEMY',
     shooterId: shooter.id,
     pos,
-    damage: Math.max(shooter.bulletData.level**2, shooter.bulletData.baseDamage ? shooter.bulletData.baseDamage * shooter.bulletData.level : 5),
+    damage: Math.max((shooter.bulletData.baseDamage ? shooter.bulletData.baseDamage * shooter.bulletData.level : shooter.bulletData.level**2), 5),
     directions,
     img,
     size: { w: 1, h: 2 },

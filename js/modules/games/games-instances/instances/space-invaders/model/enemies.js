@@ -26,7 +26,7 @@ export function createEnemy(state, pos, isSuper) {
     size: { w: 4, h: 2.3 },
     directions: { i: 1, j: 0 },
     damage: isSuper ? 40 : 10,
-    health: isSuper ? 100 : 10,
+    health: isSuper ? 500 : 10,
     maxHealth: isSuper ? 500 : 10,
     points: isSuper ? 30 : 1,
     score: 0,
@@ -35,7 +35,7 @@ export function createEnemy(state, pos, isSuper) {
       type: '',
       level: 1,
       baseDamage: 30,
-      shootingFriquency: 40 || 7,
+      shootingFriquency: 20 || 7,
       speed: 3,
       // power: 30,
       img: 'images/enemy_bullet.png'
