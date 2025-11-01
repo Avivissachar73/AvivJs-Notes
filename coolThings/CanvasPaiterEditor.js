@@ -210,6 +210,18 @@ export class CanvasEditor {
     this.actionsState.selectedItem = canvasTextItem;
     this.canvasItems = [
       bgcItem,
+      { // grid item
+        hide: true,
+        x: 0, y: 0, w: this.config.w, h: this.config.h,
+        grid: {
+          space: this.config.w / 10,
+          style: {
+              strokeStyle: 'rgba(0, 0, 0, 0.2)',
+              linePattern: [this.config.w/100, this.config.w/100],
+              lineWidth: 2
+          }
+        }
+      },
       outlineItem,
       ...this.state.textItems.reduce((acc, c) => {
         // [...acc, c]
@@ -230,7 +242,17 @@ export class CanvasEditor {
       height: this.config.h,
       shapes: this.canvasItems,
       staticShapes: [],
-    }, { selector: '.canvas-editor', enableZoom: false, enableZoomUi: false, enableScrollUi: false, bgc: '#ffffff' }, undefined, {
+    }, { selector: '.canvas-editor', enableZoom: false, enableZoomUi: false, enableScrollUi: false, bgc: '#ffffff',
+      grid: { // not work here becouse of custom bg item, temp fix in shapes list
+        space: 10,
+        style: {
+            strokeStyle: 'black',
+            linePattern: [10, 10],
+            lineWidth: 10,
+            zIndex: 1
+        }
+      } 
+    }, undefined, {
       ...(() => {
         // let this.actionsState.lastDragPos = null;
         // let this.actionsState.dragedItem = null;
