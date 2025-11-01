@@ -184,7 +184,17 @@ export default class SandBox {
                             "direction": "rtl"
                         }
                     }
-                ]
+                ],
+                opts: {
+                    fillStyle: '#000000',
+                    fontFamily: 'Arial',
+                    textAlign: 'end',
+                    direction: 'ltr',
+                    bgc: '#ffffff',
+                },
+                paintOpts: {
+                    clr: '#ff0000',
+                }
             });
             window.canvasEditor = canvasEditor;
             // // this.destroyers.push(canvasEditor.destroy.bind(canvasEditor));

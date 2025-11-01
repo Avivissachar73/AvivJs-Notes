@@ -9,7 +9,26 @@ export class CanvasEditor {
     bgImg: '',
     w: 1000,
     h: 1500,
-    textItems: []
+    textItems: [],
+
+    opts: {
+      fillStyle: '#000000',
+      fontFamily: 'Arial',
+      textAlign: 'end',
+      // textBaseline: 'top',
+      direction: 'ltr',
+      bgc: '#ffffff',
+
+      // fontSize ,
+
+      // text;
+      // x;
+      // y;
+      // bgcItem.style.fillStyle;
+    },
+    paintOpts: {
+      clr: '#ff0000',
+    }
   };
   constructor(parentSelector = 'body', initState = null) {
     if (initState) this.state = initState;
@@ -101,6 +120,7 @@ export class CanvasEditor {
                 ${inputCmp('canvas-font-size-field', 'input', 'number', 'font-size')}
                 ${inputCmp('canvas-posx-field', 'input', 'number', 'pos-x')}
                 ${inputCmp('canvas-posy-field', 'input', 'number', 'pos-y')}
+                ${inputCmp('canvas-painter-clr-field', 'input', 'color', 'painter clr')}
                 <!--
                     <input type="color" class="canvas-clr-field"/>
                     <input type="color" class="canvas-bg-bgc-field"/>
@@ -161,11 +181,12 @@ export class CanvasEditor {
         bgc: '#ffffff'
       },
       style: {
-        fillStyle: '#000000',
-        fontFamily: 'Arial',
-        textAlign: 'end',
+        fillStyle: this.state.opts.fillStyle,
+        fontFamily: this.state.opts.fontFamily,
+        textAlign: this.state.opts.textAlign,
+        direction: this.state.opts.direction,
         textBaseline: 'top',
-        direction: 'ltr'
+
       }
     });
     const createTextBgItem = (txtItem) => ({
@@ -270,7 +291,7 @@ export class CanvasEditor {
           if (this.actionsState.paintModeOn) {
             if (!this.actionsState.painting) return;
             if (!this.actionsState.currPaintingShape) {
-              this.actionsState.currPaintingShape = { geoShape: [], zIndex: this.state.textItems.length + 1, data: {  }, style: { strokeStyle: canvasEditorContainer.querySelector('.canvas-clr-field').value || 'red', lineWidth: 8 }, id: Utils.getRandomId() };
+              this.actionsState.currPaintingShape = { geoShape: [], zIndex: this.state.textItems.length + 1, data: {  }, style: { strokeStyle: this.state.paintOpts.clr, lineWidth: 8 }, id: Utils.getRandomId() };
               this.state.textItems.push(this.actionsState);
               this.actionsState.selectedItem = null;
               this.canvasItems.push(this.actionsState.currPaintingShape);
@@ -346,18 +367,23 @@ export class CanvasEditor {
       }
     }
     const setFieldValues = () => {
-      if (!this.actionsState.selectedItem) return;
-      canvasEditorContainer.querySelector('.canvas-txt-field').value = this.actionsState.selectedItem.text;
-      canvasEditorContainer.querySelector('.canvas-clr-field').value = this.actionsState.selectedItem.style.fillStyle;
-      canvasEditorContainer.querySelector('.canvas-bgc-field').value = this.actionsState.selectedItem.data.bgc;
+      const selectedItem = this.actionsState.selectedItem;
+      const opts = this.state.opts;
+      if (!selectedItem) return;
+      canvasEditorContainer.querySelector('.canvas-txt-field').value = selectedItem.text;
+      canvasEditorContainer.querySelector('.canvas-posx-field').value = selectedItem.x;
+      canvasEditorContainer.querySelector('.canvas-posy-field').value = selectedItem.y;
+      canvasEditorContainer.querySelector('.canvas-font-size-field').value = selectedItem.fontSize;
+      canvasEditorContainer.querySelector('.canvas-clr-field').value = opts.fillStyle;
+      canvasEditorContainer.querySelector('.canvas-bgc-field').value = opts.bgc;
+      canvasEditorContainer.querySelector('.canvas-font-field').value = opts.fontFamily;
+      canvasEditorContainer.querySelector('.canvas-alignment-field').value = opts.textAlign;
+      canvasEditorContainer.querySelector('.canvas-direction-field').value = opts.direction;
+
       canvasEditorContainer.querySelector('.canvas-bg-bgc-field').value = bgcItem.style.fillStyle;
-      canvasEditorContainer.querySelector('.canvas-font-size-field').value = this.actionsState.selectedItem.fontSize;
-      canvasEditorContainer.querySelector('.canvas-font-field').value = this.actionsState.selectedItem.style.fontFamily;
-      canvasEditorContainer.querySelector('.canvas-posx-field').value = this.actionsState.selectedItem.x;
-      canvasEditorContainer.querySelector('.canvas-posy-field').value = this.actionsState.selectedItem.y;
-      canvasEditorContainer.querySelector('.canvas-alignment-field').value = this.actionsState.selectedItem.style.textAlign;
-      canvasEditorContainer.querySelector('.canvas-direction-field').value = this.actionsState.selectedItem.style.direction;
+
       // canvasEditorContainer.querySelector('.canvas-txt-field')?.focus();
+      canvasEditorContainer.querySelector('.canvas-painter-clr-field').value = this.state.paintOpts.clr;
     }
     canvasEditorContainer.querySelector('.canvas-txt-field').oninput = (ev) => {
       this.actionsState.selectedItem.text = ev.target.value.trim();
@@ -365,11 +391,12 @@ export class CanvasEditor {
     }
     canvasEditorContainer.querySelector('.canvas-clr-field').oninput = (ev) => {
       if (!this.actionsState.selectedItem) return;
-      this.actionsState.selectedItem.style.fillStyle = ev.target.value;
+      this.state.opts.fillStyle = ev.target.value;
+      if (!this.actionsState.paintModeOn) this.actionsState.selectedItem.style.fillStyle = this.state.opts.fillStyle;
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-bgc-field').oninput = (ev) => {
-      this.actionsState.selectedItem.data.bgc = ev.target.value;
+      this.state.opts.bgc = this.actionsState.selectedItem.data.bgc = ev.target.value;
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-bg-bgc-field').oninput = (ev) => {
@@ -378,11 +405,11 @@ export class CanvasEditor {
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-font-size-field').oninput = (ev) => {
-      this.actionsState.selectedItem.fontSize = +ev.target.value;
+      this.state.opts.fontSize = this.actionsState.selectedItem.fontSize = +ev.target.value;
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-font-field').oninput = (ev) => {
-      this.actionsState.selectedItem.style.fontFamily = ev.target.value;
+      this.state.opts.fontFamily = this.actionsState.selectedItem.style.fontFamily = ev.target.value;
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-posx-field').oninput = (ev) => {
@@ -399,18 +426,23 @@ export class CanvasEditor {
     }
     canvasEditorContainer.querySelector('.canvas-alignment-field').oninput = (ev) => {
       const prev = this.actionsState.selectedItem.style.textAlign;
-      this.actionsState.selectedItem.style.textAlign = ev.target.value;
+      this.state.opts.textAlign = this.actionsState.selectedItem.style.textAlign = ev.target.value;
       if (this.actionsState.selectedItem.style.textAlign === 'center') this.actionsState.selectedItem.x = this.config.w / 2;
-      if (this.actionsState.selectedItem.style.textAlign === 'end') this.actionsState.selectedItem.x = this.config.w-this.config.pad.x;
+      if (this.actionsState.selectedItem.style.textAlign === 'end') this.actionsState.selectedItem.x = this.config.w - this.config.pad.x;
       if (this.actionsState.selectedItem.style.textAlign === 'start') this.actionsState.selectedItem.x = this.config.pad.x;
       updateIt();
     }
     canvasEditorContainer.querySelector('.add-txt').oninput = (ev) => {
-      this.actionsState.selectedItem.style.textAlign = ev.target.value;
+      this.state.opts.textAlign = this.actionsState.selectedItem.style.textAlign = ev.target.value;
       updateIt();
     }
     canvasEditorContainer.querySelector('.canvas-direction-field').oninput = (ev) => {
-      this.actionsState.selectedItem.style.direction = ev.target.value;
+      this.state.opts.direction = this.actionsState.selectedItem.style.direction = ev.target.value;
+      updateIt();
+    }
+    canvasEditorContainer.querySelector('.canvas-painter-clr-field').oninput = (ev) => {
+      this.state.paintOpts.clr = ev.target.value;
+      if (this.actionsState.paintModeOn) this.actionsState.selectedItem.style.strokeStyle = this.state.paintOpts.clr;
       updateIt();
     }
 
